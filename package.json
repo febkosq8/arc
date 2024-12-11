@@ -6,8 +6,9 @@
 	"type": "module",
 	"repository": "https://github.com/febkosq8/arc",
 	"scripts": {
-		"dev": "vite dev",
-		"build": "vite build"
+		"build": "vite build",
+        "push-npm": "npm publish --access public",
+		"prepublishOnly": "npm run build"
 	},
 	"peerDependencies": {
 		"react": "19.0.0",
