@@ -2,7 +2,7 @@
 	"name": "@febkosq8/arc",
 	"description": "A React components library for febkosq8",
 	"private": false,
-	"version": "0.2.0",
+	"version": "0.3.0",
 	"type": "module",
 	"repository": "https://github.com/febkosq8/arc",
 	"scripts": {
