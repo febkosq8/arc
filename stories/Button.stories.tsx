@@ -11,7 +11,7 @@ const meta = {
 		docs: {
 			description: {
 				component:
-					"Buttons communicate actions and support semantic color variants, responsive sizes, and icon-only layouts.",
+					"Buttons communicate actions and support semantic color variants, responsive sizes, and icon-only layouts.\n\nAny additional props that are not used by the Button API are forwarded to the underlying <button> element.",
 			},
 		},
 	},
@@ -19,10 +19,20 @@ const meta = {
 		children: {
 			control: "text",
 			description: "Text displayed inside the button",
+			table: {
+				type: {
+					summary: "ReactNode",
+				},
+			},
 		},
 		variant: {
 			control: "select",
 			description: "Visual style of the button.",
+			table: {
+				defaultValue: {
+					summary: "primary",
+				},
+			},
 			options: [
 				"primary",
 				"secondary",
@@ -39,11 +49,18 @@ const meta = {
 		size: {
 			control: "select",
 			description: "Button dimensions. Use an icon size for icon-only buttons.",
-			options: ["xs", "sm", "md", "lg", "xl", "icon-xs", "icon-sm", "icon-md", "icon-lg"],
+			table: {
+				defaultValue: {
+					summary: "md",
+				},
+			},
+			options: ["xs", "sm", "md", "lg", "xl", "icon-xs", "icon-sm", "icon-md", "icon-lg", "icon-xl"],
 		},
 	},
 	args: {
 		children: "Button Text",
+		variant: "primary",
+		size: "md",
 	},
 } satisfies Meta<typeof Button>;
 
@@ -80,7 +97,7 @@ export const IconOnly: Story = {
 		size: {
 			control: "select",
 			description: "Icon button dimensions.",
-			options: ["icon-xs", "icon-sm", "icon-md", "icon-lg"],
+			options: ["icon-xs", "icon-sm", "icon-md", "icon-lg", "icon-xl"],
 		},
 	},
 	args: {
