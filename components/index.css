@@ -1,5 +1,31 @@
 @import "tailwindcss";
 
+@property --double-click-progress {
+	syntax: "<number>";
+	inherits: false;
+	initial-value: 360;
+}
+
+@keyframes double-click-countdown {
+	from {
+		--double-click-progress: 360;
+	}
+	to {
+		--double-click-progress: 0;
+	}
+}
+
+@keyframes double-click-feedback {
+	from {
+		opacity: 1;
+		transform: scale(1.05);
+	}
+	to {
+		opacity: 0.45;
+		transform: scale(1);
+	}
+}
+
 @layer base {
 	:root {
 		--background: 220 14% 94%;

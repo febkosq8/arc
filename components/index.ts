@@ -1,4 +1,7 @@
 export {default as Button} from './button';
+export {default as ButtonGroup} from './button-group';
+export {default as DoubleClickButton} from './double-click-button';
+export {default as LongPressButton} from './long-press-button';
 export {default as Input} from './input';
 export {default as Card} from './card';
 export {default as Menu} from './menu';

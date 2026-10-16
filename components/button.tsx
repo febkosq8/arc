@@ -1,4 +1,5 @@
 import { cva, cx, VariantProps } from "@rinzai/zen";
+import ButtonGroup from "./button-group";
 
 const buttonVariants = cva(
 	"inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 truncate",
@@ -44,8 +45,15 @@ export interface ButtonProps
 	extends React.ButtonHTMLAttributes<HTMLButtonElement>,
 		VariantProps<typeof buttonVariants> {}
 
-const Button = ({ className, variant, size, ...props }: ButtonProps) => {
+interface ButtonComponent extends React.FC<ButtonProps> {
+	Group: typeof ButtonGroup;
+}
+
+const Button: ButtonComponent = Object.assign(
+	({ className, variant, size, ...props }: ButtonProps) => {
 	return <button className={cx(buttonVariants({ variant, size, className }))} {...props} />;
-	};
+	},
+	{ Group: ButtonGroup },
+);
 
 export default Button 
