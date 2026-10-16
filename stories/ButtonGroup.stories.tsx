@@ -57,7 +57,7 @@ export const Default: Story = {
 			<div className="flex flex-col items-start gap-3">
 				<Button.Group
 					orientation={orientation}
-					onSelectedVariant={selectedVariant}
+					selectedVariant={selectedVariant}
 					aria-label="Navigation"
 				>
 					{buttons.map((label) => {
@@ -86,6 +86,21 @@ export const Default: Story = {
 			control: "select",
 			options: ["horizontal", "vertical"],
 			description: "Direction in which the buttons are arranged.",
+			table: {
+				defaultValue: {
+					summary: "horizontal",
+				},
+			},
+		},
+		selectedVariant: {
+			control: "select",
+			options: ["primary", "secondary", "destructive", "ghost", "warning"],
+			description: "Variant applied to the selected button.",
+			table: {
+				defaultValue: {
+					summary: "none",
+				},
+			},
 		},
 		selected: {
 			control: "select",
@@ -119,11 +134,6 @@ export const Default: Story = {
 			options: ["primary", "secondary", "destructive", "ghost", "warning"],
 			description: "Variant used by the third button.",
 		},
-		selectedVariant: {
-			control: "select",
-			options: ["primary", "secondary", "destructive", "ghost", "warning"],
-			description: "Variant applied to the selected button.",
-		},
 	},
 	args: {
 		orientation: "horizontal",
@@ -131,7 +141,7 @@ export const Default: Story = {
 		button1Content: "Previous",
 		button1Variant: "secondary",
 		button2Content: "Current",
-		button2Variant: "primary",
+		button2Variant: "secondary",
 		button3Content: "Next",
 		button3Variant: "secondary",
 		selectedVariant: "primary",

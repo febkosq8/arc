@@ -15,13 +15,13 @@ type ButtonVariant =
 
 export interface ButtonGroupProps extends ComponentPropsWithoutRef<"div"> {
 	orientation?: "horizontal" | "vertical";
-	onSelectedVariant?: ButtonVariant;
+	selectedVariant?: ButtonVariant;
 }
 
 const ButtonGroup = ({
 	className,
 	orientation = "horizontal",
-	onSelectedVariant,
+	selectedVariant,
 	children,
 	...props
 }: ButtonGroupProps) => (
@@ -37,12 +37,12 @@ const ButtonGroup = ({
 		{...props}
 	>
 		{Children.map(children as ReactNode, (child) => {
-			if (!onSelectedVariant || !isValidElement<{ "aria-pressed"?: boolean; variant?: ButtonVariant }>(child)) {
+			if (!selectedVariant || !isValidElement<{ "aria-pressed"?: boolean; variant?: ButtonVariant }>(child)) {
 				return child;
 			}
 
 			return child.props["aria-pressed"] === true
-				? cloneElement(child, { variant: onSelectedVariant })
+				? cloneElement(child, { variant: selectedVariant })
 				: child;
 		})}
 	</div>
