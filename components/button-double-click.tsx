@@ -143,7 +143,7 @@ const DoubleClickButton = ({
 				style={
 				{
 					background: isWaiting
-						? `linear-gradient(to right, color-mix(in srgb, ${feedbackColor} 90%, white) calc(var(--double-click-progress) * 1%), transparent 0)`
+						? `conic-gradient(from 90deg, color-mix(in srgb, ${feedbackColor} 90%, white) calc(var(--double-click-progress) * 1%), transparent 0)`
 						: "transparent",
 					"--double-click-progress": 100,
 					"--double-click-timeout": `${doubleClickTimeout}ms`,

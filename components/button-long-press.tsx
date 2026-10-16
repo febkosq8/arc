@@ -135,7 +135,7 @@ const LongPressButton = ({
 				className="double-click-progress-ring pointer-events-none absolute inset-0 rounded-md p-px"
 				style={{
 					background: isPressing
-						? `linear-gradient(to right, color-mix(in srgb, ${feedbackColor} 90%, white) calc(var(--double-click-progress) * 1%), transparent 0)`
+						? `conic-gradient(from 90deg, color-mix(in srgb, ${feedbackColor} 90%, white) calc(var(--double-click-progress) * 1%), transparent 0)`
 						: "transparent",
 					"--double-click-progress": 100,
 					"--double-click-timeout": `${longPressDuration}ms`,
