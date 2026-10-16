@@ -2,10 +2,23 @@ import { cx } from "@rinzai/zen";
 import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import Button, { type ButtonProps } from "./button";
 
+export interface DoubleClickButtonFeedbackContext {
+	isWaiting: boolean;
+	isActive: boolean;
+	doubleClickTimeout: number;
+	remainingTime: number;
+	variant: ButtonProps["variant"];
+	feedbackVariant: Exclude<ButtonProps["variant"], "ghost">;
+}
+
+export type DoubleClickButtonFeedbackContent =
+	| ReactNode
+	| ((context: DoubleClickButtonFeedbackContext) => ReactNode);
+
 export interface DoubleClickButtonProps extends ButtonProps {
 	doubleClickTimeout?: number;
 	feedbackVariant?: Exclude<ButtonProps["variant"], "ghost">;
-	feedbackContent?: ReactNode;
+	feedbackContent?: DoubleClickButtonFeedbackContent;
 }
 
 const DoubleClickButton = ({
@@ -22,7 +35,10 @@ const DoubleClickButton = ({
 }: DoubleClickButtonProps) => {
 	const [isActive, setIsActive] = useState(false);
 	const [isWaiting, setIsWaiting] = useState(false);
+	const [remainingTime, setRemainingTime] = useState(0);
 	const timerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+	const intervalRef = useRef<ReturnType<typeof setInterval> | undefined>(undefined);
+	const deadlineRef = useRef(0);
 	const feedbackRingClass = {
 		primary: "ring-primary",
 		secondary: "ring-secondary-foreground",
@@ -50,10 +66,22 @@ const DoubleClickButton = ({
 
 	useEffect(() => () => {
 		if (timerRef.current) clearTimeout(timerRef.current);
+		if (intervalRef.current) clearInterval(intervalRef.current);
 	}, []);
 
+	const resolvedFeedbackContent =
+		typeof feedbackContent === "function"
+			? feedbackContent({
+					isWaiting,
+					isActive,
+					doubleClickTimeout,
+					remainingTime,
+					variant,
+					feedbackVariant,
+				})
+			: feedbackContent;
 	const buttonContent =
-		feedbackContent === undefined ? (
+		resolvedFeedbackContent === undefined ? (
 			children
 		) : (
 			<span className="grid">
@@ -73,7 +101,7 @@ const DoubleClickButton = ({
 					)}
 					aria-hidden={!isWaiting}
 				>
-					{feedbackContent}
+					{resolvedFeedbackContent}
 				</span>
 			</span>
 		);
@@ -98,17 +126,30 @@ const DoubleClickButton = ({
 			data-double-click-state={isActive ? "active" : isWaiting ? "waiting" : undefined}
 			onClick={(event) => {
 				if (event.detail === 1) {
+					const deadline = Date.now() + doubleClickTimeout;
+					deadlineRef.current = deadline;
 					setIsWaiting(true);
+					setRemainingTime(doubleClickTimeout);
 					if (timerRef.current) clearTimeout(timerRef.current);
-					timerRef.current = setTimeout(() => setIsWaiting(false), doubleClickTimeout);
+					if (intervalRef.current) clearInterval(intervalRef.current);
+					intervalRef.current = setInterval(() => {
+						setRemainingTime(Math.max(0, deadlineRef.current - Date.now()));
+					}, 50);
+					timerRef.current = setTimeout(() => {
+						setIsWaiting(false);
+						setRemainingTime(0);
+						if (intervalRef.current) clearInterval(intervalRef.current);
+					}, doubleClickTimeout);
 				}
 				onClick?.(event);
 			}}
 			onDoubleClick={(event) => {
 				onDoubleClick?.(event);
 				setIsWaiting(false);
+				setRemainingTime(0);
 				setIsActive(true);
 				if (timerRef.current) clearTimeout(timerRef.current);
+				if (intervalRef.current) clearInterval(intervalRef.current);
 				timerRef.current = setTimeout(() => setIsActive(false), doubleClickTimeout);
 			}}
 		/>

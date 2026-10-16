@@ -1,32 +1,33 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
-import { Button, DoubleClickButton, LongPressButton } from "../components";
+import { DoubleClickButton } from "../components";
 
 const meta = {
-	title: "Components/Button interactions",
+	title: "Components/ButtonDoubleClick",
 	tags: ["autodocs"],
 	parameters: {
 		docs: {
 			description: {
-				component:
-					"Specialized buttons for double-click actions, long-press actions, and grouped actions.",
+				component: "A button that performs its action after a double-click.",
 			},
 		},
 	},
 } satisfies Meta;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
 
-export const DoubleClick: StoryObj<{
+type Story = StoryObj<{
 	children: string;
 	doubleClickTimeout: number;
 	variant: "primary" | "secondary" | "destructive" | "ghost" | "warning";
 	feedbackVariant: "primary" | "secondary" | "destructive" | "warning";
 	feedbackContent?: string;
-}> = {
+}>;
+
+export const Default: Story = {
 	render: ({ children, doubleClickTimeout, variant, feedbackVariant, feedbackContent }) => {
 		const [message, setMessage] = useState("Waiting for a double-click");
+
 		return (
 			<div className="flex flex-col items-start gap-3">
 				<DoubleClickButton
@@ -60,7 +61,8 @@ export const DoubleClick: StoryObj<{
 		},
 		feedbackContent: {
 			control: "text",
-			description: "Optional content shown in the button while waiting for the second click.",
+			description:
+				"Optional content or callback returning content shown while waiting for the second click. Callback receives the button state, remaining time, and configured props.",
 		},
 	},
 	args: {
@@ -69,54 +71,4 @@ export const DoubleClick: StoryObj<{
 		variant: "primary",
 		feedbackVariant: "warning",
 	},
-};
-
-export const LongPress: StoryObj<{
-	children: string;
-	longPressDuration: number;
-	preventClick: boolean;
-}> = {
-	render: ({ children, longPressDuration, preventClick }) => {
-		const [message, setMessage] = useState("Press and hold for 500ms");
-		return (
-			<div className="flex flex-col items-start gap-3">
-				<LongPressButton
-					longPressDuration={longPressDuration}
-					preventClick={preventClick}
-					onLongPress={() => setMessage("Long-press action fired")}
-				>
-					{children}
-				</LongPressButton>
-				<span className="text-sm text-muted-foreground">
-					{message.replace("500", String(longPressDuration))}
-				</span>
-			</div>
-		);
-	},
-	argTypes: {
-		children: { control: "text", description: "Button label." },
-		longPressDuration: {
-			control: { type: "number", min: 0, step: 50 },
-			description: "How long the button must be held, in milliseconds.",
-		},
-		preventClick: {
-			control: "boolean",
-			description: "Prevent the regular click after a long press.",
-		},
-	},
-	args: {
-		children: "Press and hold",
-		longPressDuration: 500,
-		preventClick: true,
-	},
-};
-
-export const Group: Story = {
-	render: () => (
-		<Button.Group>
-			<Button>Previous</Button>
-			<Button variant="secondary">Current</Button>
-			<Button>Next</Button>
-		</Button.Group>
-	),
 };

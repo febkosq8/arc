@@ -9,6 +9,23 @@ const preview: Preview = {
 				date: /Date$/i,
 			},
 		},
+		options: {
+			storySort: {
+				order: [
+					"Button",
+					"ButtonGroup",
+					"ButtonDoubleClick",
+					"ButtonLongPress",
+					"Card",
+					"Input",
+					"Menu",
+					"Pill",
+					"Switch",
+					"TextArea",
+					"ThemeSwitcher",
+				],
+			},
+		},
 	},
 };
 
