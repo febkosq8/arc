@@ -20,15 +20,26 @@ type Story = StoryObj<{
 	orientation: "horizontal" | "vertical";
 	selected: "Previous" | "Current" | "Next";
 	button1Content: string;
-	button1Variant: "primary" | "secondary" | "destructive" | "ghost" | "warning";
+	button1Variant: ButtonGroupVariant;
 	button2Content: string;
-	button2Variant: "primary" | "secondary" | "destructive" | "ghost" | "warning";
+	button2Variant: ButtonGroupVariant;
 	button3Content: string;
-	button3Variant: "primary" | "secondary" | "destructive" | "ghost" | "warning";
-	selectedVariant: "primary" | "secondary" | "destructive" | "ghost" | "warning";
+	button3Variant: ButtonGroupVariant;
+	selectedVariant: ButtonGroupVariant;
 }>;
 
 type ButtonName = "Previous" | "Current" | "Next";
+type ButtonGroupVariant =
+	| "primary"
+	| "secondary"
+	| "destructive"
+	| "ghost"
+	| "warning"
+	| "outline-primary"
+	| "outline-secondary"
+	| "outline-destructive"
+	| "outline-ghost"
+	| "outline-warning";
 
 export const Default: Story = {
 	render: ({
@@ -45,7 +56,7 @@ export const Default: Story = {
 		const [selected, setSelected] = useState(initialSelected);
 		const buttons: Array<{
 			content: string;
-			variant: "primary" | "secondary" | "destructive" | "ghost" | "warning";
+			variant: ButtonGroupVariant;
 			name: ButtonName;
 		}> = [
 			{ content: button1Content, variant: button1Variant, name: "Previous" },
@@ -94,7 +105,18 @@ export const Default: Story = {
 		},
 		selectedVariant: {
 			control: "select",
-			options: ["primary", "secondary", "destructive", "ghost", "warning"],
+			options: [
+				"primary",
+				"secondary",
+				"destructive",
+				"ghost",
+				"warning",
+				"outline-primary",
+				"outline-secondary",
+				"outline-destructive",
+				"outline-ghost",
+				"outline-warning",
+			],
 			description: "Variant applied to the selected button.",
 			table: {
 				defaultValue: {
@@ -113,7 +135,18 @@ export const Default: Story = {
 		},
 		button1Variant: {
 			control: "select",
-			options: ["primary", "secondary", "destructive", "ghost", "warning"],
+			options: [
+				"primary",
+				"secondary",
+				"destructive",
+				"ghost",
+				"warning",
+				"outline-primary",
+				"outline-secondary",
+				"outline-destructive",
+				"outline-ghost",
+				"outline-warning",
+			],
 			description: "Variant used by the first button.",
 		},
 		button2Content: {
@@ -122,7 +155,18 @@ export const Default: Story = {
 		},
 		button2Variant: {
 			control: "select",
-			options: ["primary", "secondary", "destructive", "ghost", "warning"],
+			options: [
+				"primary",
+				"secondary",
+				"destructive",
+				"ghost",
+				"warning",
+				"outline-primary",
+				"outline-secondary",
+				"outline-destructive",
+				"outline-ghost",
+				"outline-warning",
+			],
 			description: "Variant used by the second button.",
 		},
 		button3Content: {
@@ -131,7 +175,18 @@ export const Default: Story = {
 		},
 		button3Variant: {
 			control: "select",
-			options: ["primary", "secondary", "destructive", "ghost", "warning"],
+			options: [
+				"primary",
+				"secondary",
+				"destructive",
+				"ghost",
+				"warning",
+				"outline-primary",
+				"outline-secondary",
+				"outline-destructive",
+				"outline-ghost",
+				"outline-warning",
+			],
 			description: "Variant used by the third button.",
 		},
 	},

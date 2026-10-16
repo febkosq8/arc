@@ -20,7 +20,17 @@ type Story = StoryObj<{
 	children: string;
 	longPressDuration: number;
 	preventClick: boolean;
-	variant: "primary" | "secondary" | "destructive" | "ghost" | "warning";
+	variant:
+		| "primary"
+		| "secondary"
+		| "destructive"
+		| "ghost"
+		| "warning"
+		| "outline-primary"
+		| "outline-secondary"
+		| "outline-destructive"
+		| "outline-ghost"
+		| "outline-warning";
 	feedbackVariant: "primary" | "secondary" | "destructive" | "warning";
 	feedbackContent?: string;
 }>;
@@ -68,7 +78,18 @@ export const Default: Story = {
 		},
 		variant: {
 			control: "select",
-			options: ["primary", "secondary", "destructive", "ghost", "warning"],
+			options: [
+				"primary",
+				"secondary",
+				"destructive",
+				"ghost",
+				"warning",
+				"outline-primary",
+				"outline-secondary",
+				"outline-destructive",
+				"outline-ghost",
+				"outline-warning",
+			],
 			description: "Base variant used before the long-press feedback is active.",
 			table: { defaultValue: { summary: "primary" } },
 		},
