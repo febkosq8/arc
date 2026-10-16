@@ -7,6 +7,7 @@ const Input = ({ className, ...rest }: ComponentPropsWithoutRef<"input">) => {
 			{...rest}
 			autoComplete="off"
 			className={cx(
+				"arc-input",
 				className,
 				"h-10",
 				"placeholder:gray-800 rounded border border-border bg-input pl-5 text-foreground",

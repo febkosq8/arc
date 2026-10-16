@@ -1,12 +1,12 @@
 export {default as Button} from './button';
 export {default as ButtonGroup} from './button-group';
-export {default as DoubleClickButton} from './double-click-button';
+export {default as DoubleClickButton} from './button-double-click';
 export type {
 	DoubleClickButtonFeedbackContent,
 	DoubleClickButtonFeedbackContext,
 	DoubleClickButtonProps,
-} from './double-click-button';
-export {default as LongPressButton} from './long-press-button';
+} from './button-double-click';
+export {default as LongPressButton} from './button-long-press';
 export {default as Input} from './input';
 export {default as Card} from './card';
 export {default as Menu} from './menu';

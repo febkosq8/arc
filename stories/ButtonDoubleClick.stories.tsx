@@ -48,16 +48,31 @@ export const Default: Story = {
 		doubleClickTimeout: {
 			control: { type: "number", min: 0, step: 100 },
 			description: "Maximum time allowed between the first and second click, in milliseconds.",
+			table: {
+				defaultValue: {
+					summary: "2000",
+				},
+			},
 		},
 		variant: {
 			control: "select",
 			options: ["primary", "secondary", "destructive", "ghost", "warning"],
 			description: "Base variant used before the double-click feedback is active.",
+			table: {
+				defaultValue: {
+					summary: "primary",
+				},
+			},
 		},
 		feedbackVariant: {
 			control: "select",
 			options: ["primary", "secondary", "destructive", "warning"],
 			description: "Variant used while the double-click feedback is active.",
+			table: {
+				defaultValue: {
+					summary: "warning",
+				},
+			},
 		},
 		feedbackContent: {
 			control: "text",
@@ -70,5 +85,6 @@ export const Default: Story = {
 		doubleClickTimeout: 2000,
 		variant: "primary",
 		feedbackVariant: "warning",
+		feedbackContent: "Click again",
 	},
 };

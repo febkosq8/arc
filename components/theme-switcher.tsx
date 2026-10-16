@@ -37,7 +37,8 @@ export default function ThemeSwitcher() {
 		}
 	}, [colorMode]);
 	return (
-		<Menu buttonText={<FontAwesomeIcon icon={colorModeIcon[colorMode] ?? faLaptop} />}>
+		<div className="arc-theme-switcher">
+			<Menu buttonText={<FontAwesomeIcon icon={colorModeIcon[colorMode] ?? faLaptop} />}>
 			<>
 				<Menu.Item className="focus-visible:outline-none">
 					<Pill
@@ -76,6 +77,7 @@ export default function ThemeSwitcher() {
 					</Pill>
 				</Menu.Item>
 			</>
-		</Menu>
+			</Menu>
+		</div>
 	);
 }

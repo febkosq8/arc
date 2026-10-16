@@ -15,17 +15,6 @@
 	}
 }
 
-@keyframes double-click-feedback {
-	from {
-		opacity: 1;
-		transform: scale(1.05);
-	}
-	to {
-		opacity: 0.45;
-		transform: scale(1);
-	}
-}
-
 .double-click-progress-ring {
 	-webkit-mask:
 		linear-gradient(#000 0 0) content-box,
@@ -35,6 +24,45 @@
 		linear-gradient(#000 0 0) content-box,
 		linear-gradient(#000 0 0);
 	mask-composite: exclude;
+}
+
+.arc-button-group > .arc-button {
+	border-radius: 0;
+}
+
+.arc-button-group > .arc-button:not(:first-child) {
+	border-color: hsl(var(--border));
+}
+
+.arc-button-group-horizontal > .arc-button:first-child {
+	border-radius: 0;
+}
+
+.arc-button-group-horizontal > .arc-button:last-child {
+	border-radius: 0;
+}
+
+.arc-button-group-horizontal > .arc-button:not(:first-child) {
+	border-left-width: 1px;
+	border-color: hsl(var(--border));
+}
+
+.arc-button-group-vertical > .arc-button {
+	width: 100%;
+}
+
+.arc-button-group-vertical > .arc-button:first-child {
+	border-radius: 0;
+}
+
+.arc-button-group-vertical > .arc-button:last-child {
+	border-radius: 0;
+}
+
+.arc-button-group-vertical > .arc-button:not(:first-child) {
+	border-left-width: 0;
+	border-top-width: 1px;
+	border-color: hsl(var(--border));
 }
 
 @layer base {

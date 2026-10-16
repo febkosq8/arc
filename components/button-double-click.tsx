@@ -8,7 +8,7 @@ export interface DoubleClickButtonFeedbackContext {
 	doubleClickTimeout: number;
 	remainingTime: number;
 	variant: ButtonProps["variant"];
-	feedbackVariant: Exclude<ButtonProps["variant"], "ghost">;
+	feedbackVariant: "primary" | "secondary" | "destructive" | "warning";
 }
 
 export type DoubleClickButtonFeedbackContent =
@@ -17,7 +17,7 @@ export type DoubleClickButtonFeedbackContent =
 
 export interface DoubleClickButtonProps extends ButtonProps {
 	doubleClickTimeout?: number;
-	feedbackVariant?: Exclude<ButtonProps["variant"], "ghost">;
+	feedbackVariant?: "primary" | "secondary" | "destructive" | "warning";
 	feedbackContent?: DoubleClickButtonFeedbackContent;
 }
 
@@ -33,35 +33,16 @@ const DoubleClickButton = ({
 	style,
 	...props
 }: DoubleClickButtonProps) => {
-	const [isActive, setIsActive] = useState(false);
 	const [isWaiting, setIsWaiting] = useState(false);
 	const [remainingTime, setRemainingTime] = useState(0);
 	const timerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 	const intervalRef = useRef<ReturnType<typeof setInterval> | undefined>(undefined);
 	const deadlineRef = useRef(0);
-	const feedbackRingClass = {
-		primary: "ring-primary",
-		secondary: "ring-secondary-foreground",
-		destructive: "ring-destructive",
-		ghost: "ring-accent-foreground",
-		warning: "ring-warning",
-		"outline-primary": "ring-primary",
-		"outline-secondary": "ring-secondary-foreground",
-		"outline-destructive": "ring-destructive",
-		"outline-ghost": "ring-accent-foreground",
-		"outline-warning": "ring-warning",
-	}[feedbackVariant ?? "warning"];
 	const feedbackColor = {
 		primary: "var(--color-primary)",
 		secondary: "var(--color-secondary-foreground)",
 		destructive: "var(--color-destructive)",
-		ghost: "var(--color-accent-foreground)",
 		warning: "var(--color-warning)",
-		"outline-primary": "var(--color-primary)",
-		"outline-secondary": "var(--color-secondary-foreground)",
-		"outline-destructive": "var(--color-destructive)",
-		"outline-ghost": "var(--color-accent-foreground)",
-		"outline-warning": "var(--color-warning)",
 	}[feedbackVariant ?? "warning"];
 
 	useEffect(() => () => {
@@ -73,7 +54,7 @@ const DoubleClickButton = ({
 		typeof feedbackContent === "function"
 			? feedbackContent({
 					isWaiting,
-					isActive,
+					isActive: false,
 					doubleClickTimeout,
 					remainingTime,
 					variant,
@@ -112,20 +93,23 @@ const DoubleClickButton = ({
 			children={buttonContent}
 			className={cx(
 				className,
-				isActive &&
-					`ring-4 ${feedbackRingClass} ring-offset-2 shadow-lg scale-105 double-click-feedback`,
 			)}
 			style={{
 			...style,
-			...(isActive && {
-				"--double-click-timeout": `${doubleClickTimeout}ms`,
-				animation: "double-click-feedback var(--double-click-timeout) ease-out forwards",
-			}),
 			} as CSSProperties & { "--double-click-timeout"?: string }}
-			variant={isActive ? feedbackVariant : variant}
-			data-double-click-state={isActive ? "active" : isWaiting ? "waiting" : undefined}
+			variant={variant}
+			data-double-click-state={isWaiting ? "waiting" : undefined}
 			onClick={(event) => {
-				if (event.detail === 1) {
+				const isSecondClick =
+					isWaiting && Date.now() <= deadlineRef.current;
+
+				if (isSecondClick) {
+					setIsWaiting(false);
+					setRemainingTime(0);
+					if (timerRef.current) clearTimeout(timerRef.current);
+					if (intervalRef.current) clearInterval(intervalRef.current);
+					onDoubleClick?.(event);
+				} else {
 					const deadline = Date.now() + doubleClickTimeout;
 					deadlineRef.current = deadline;
 					setIsWaiting(true);
@@ -143,27 +127,18 @@ const DoubleClickButton = ({
 				}
 				onClick?.(event);
 			}}
-			onDoubleClick={(event) => {
-				onDoubleClick?.(event);
-				setIsWaiting(false);
-				setRemainingTime(0);
-				setIsActive(true);
-				if (timerRef.current) clearTimeout(timerRef.current);
-				if (intervalRef.current) clearInterval(intervalRef.current);
-				timerRef.current = setTimeout(() => setIsActive(false), doubleClickTimeout);
-			}}
 		/>
 	);
 
 	return (
 		<span
 			aria-label={isWaiting ? "Waiting for second click" : undefined}
-			className="relative inline-flex rounded-md p-0.5"
+			className="arc-double-click-button relative inline-flex rounded-md"
 			data-double-click-state={isWaiting ? "waiting" : undefined}
 		>
 			<span
 				aria-hidden="true"
-				className="double-click-progress-ring pointer-events-none absolute inset-0 rounded-md p-0.5"
+				className="double-click-progress-ring pointer-events-none absolute inset-0 rounded-md p-px"
 				style={
 				{
 					background: isWaiting

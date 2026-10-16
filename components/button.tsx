@@ -51,7 +51,7 @@ interface ButtonComponent extends React.FC<ButtonProps> {
 
 const Button: ButtonComponent = Object.assign(
 	({ className, variant, size, ...props }: ButtonProps) => {
-	return <button className={cx(buttonVariants({ variant, size, className }))} {...props} />;
+	return <button className={cx("arc-button", buttonVariants({ variant, size, className }))} {...props} />;
 	},
 	{ Group: ButtonGroup },
 );

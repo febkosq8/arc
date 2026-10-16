@@ -18,7 +18,8 @@ interface MenuComponent extends React.FC<MenuProps> {
 
 const MenuComponent = ({ className, active, buttonText, children }:MenuProps) => {
 	return (
-		<DropdownBaseMenu.Root>
+		<div className="arc-menu">
+			<DropdownBaseMenu.Root>
 			<DropdownBaseMenu.Trigger asChild>
 				<Pill active={active} className={cx("w-fit", className)}>
 					{buttonText}
@@ -34,7 +35,8 @@ const MenuComponent = ({ className, active, buttonText, children }:MenuProps) =>
 					{children}
 				</DropdownBaseMenu.Content>
 			</DropdownBaseMenu.Portal>
-		</DropdownBaseMenu.Root>
+			</DropdownBaseMenu.Root>
+		</div>
 	);
 };
 
@@ -50,7 +52,8 @@ interface MenuSubProps {
 
 const MenuSub = ({ active, buttonText, children }: MenuSubProps) => {
 	return (
-		<DropdownBaseMenu.Sub>
+		<div className="arc-menu-sub">
+			<DropdownBaseMenu.Sub>
 			<DropdownBaseMenu.SubTrigger asChild>
 				<Pill active={active} className="flex w-full items-center justify-between whitespace-nowrap">
 					{buttonText}
@@ -68,7 +71,8 @@ const MenuSub = ({ active, buttonText, children }: MenuSubProps) => {
 					<DropdownBaseMenu.Arrow className="fill-black dark:fill-stone-200 size-2" />
 				</DropdownBaseMenu.SubContent>
 			</DropdownBaseMenu.Portal>
-		</DropdownBaseMenu.Sub>
+			</DropdownBaseMenu.Sub>
+		</div>
 	);
 };
 

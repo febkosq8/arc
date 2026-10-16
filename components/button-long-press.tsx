@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { cx } from "@rinzai/zen";
 import Button, { type ButtonProps } from "./button";
 
 export interface LongPressButtonProps extends ButtonProps {
@@ -27,6 +28,7 @@ const LongPressButton = ({
 	return (
 		<Button
 			{...props}
+			className={cx("arc-long-press-button", props.className)}
 			onPointerDown={(event) => {
 				props.onPointerDown?.(event);
 				longPressRef.current = false;

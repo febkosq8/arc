@@ -7,6 +7,7 @@ const TextArea = ({ className, ...rest }: ComponentPropsWithoutRef<"textarea">) 
 			{...rest}
 			autoComplete="off"
 			className={cx(
+				"arc-text-area",
 				className,
 				"min-h-[200px] max-h-96 !overflow-auto",
 				"placeholder:gray-800 rounded border border-border bg-input p-2 text-foreground",

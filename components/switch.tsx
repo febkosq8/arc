@@ -23,7 +23,7 @@ const Switch = ({
 			checked={checked}
 			disabled={disabled}
 			onChange={onChange}
-			className={SwitchVariants({ variant, checked, disabled })}
+			className={cx("arc-switch", SwitchVariants({ variant, checked, disabled }))}
 			{...rest}
 		>
 			{children ? (
@@ -79,4 +79,3 @@ const SwitchVariants = cva("relative inline-flex h-6 w-11 items-center rounded-f
 	],
 });
 export default Switch
-
