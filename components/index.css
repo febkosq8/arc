@@ -3,12 +3,12 @@
 @property --double-click-progress {
 	syntax: "<number>";
 	inherits: false;
-	initial-value: 360;
+	initial-value: 100;
 }
 
 @keyframes double-click-countdown {
 	from {
-		--double-click-progress: 360;
+		--double-click-progress: 100;
 	}
 	to {
 		--double-click-progress: 0;

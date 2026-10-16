@@ -32,6 +32,18 @@ const DoubleClickButton = ({
 		"outline-ghost": "ring-accent-foreground",
 		"outline-warning": "ring-warning",
 	}[feedbackVariant ?? "warning"];
+	const feedbackColor = {
+		primary: "var(--color-primary)",
+		secondary: "var(--color-secondary-foreground)",
+		destructive: "var(--color-destructive)",
+		ghost: "var(--color-accent-foreground)",
+		warning: "var(--color-warning)",
+		"outline-primary": "var(--color-primary)",
+		"outline-secondary": "var(--color-secondary-foreground)",
+		"outline-destructive": "var(--color-destructive)",
+		"outline-ghost": "var(--color-accent-foreground)",
+		"outline-warning": "var(--color-warning)",
+	}[feedbackVariant ?? "warning"];
 
 	useEffect(() => () => {
 		if (timerRef.current) clearTimeout(timerRef.current);
@@ -80,9 +92,9 @@ const DoubleClickButton = ({
 			style={
 				{
 					background: isWaiting
-						? "conic-gradient(transparent calc((360 - var(--double-click-progress)) * 1deg), var(--color-warning) 0deg)"
+						? `linear-gradient(to right, ${feedbackColor} calc(var(--double-click-progress) * 1%), transparent 0)`
 						: "transparent",
-					"--double-click-progress": 360,
+					"--double-click-progress": 100,
 					"--double-click-timeout": `${doubleClickTimeout}ms`,
 					animation: isWaiting
 						? "double-click-countdown var(--double-click-timeout) linear forwards"
