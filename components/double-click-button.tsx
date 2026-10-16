@@ -1,16 +1,19 @@
 import { cx } from "@rinzai/zen";
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import Button, { type ButtonProps } from "./button";
 
 export interface DoubleClickButtonProps extends ButtonProps {
 	doubleClickTimeout?: number;
-	feedbackVariant?: ButtonProps["variant"];
+	feedbackVariant?: Exclude<ButtonProps["variant"], "ghost">;
+	feedbackContent?: ReactNode;
 }
 
 const DoubleClickButton = ({
 	doubleClickTimeout = 2000,
 	feedbackVariant = "warning",
+	feedbackContent,
 	variant = "primary",
+	children,
 	onClick,
 	onDoubleClick,
 	className,
@@ -49,9 +52,36 @@ const DoubleClickButton = ({
 		if (timerRef.current) clearTimeout(timerRef.current);
 	}, []);
 
+	const buttonContent =
+		feedbackContent === undefined ? (
+			children
+		) : (
+			<span className="grid">
+				<span
+					className={cx(
+						"col-start-1 row-start-1",
+						isWaiting ? "invisible" : "visible",
+					)}
+					aria-hidden={isWaiting}
+				>
+					{children}
+				</span>
+				<span
+					className={cx(
+						"col-start-1 row-start-1",
+						isWaiting ? "visible" : "invisible",
+					)}
+					aria-hidden={!isWaiting}
+				>
+					{feedbackContent}
+				</span>
+			</span>
+		);
+
 	const button = (
 		<Button
 			{...props}
+			children={buttonContent}
 			className={cx(
 				className,
 				isActive &&
@@ -87,12 +117,16 @@ const DoubleClickButton = ({
 	return (
 		<span
 			aria-label={isWaiting ? "Waiting for second click" : undefined}
-			className="inline-flex rounded-md p-0.5"
+			className="relative inline-flex rounded-md p-0.5"
 			data-double-click-state={isWaiting ? "waiting" : undefined}
-			style={
+		>
+			<span
+				aria-hidden="true"
+				className="double-click-progress-ring pointer-events-none absolute inset-0 rounded-md p-0.5"
+				style={
 				{
 					background: isWaiting
-						? `linear-gradient(to right, ${feedbackColor} calc(var(--double-click-progress) * 1%), transparent 0)`
+						? `linear-gradient(to right, color-mix(in srgb, ${feedbackColor} 90%, white) calc(var(--double-click-progress) * 1%), transparent 0)`
 						: "transparent",
 					"--double-click-progress": 100,
 					"--double-click-timeout": `${doubleClickTimeout}ms`,
@@ -103,8 +137,8 @@ const DoubleClickButton = ({
 					"--double-click-progress": number;
 					"--double-click-timeout": string;
 				}
-			}
-		>
+				}
+			/>
 			{button}
 		</span>
 	);

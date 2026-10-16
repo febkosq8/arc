@@ -21,15 +21,19 @@ type Story = StoryObj<typeof meta>;
 export const DoubleClick: StoryObj<{
 	children: string;
 	doubleClickTimeout: number;
-	feedbackVariant: "primary" | "secondary" | "destructive" | "ghost" | "warning";
+	variant: "primary" | "secondary" | "destructive" | "ghost" | "warning";
+	feedbackVariant: "primary" | "secondary" | "destructive" | "warning";
+	feedbackContent?: string;
 }> = {
-	render: ({ children, doubleClickTimeout, feedbackVariant }) => {
+	render: ({ children, doubleClickTimeout, variant, feedbackVariant, feedbackContent }) => {
 		const [message, setMessage] = useState("Waiting for a double-click");
 		return (
 			<div className="flex flex-col items-start gap-3">
 				<DoubleClickButton
 					doubleClickTimeout={doubleClickTimeout}
+					variant={variant}
 					feedbackVariant={feedbackVariant}
+					feedbackContent={feedbackContent}
 					onDoubleClick={() => setMessage("Double-click action fired")}
 				>
 					{children}
@@ -44,15 +48,25 @@ export const DoubleClick: StoryObj<{
 			control: { type: "number", min: 0, step: 100 },
 			description: "Maximum time allowed between the first and second click, in milliseconds.",
 		},
-		feedbackVariant: {
+		variant: {
 			control: "select",
 			options: ["primary", "secondary", "destructive", "ghost", "warning"],
+			description: "Base variant used before the double-click feedback is active.",
+		},
+		feedbackVariant: {
+			control: "select",
+			options: ["primary", "secondary", "destructive", "warning"],
 			description: "Variant used while the double-click feedback is active.",
+		},
+		feedbackContent: {
+			control: "text",
+			description: "Optional content shown in the button while waiting for the second click.",
 		},
 	},
 	args: {
 		children: "Double-click me",
 		doubleClickTimeout: 2000,
+		variant: "primary",
 		feedbackVariant: "warning",
 	},
 };

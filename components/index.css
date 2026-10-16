@@ -26,6 +26,17 @@
 	}
 }
 
+.double-click-progress-ring {
+	-webkit-mask:
+		linear-gradient(#000 0 0) content-box,
+		linear-gradient(#000 0 0);
+	-webkit-mask-composite: xor;
+	mask:
+		linear-gradient(#000 0 0) content-box,
+		linear-gradient(#000 0 0);
+	mask-composite: exclude;
+}
+
 @layer base {
 	:root {
 		--background: 220 14% 94%;
