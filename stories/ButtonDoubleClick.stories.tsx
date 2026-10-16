@@ -83,8 +83,8 @@ export const Default: Story = {
 	args: {
 		children: "Double-click me",
 		doubleClickTimeout: 2000,
-		variant: "primary",
-		feedbackVariant: "warning",
+		variant: "secondary",
+		feedbackVariant: "primary",
 		feedbackContent: "Click again",
 	},
 };

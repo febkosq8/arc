@@ -7,6 +7,11 @@ export type {
 	DoubleClickButtonProps,
 } from './button-double-click';
 export {default as LongPressButton} from './button-long-press';
+export type {
+	LongPressButtonFeedbackContent,
+	LongPressButtonFeedbackContext,
+	LongPressButtonProps,
+} from './button-long-press';
 export {default as Input} from './input';
 export {default as Card} from './card';
 export {default as Menu} from './menu';
