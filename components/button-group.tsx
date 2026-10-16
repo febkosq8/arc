@@ -29,7 +29,7 @@ const ButtonGroup = ({
 		role="group"
 		className={cx(
 			"arc-button-group",
-			"inline-flex w-fit overflow-hidden rounded-md border border-border",
+			"inline-flex w-fit gap-0 overflow-hidden rounded-md border border-border",
 			orientation === "vertical" && "arc-button-group-vertical flex-col items-stretch",
 			orientation === "horizontal" && "arc-button-group-horizontal",
 			className,

@@ -82,24 +82,7 @@ const LongPressButton = ({
 		);
 
 	return (
-		<span className="arc-long-press-button relative inline-flex rounded-md" data-long-press-state={isPressing ? "pressing" : undefined}>
-			<span
-				aria-hidden="true"
-				className="double-click-progress-ring pointer-events-none absolute inset-0 rounded-md p-px"
-				style={{
-					background: isPressing
-						? `linear-gradient(to right, color-mix(in srgb, ${feedbackColor} 90%, white) calc(var(--double-click-progress) * 1%), transparent 0)`
-						: "transparent",
-					"--double-click-progress": 100,
-					"--double-click-timeout": `${longPressDuration}ms`,
-					animation: isPressing
-						? "double-click-countdown var(--double-click-timeout) linear forwards"
-						: "none",
-				} as CSSProperties & {
-					"--double-click-progress": number;
-					"--double-click-timeout": string;
-				}}
-			/>
+		<span className="arc-long-press-button relative inline-flex" data-long-press-state={isPressing ? "pressing" : undefined}>
 			<Button
 				{...props}
 				children={buttonContent}
@@ -145,6 +128,23 @@ const LongPressButton = ({
 						return;
 					}
 					onClick?.(event);
+				}}
+			/>
+			<span
+				aria-hidden="true"
+				className="double-click-progress-ring pointer-events-none absolute inset-0 rounded-md p-px"
+				style={{
+					background: isPressing
+						? `linear-gradient(to right, color-mix(in srgb, ${feedbackColor} 90%, white) calc(var(--double-click-progress) * 1%), transparent 0)`
+						: "transparent",
+					"--double-click-progress": 100,
+					"--double-click-timeout": `${longPressDuration}ms`,
+					animation: isPressing
+						? "double-click-countdown var(--double-click-timeout) linear forwards"
+						: "none",
+				} as CSSProperties & {
+					"--double-click-progress": number;
+					"--double-click-timeout": string;
 				}}
 			/>
 		</span>

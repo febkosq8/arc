@@ -26,43 +26,126 @@
 	mask-composite: exclude;
 }
 
-.arc-button-group > .arc-button {
-	border-radius: 0;
+.arc-button-group > :is(.arc-button, .arc-double-click-button, .arc-long-press-button) {
+	border-radius: 0 !important;
 }
 
-.arc-button-group > .arc-button:not(:first-child) {
+.arc-button-group
+	> :is(.arc-button, .arc-double-click-button, .arc-long-press-button):not(:first-child) {
 	border-color: hsl(var(--border));
 }
 
-.arc-button-group-horizontal > .arc-button:first-child {
+.arc-button-group-horizontal
+	> :is(.arc-button, .arc-double-click-button, .arc-long-press-button):first-child {
 	border-radius: 0;
 }
 
-.arc-button-group-horizontal > .arc-button:last-child {
+.arc-button-group-horizontal
+	> :is(.arc-button, .arc-double-click-button, .arc-long-press-button):last-child {
 	border-radius: 0;
 }
 
-.arc-button-group-horizontal > .arc-button:not(:first-child) {
+.arc-button-group-horizontal
+	> :is(.arc-button, .arc-double-click-button, .arc-long-press-button):not(:first-child) {
 	border-left-width: 1px;
 	border-color: hsl(var(--border));
 }
 
-.arc-button-group-vertical > .arc-button {
+.arc-button-group-vertical
+	> :is(.arc-button, .arc-double-click-button, .arc-long-press-button) {
 	width: 100%;
 }
 
-.arc-button-group-vertical > .arc-button:first-child {
+.arc-button-group-vertical
+	> :is(.arc-button, .arc-double-click-button, .arc-long-press-button):first-child {
 	border-radius: 0;
 }
 
-.arc-button-group-vertical > .arc-button:last-child {
+.arc-button-group-vertical
+	> :is(.arc-button, .arc-double-click-button, .arc-long-press-button):last-child {
 	border-radius: 0;
 }
 
-.arc-button-group-vertical > .arc-button:not(:first-child) {
+.arc-button-group-vertical
+	> :is(.arc-button, .arc-double-click-button, .arc-long-press-button):not(:first-child) {
 	border-left-width: 0;
 	border-top-width: 1px;
 	border-color: hsl(var(--border));
+}
+
+.arc-button-group
+	> :is(.arc-double-click-button, .arc-long-press-button)
+	> .arc-button {
+	border-radius: 0 !important;
+}
+
+.arc-button-group
+	> :is(.arc-double-click-button, .arc-long-press-button) {
+	border-radius: 0 !important;
+	margin: 0;
+	padding: 0;
+	z-index: 1;
+}
+
+.arc-button-group
+	> :is(.arc-double-click-button, .arc-long-press-button)
+	> .double-click-progress-ring {
+	border-radius: inherit;
+	inset: 0;
+	z-index: 2;
+}
+
+.arc-button-group-horizontal
+	> :is(.arc-double-click-button, .arc-long-press-button):first-child {
+	border-radius: 5px 0 0 5px !important;
+}
+
+.arc-button-group-horizontal
+	> :is(.arc-double-click-button, .arc-long-press-button):last-child {
+	border-radius: 0 5px 5px 0 !important;
+}
+
+.arc-button-group-vertical
+	> :is(.arc-double-click-button, .arc-long-press-button):first-child {
+	border-radius: 5px 5px 0 0 !important;
+}
+
+.arc-button-group-vertical
+	> :is(.arc-double-click-button, .arc-long-press-button):last-child {
+	border-radius: 0 0 5px 5px !important;
+}
+
+.arc-button-group-horizontal
+	> :is(.arc-double-click-button, .arc-long-press-button):not(:first-child)
+	{
+	border-left-width: 1px;
+	border-color: hsl(var(--border));
+}
+
+.arc-button-group-horizontal
+	> :is(.arc-double-click-button, .arc-long-press-button):not(:first-child)
+	> .arc-button {
+	border-left-width: 0;
+}
+
+.arc-button-group-vertical
+	> :is(.arc-double-click-button, .arc-long-press-button)
+	> .arc-button {
+	width: 100%;
+}
+
+.arc-button-group-vertical
+	> :is(.arc-double-click-button, .arc-long-press-button):not(:first-child)
+	{
+	border-left-width: 0;
+	border-top-width: 1px;
+	border-color: hsl(var(--border));
+}
+
+.arc-button-group-vertical
+	> :is(.arc-double-click-button, .arc-long-press-button):not(:first-child)
+	> .arc-button {
+	border-top-width: 0;
 }
 
 @layer base {

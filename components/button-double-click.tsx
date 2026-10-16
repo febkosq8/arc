@@ -133,9 +133,10 @@ const DoubleClickButton = ({
 	return (
 		<span
 			aria-label={isWaiting ? "Waiting for second click" : undefined}
-			className="arc-double-click-button relative inline-flex rounded-md"
+			className="arc-double-click-button relative inline-flex"
 			data-double-click-state={isWaiting ? "waiting" : undefined}
 		>
+			{button}
 			<span
 				aria-hidden="true"
 				className="double-click-progress-ring pointer-events-none absolute inset-0 rounded-md p-px"
@@ -150,12 +151,11 @@ const DoubleClickButton = ({
 						? "double-click-countdown var(--double-click-timeout) linear forwards"
 						: "none",
 				} as CSSProperties & {
-					"--double-click-progress": number;
-					"--double-click-timeout": string;
+				"--double-click-progress": number;
+				"--double-click-timeout": string;
 				}
 				}
 			/>
-			{button}
 		</span>
 	);
 };
