@@ -1,6 +1,6 @@
 import react from '@vitejs/plugin-react';
 import { resolve } from 'node:path';
-import tailwindcss from 'tailwindcss';
+import tailwindcss from '@tailwindcss/postcss';
 import { defineConfig } from 'vite';
 import dts from 'unplugin-dts/vite';
 import config from './package.json' with {type:"json"};

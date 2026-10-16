@@ -1,4 +1,3 @@
-import { Slot } from "@radix-ui/react-slot";
 import { cva, cx, VariantProps } from "@rinzai/zen";
 
 const buttonVariants = cva(
@@ -6,37 +5,46 @@ const buttonVariants = cva(
 	{
 		variants: {
 			variant: {
-				default: "bg-primary text-primary-foreground hover:bg-primary/90",
-				destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
-				outline: "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
+				primary: "bg-primary text-primary-foreground hover:bg-primary/90",
 				secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+				destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
 				ghost: "hover:bg-accent hover:text-accent-foreground",
-				link: " border text-primary underline-offset-4 hover:underline",
+				warning: "bg-warning text-warning-foreground hover:bg-warning/90",
+				"outline-primary":
+					"border border-primary bg-background text-primary hover:bg-primary hover:text-primary-foreground",
+				"outline-secondary":
+					"border border-secondary-foreground bg-background text-secondary-foreground hover:bg-secondary",
+				"outline-destructive":
+					"border border-destructive bg-background text-destructive hover:bg-destructive hover:text-destructive-foreground",
+				"outline-ghost": "border border-transparent bg-background hover:bg-accent hover:text-accent-foreground",
+				"outline-warning":
+					"border border-warning bg-background text-warning hover:bg-warning hover:text-warning-foreground",
 			},
 			size: {
-				default: "h-10 px-4 py-2",
-				sm: "h-9 rounded-md px-3",
+				xs: "h-7 rounded-md px-2 text-xs",
+				sm: "h-8 rounded-md px-3 text-xs",
+				md: "h-10 px-4 py-2",
 				lg: "h-11 rounded-md px-8",
-				icon: "h-10 w-10",
+				xl: "h-12 rounded-md px-10",
+				"icon-xs": "h-7 w-7",
+				"icon-sm": "h-8 w-8",
+				"icon-md": "h-10 w-10",
+				"icon-lg": "h-12 w-12",
 			},
 		},
 		defaultVariants: {
-			variant: "default",
-			size: "default",
+			variant: "primary",
+			size: "md",
 		},
 	},
 );
 
 export interface ButtonProps
 	extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-		VariantProps<typeof buttonVariants> {
-	asChild?: boolean;
-}
+		VariantProps<typeof buttonVariants> {}
 
-const Button =({ className, variant, size, asChild = false, ...props }:ButtonProps) => {
-		const Comp = asChild ? Slot : "button";
-		return <Comp className={cx(buttonVariants({ variant, size, className }))} {...props} />;
+const Button = ({ className, variant, size, ...props }: ButtonProps) => {
+	return <button className={cx(buttonVariants({ variant, size, className }))} {...props} />;
 	};
 
 export default Button 
-

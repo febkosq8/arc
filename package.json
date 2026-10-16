@@ -7,6 +7,8 @@
 	"repository": "https://github.com/febkosq8/arc",
 	"scripts": {
 		"build": "vite build",
+		"storybook": "storybook dev -p 6006",
+		"build-storybook": "storybook build",
 		"push-npm": "npm publish --access public",
 		"prepublishOnly": "npm run build"
 	},
@@ -20,12 +22,13 @@
 		"@fortawesome/react-fontawesome": "3.5.0",
 		"@headlessui/react": "2.2.10",
 		"@radix-ui/react-dropdown-menu": "2.2.1",
-		"@radix-ui/react-slot": "1.5.0",
 		"@radix-ui/react-switch": "1.4.1",
 		"@rinzai/zen": "0.14.0",
 		"tailwind-merge": "3.7.0"
 	},
 	"devDependencies": {
+		"@storybook/react-vite": "10.6.2",
+		"@tailwindcss/postcss": "4.3.3",
 		"@tailwindcss/typography": "0.5.20",
 		"@types/node": "26.6.5",
 		"@types/react": "19.3.0",
@@ -42,10 +45,11 @@
 		"prettier": "3.9.10",
 		"react": "19.3.1",
 		"react-dom": "19.3.1",
+		"storybook": "10.6.2",
 		"tailwindcss": "4.3.3",
 		"tailwindcss-animate": "1.0.7",
 		"typescript": "7.0.2",
-		"vite": "8.3.4",
-		"unplugin-dts": "1.1.2"
+		"unplugin-dts": "1.1.2",
+		"vite": "8.3.4"
 	}
 }
