@@ -1,20 +1,29 @@
-import { cx } from "@rinzai/zen";
+import { cva, cx, type VariantProps } from "@rinzai/zen";
 import { ComponentPropsWithoutRef } from "react";
 
-const Input = ({ className, ...rest }: ComponentPropsWithoutRef<"input">) => {
+const inputVariants = cva(
+	"arc-input h-10 rounded border p-1 pl-2 placeholder:text-muted-foreground text-foreground focus:ring-ring focus:border-transparent focus:ring-2 focus:outline-hidden disabled:border-muted disabled:bg-muted disabled:cursor-not-allowed whitespace-pre-wrap",
+	{
+		variants: {
+			variant: {
+				default: "border-border bg-background",
+				ghost: "border-transparent bg-transparent",
+			},
+		},
+		defaultVariants: {
+			variant: "default",
+		},
+	},
+);
+
+export interface InputProps extends ComponentPropsWithoutRef<"input">, VariantProps<typeof inputVariants> {}
+
+const Input = ({ className, variant, ...rest }: InputProps) => {
 	return (
 		<input
 			{...rest}
 			autoComplete="off"
-			className={cx(
-				"arc-input",
-				className,
-				"h-10",
-				"placeholder:gray-800 rounded border border-border bg-input pl-5 text-foreground",
-				"focus:border-transparent focus:outline-none focus:ring-2 focus:ring-ring",
-				"disabled:cursor-not-allowed disabled:border-muted",
-				"whitespace-pre-wrap",
-			)}
+			className={cx(inputVariants({ variant }), className)}
 		/>
 	);
 };
