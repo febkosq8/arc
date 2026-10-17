@@ -2,7 +2,7 @@ import Pill from "@feb/pill";
 import * as DropdownBaseMenu from "@radix-ui/react-dropdown-menu";
 import { cx } from "@rinzai/zen";
 import { FiChevronDown, FiChevronRight } from "react-icons/fi";
-import { Children, ComponentPropsWithoutRef, ReactNode, isValidElement } from "react";
+import { Children, ComponentPropsWithoutRef, Fragment, ReactNode, isValidElement } from "react";
 
 interface MenuProps {
 	className?: string;
@@ -16,6 +16,17 @@ interface MenuComponent extends React.FC<MenuProps> {
 	Item: typeof MenuItem;
 	Sub: typeof MenuSub;
 }
+
+const MenuChildren = ({ children }: { children: ReactNode }) => {
+	const items = Children.toArray(children);
+
+	return items.map((child, index) => (
+		<Fragment key={index}>
+			{index > 0 && <DropdownBaseMenu.Separator className="mx-2 h-px bg-border" />}
+			{child}
+		</Fragment>
+	));
+};
 
 type MenuItemProps = ComponentPropsWithoutRef<typeof DropdownBaseMenu.Item> & {
 	active?: boolean;
@@ -40,7 +51,7 @@ const MenuComponent = ({ className, active, activeClassName, buttonText, childre
 	return (
 		<DropdownBaseMenu.Root>
 			<DropdownBaseMenu.Trigger asChild>
-				<Pill active={active} className={cx("w-fit rounded-[var(--radius)]!", active && activeClassName, className)}>
+				<Pill active={active} className={cx("w-fit rounded-(--radius)!", active && activeClassName, className)}>
 					{buttonText}
 					<FiChevronDown className="-mr-1 ml-2 h-4 w-4" aria-hidden="true" />
 				</Pill>
@@ -51,7 +62,7 @@ const MenuComponent = ({ className, active, activeClassName, buttonText, childre
 					sideOffset={8}
 					className="arc-menu-content z-50 flex w-fit min-w-40 origin-top-right flex-col overflow-hidden rounded-md border border-border text-foreground shadow-lg ring-1 ring-foreground/10 focus:outline-none"
 				>
-					{children}
+					<MenuChildren>{children}</MenuChildren>
 				</DropdownBaseMenu.Content>
 			</DropdownBaseMenu.Portal>
 		</DropdownBaseMenu.Root>
@@ -74,7 +85,7 @@ const MenuSub = ({ active, buttonText, children }: MenuSubProps) => {
 			<DropdownBaseMenu.SubTrigger asChild>
 				<Pill
 					active={isActive}
-					className="arc-menu-sub-trigger flex w-full items-center justify-between rounded-md px-3 py-2 text-base"
+					className="arc-menu-sub-trigger flex w-full items-center justify-between rounded-md px-3 py-2 text-base focus-visible:ring-0"
 				>
 					{buttonText}
 					<FiChevronRight className="-mr-1 ml-2 h-4 w-4" aria-hidden="true" />
@@ -87,7 +98,7 @@ const MenuSub = ({ active, buttonText, children }: MenuSubProps) => {
 					arrowPadding={2}
 					className="arc-menu-content z-50 flex w-fit min-w-40 origin-top-right flex-col overflow-hidden rounded-md border border-border text-foreground shadow-lg ring-1 ring-foreground/10 focus:outline-none"
 				>
-					{children}
+					<MenuChildren>{children}</MenuChildren>
 					<DropdownBaseMenu.Arrow className="arc-menu-arrow size-2" />
 				</DropdownBaseMenu.SubContent>
 			</DropdownBaseMenu.Portal>

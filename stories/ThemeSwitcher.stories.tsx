@@ -33,9 +33,3 @@ export const Default: Story = {
 		variant: "dropdown",
 	},
 };
-
-export const Toggle: Story = {
-	args: {
-		variant: "toggle",
-	},
-};

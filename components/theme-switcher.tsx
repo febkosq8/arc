@@ -42,7 +42,7 @@ export default function ThemeSwitcher({ variant = "dropdown" }: ThemeSwitcherPro
 	}, [colorMode]);
 
 	const toggleColorMode = () => {
-		setColorMode(isDarkColorMode(colorMode) ? "light" : "dark");
+		setColorMode(colorMode === "system" ? "light" : colorMode === "light" ? "dark" : "system");
 	};
 
 	if (variant === "toggle") {
@@ -69,38 +69,38 @@ export default function ThemeSwitcher({ variant = "dropdown" }: ThemeSwitcherPro
 		<div className="arc-theme-switcher">
 			<Menu buttonText={<ColorModeIcon aria-hidden="true" />}>
 				<>
-					<Menu.Item className="focus-visible:outline-none">
+					<Menu.Item className="border-0! p-0! focus-visible:outline-none">
 						<Pill
 							active={colorMode === "system"}
 							title="System Theme"
 							onClick={() => {
 								setColorMode("system");
 							}}
-							className="flex w-full whitespace-nowrap rounded-t-sm rounded-b-none p-6"
+							className="flex w-full whitespace-nowrap rounded-t-md rounded-b-none p-2"
 						>
 							<FiMonitor className="size-4" aria-hidden="true" />
 						</Pill>
 					</Menu.Item>
-					<Menu.Item className="focus-visible:outline-none">
+					<Menu.Item className="border-0! p-0! focus-visible:outline-none">
 						<Pill
 							active={colorMode === "light"}
 							title="Light Theme"
 							onClick={() => {
 								setColorMode("light");
 							}}
-							className="flex w-full whitespace-nowrap rounded-none p-6"
+							className="flex w-full whitespace-nowrap rounded-none p-2"
 						>
 							<FiSun className="size-4" aria-hidden="true" />
 						</Pill>
 					</Menu.Item>
-					<Menu.Item className="focus-visible:outline-none">
+					<Menu.Item className="border-0! p-0! focus-visible:outline-none">
 						<Pill
 							active={colorMode === "dark"}
 							title="Dark Theme"
 							onClick={() => {
 								setColorMode("dark");
 							}}
-							className="flex w-full whitespace-nowrap rounded-b-sm rounded-t-none p-6"
+							className="flex w-full whitespace-nowrap rounded-b-md rounded-t-none p-2"
 						>
 							<FiMoon className="size-4" aria-hidden="true" />
 						</Pill>
