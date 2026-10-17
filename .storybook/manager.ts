@@ -6,5 +6,6 @@ addons.setConfig({
 	theme: create({
 		...themes.dark,
 		brandTitle: `Arc v${packageJson.version}`,
+		brandUrl: "https://www.npmjs.com/package/@febkosq8/arc",
 	}),
 });

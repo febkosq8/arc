@@ -4,6 +4,7 @@
 	"private": false,
 	"version": "0.3.0",
 	"type": "module",
+	"homepage": "https://www.npmjs.com/package/@febkosq8/arc",
 	"repository": "https://github.com/febkosq8/arc",
 	"scripts": {
 		"build": "vite build",
