@@ -37,7 +37,7 @@ type MenuItemProps = Omit<ComponentPropsWithoutRef<typeof BaseMenu.Item>, "class
 
 const MenuItem = ({ active, asChild = false, className, nativeButton, children, ...props }: MenuItemProps) => {
 	const itemClassName = cx(
-		"flex min-h-10 w-full cursor-default items-center justify-start rounded-md border border-transparent px-3 py-2 text-base font-medium text-foreground outline-none select-none",
+		"flex min-h-10 pointer-coarse:min-h-11 w-full cursor-default items-center justify-start rounded-md border border-transparent px-3 py-2 text-base font-medium text-foreground outline-none select-none",
 		"data-highlighted:bg-accent data-highlighted:text-primary",
 		"focus-visible:ring-0",
 		active && "text-primary!",
@@ -77,10 +77,10 @@ const MenuComponent = ({ className, contentClassName, active, activeClassName, b
 				<FiChevronDown className="-mr-1 ml-2 h-4 w-4" aria-hidden="true" />
 			</BaseMenu.Trigger>
 			<BaseMenu.Portal>
-				<BaseMenu.Positioner className="z-50" sideOffset={8}>
+				<BaseMenu.Positioner className="z-50" sideOffset={8} collisionPadding={8}>
 					<BaseMenu.Popup
 						className={cx(
-							"arc-menu-content z-50 flex w-fit min-w-40 origin-top-right flex-col overflow-hidden rounded-md border border-border text-foreground shadow-lg ring-1 ring-foreground/10 focus:outline-none",
+							"arc-menu-content z-50 flex w-fit min-w-40 max-w-[calc(100vw-1rem)] origin-top-right flex-col overflow-hidden rounded-md border border-border text-foreground shadow-lg ring-1 ring-foreground/10 focus:outline-none",
 							contentClassName,
 						)}
 					>
@@ -108,7 +108,7 @@ const MenuSub = ({ active, buttonText, children }: MenuSubProps) => {
 		<BaseMenu.SubmenuRoot loopFocus>
 			<BaseMenu.SubmenuTrigger
 				className={cx(
-					"arc-pill arc-menu-sub-trigger inline-flex h-10 w-full items-center justify-between whitespace-nowrap rounded-md border border-transparent px-3 py-2 text-base font-medium text-foreground transition focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-opacity-75",
+					"arc-pill arc-menu-sub-trigger inline-flex h-10 pointer-coarse:h-11 w-full items-center justify-between whitespace-nowrap rounded-md border border-transparent px-3 py-2 text-base font-medium text-foreground transition focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-opacity-75",
 					"data-highlighted:bg-accent data-highlighted:text-primary",
 					isActive && "text-primary!",
 				)}
@@ -117,8 +117,8 @@ const MenuSub = ({ active, buttonText, children }: MenuSubProps) => {
 				<FiChevronRight className="-mr-1 ml-2 h-4 w-4" aria-hidden="true" />
 			</BaseMenu.SubmenuTrigger>
 			<BaseMenu.Portal>
-				<BaseMenu.Positioner className="z-50" side="right" align="start" sideOffset={8}>
-					<BaseMenu.Popup className="arc-menu-content z-50 flex w-fit min-w-40 origin-top-right flex-col overflow-hidden rounded-md border border-border text-foreground shadow-lg ring-1 ring-foreground/10 focus:outline-none">
+				<BaseMenu.Positioner className="z-50" side="right" align="start" sideOffset={8} collisionPadding={8}>
+					<BaseMenu.Popup className="arc-menu-content z-50 flex w-fit min-w-40 max-w-[calc(100vw-1rem)] origin-top-right flex-col overflow-hidden rounded-md border border-border text-foreground shadow-lg ring-1 ring-foreground/10 focus:outline-none">
 						<MenuChildren>{children}</MenuChildren>
 					</BaseMenu.Popup>
 				</BaseMenu.Positioner>

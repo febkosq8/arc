@@ -214,8 +214,10 @@
 		content: "";
 	}
 
-	.arc-card-cursor-border:hover::before {
-		opacity: 1;
+	@media (hover: hover) {
+		.arc-card-cursor-border:hover::before {
+			opacity: 1;
+		}
 	}
 
 	.typography-heading-2:first-child {

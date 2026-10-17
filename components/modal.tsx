@@ -51,11 +51,11 @@ const Modal = ({
 						"data-ending-style:opacity-0 data-starting-style:opacity-0",
 					)}
 				/>
-				<Dialog.Viewport className="fixed inset-0 z-10 flex min-h-screen items-center justify-center">
+				<Dialog.Viewport className="fixed inset-0 z-10 flex min-h-dvh items-center justify-center p-4">
 					<Dialog.Popup
 						initialFocus={initialFocus}
 						className={cx(
-							"arc-modal flex w-fit max-w-full flex-col rounded-md border border-border bg-card p-6 text-left align-middle text-foreground shadow-xl",
+							"arc-modal flex max-h-full w-fit max-w-full flex-col overflow-auto rounded-md border border-border bg-card p-6 text-left align-middle text-foreground shadow-xl",
 							"transition-all duration-300",
 							"data-starting-style:scale-95 data-starting-style:opacity-0",
 							"data-ending-style:scale-95 data-ending-style:opacity-0",

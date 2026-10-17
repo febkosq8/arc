@@ -17,7 +17,7 @@ const inputVariants: (props?: InputVariantOptions) => string = cva(
 				ghost: "border-transparent bg-transparent",
 			},
 			as: {
-				input: "h-10 p-1 pl-2",
+				input: "h-10 pointer-coarse:h-11 p-1 pl-2",
 				textarea: "min-h-50 max-h-250 resize-y overflow-auto! p-2 whitespace-pre-wrap",
 			},
 		},
