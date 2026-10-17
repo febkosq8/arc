@@ -85,7 +85,7 @@ export default function ThemeSwitcher({ variant = "dropdown", showLabel = false 
 					</>
 				}
 			>
-				<Menu.Item asChild className="border-0! p-0! focus-visible:outline-none">
+				<Menu.Item asChild className={cx("border-0! focus-visible:outline-none", showLabel ? "px-3!" : "justify-center! p-0!")}>
 					<Pill
 						active={colorMode === "system"}
 						title="System Theme"
@@ -101,7 +101,7 @@ export default function ThemeSwitcher({ variant = "dropdown", showLabel = false 
 						{showLabel && colorModeLabel.system}
 					</Pill>
 				</Menu.Item>
-				<Menu.Item asChild className="border-0! p-0! focus-visible:outline-none">
+				<Menu.Item asChild className={cx("border-0! focus-visible:outline-none", showLabel ? "px-3!" : "justify-center! p-0!")}>
 					<Pill
 						active={colorMode === "light"}
 						title="Light Theme"
@@ -117,7 +117,7 @@ export default function ThemeSwitcher({ variant = "dropdown", showLabel = false 
 						{showLabel && colorModeLabel.light}
 					</Pill>
 				</Menu.Item>
-				<Menu.Item asChild className="border-0! p-0! focus-visible:outline-none">
+				<Menu.Item asChild className={cx("border-0! focus-visible:outline-none", showLabel ? "px-3!" : "justify-center! p-0!")}>
 					<Pill
 						active={colorMode === "dark"}
 						title="Dark Theme"
