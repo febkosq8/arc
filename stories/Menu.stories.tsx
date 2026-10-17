@@ -17,7 +17,10 @@ const meta = {
 	},
 	argTypes: {
 		active: { control: "boolean" },
-		activeClassName: { control: false, table: { disable: true } },
+		activeClassName: { 
+			control: false, 
+			table: { disable: true } 
+		},
 		selection: { control: "text" },
 		className: {
 			control: false,
