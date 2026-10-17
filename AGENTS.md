@@ -51,3 +51,7 @@
 - Provide every supported interactive prop as an explicit default in story meta `args`, and configure literal options explicitly in `argTypes` when Storybook cannot infer them.
 - Reflect every component's default prop values in its Storybook stories. Use stories to verify semantics and visual states, not just screenshots.
 - Run the smallest relevant build or Storybook check after component changes; keep exported types and generated declarations buildable.
+
+## Publishing
+
+- Never publish Arc packages automatically. The user manually publishes every new version; do not run `npm publish` or other release commands.

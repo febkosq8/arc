@@ -27,7 +27,7 @@ export default defineConfig({
 		},
 
 		rollupOptions: {
-			external: [...Object.keys(config.peerDependencies)],
+			external: [...Object.keys(config.peerDependencies), "react/jsx-runtime", "react/jsx-dev-runtime"],
 			output: {
 				globals: {
 					react: "React",
