@@ -2,7 +2,7 @@
 	"name": "@febkosq8/arc",
 	"description": "A React components library for febkosq8",
 	"private": false,
-	"version": "0.5.2",
+	"version": "0.5.3",
 	"type": "module",
 	"main": "./dist/arc.js",
 	"types": "./dist/index.d.ts",
@@ -19,6 +19,7 @@
 	],
 	"homepage": "https://www.npmjs.com/package/@febkosq8/arc",
 	"repository": "https://github.com/febkosq8/arc",
+	"packageManager": "pnpm@12.11.2",
 	"scripts": {
 		"build": "vite build",
 		"storybook": "storybook dev -p 6006",
