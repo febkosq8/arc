@@ -10,6 +10,7 @@ const meta = {
 		name: {
 			control: "text",
 			description: "Name used for the avatar initials and accessible labels.",
+			table: { disable: false },
 		},
 		image: {
 			control: "text",

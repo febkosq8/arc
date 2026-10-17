@@ -45,6 +45,13 @@ const preview: Preview = {
 			);
 		},
 	],
+	argTypes: {
+		id: { control: false, table: { disable: true } },
+		className: { control: false, table: { disable: true } },
+		name: { control: false, table: { disable: true } },
+		"data-name": { control: false, table: { disable: true } },
+		"data-required": { control: false, table: { disable: true } },
+	},
 	parameters: {
 		docs: {
 			title: "Arc",

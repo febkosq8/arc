@@ -8,10 +8,18 @@ const items: DropdownItem[] = [
 	{ key: "banana", label: "Banana" },
 	{ key: "cherry", label: "Cherry" },
 	{ key: "durian", label: "Durian (unavailable)", disabled: true },
+	{ key: "elderberry", label: "Elderberry" },
+	{ key: "fig", label: "Fig" },
+	{ key: "grape", label: "Grape" },
+	{ key: "honeydew", label: "Honeydew" },
+	{ key: "kiwi", label: "Kiwi" },
+	{ key: "lemon", label: "Lemon" },
+	{ key: "mango", label: "Mango" },
+	{ key: "nectarine", label: "Nectarine" },
 ];
 
 const meta = {
-	title: "Components/MultiDropdown",
+	title: "Components/DropdownMulti",
 	component: MultiDropdown,
 	tags: ["autodocs"],
 	parameters: { layout: "centered" },
@@ -28,6 +36,8 @@ const meta = {
 			description: "Keeps at least one item selected.",
 			table: { type: { summary: "boolean" }, defaultValue: { summary: "false" } },
 		},
+		"data-name": { control: false, table: { disable: true } },
+		"data-required": { control: false, table: { disable: true } },
 		onChange: { control: false, table: { disable: true } },
 	},
 	args: {

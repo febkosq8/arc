@@ -7,7 +7,15 @@ const items: DropdownItem[] = [
 	{ key: "apple", label: "Apple" },
 	{ key: "banana", label: "Banana" },
 	{ key: "cherry", label: "Cherry" },
-	{ key: "durian", label: "Durian", disabled: true },
+	{ key: "durian", label: "Durian (unavailable)", disabled: true },
+	{ key: "elderberry", label: "Elderberry" },
+	{ key: "fig", label: "Fig" },
+	{ key: "grape", label: "Grape" },
+	{ key: "honeydew", label: "Honeydew" },
+	{ key: "kiwi", label: "Kiwi" },
+	{ key: "lemon", label: "Lemon" },
+	{ key: "mango", label: "Mango" },
+	{ key: "nectarine", label: "Nectarine" },
 ];
 
 const meta = {
@@ -28,7 +36,6 @@ const meta = {
 			description: "Prevents clearing the selection.",
 			table: { type: { summary: "boolean" }, defaultValue: { summary: "false" } },
 		},
-		className: { control: false, table: { disable: true } },
 		"data-name": { control: false, table: { disable: true } },
 		"data-required": { control: false, table: { disable: true } },
 		onChange: { control: false, table: { disable: true } },

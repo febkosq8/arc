@@ -51,14 +51,14 @@ const MultiDropdown = ({
 			<div className={cx("relative", className)}>
 				<Combobox.InputGroup
 					className={cx(
-						"relative flex min-h-10 w-full flex-wrap items-center justify-between gap-1.5 rounded-md border border-border bg-background py-1 pr-2 pl-2 text-foreground shadow-xs",
+						"relative flex min-h-10 w-full items-center justify-between gap-1.5 rounded-md border border-border bg-background py-1 pr-2 pl-2 text-foreground shadow-xs",
 						"focus-within:border-transparent focus-within:outline-hidden focus-within:ring-2 focus-within:ring-ring",
 						"data-disabled:cursor-not-allowed data-disabled:bg-muted data-disabled:text-muted-foreground",
 					)}
 				>
 					<Combobox.Value>
 						{(selectedValues: DropdownItem[]) => (
-							<>
+							<div className="flex min-w-0 grow flex-wrap items-center gap-1.5">
 								<Combobox.Chips className="flex flex-wrap gap-1.5">
 									{selectedValues.map((item) => (
 										<Combobox.Chip
@@ -66,7 +66,7 @@ const MultiDropdown = ({
 											className="inline-flex items-center gap-1 rounded-md border border-border bg-muted px-2 py-0.5 text-sm text-foreground"
 										>
 											<span className="max-w-32 truncate">{item.label}</span>
-											{(preventEmpty ? selectedValues.length > 1 : true) && (
+											{!disabled && (preventEmpty ? selectedValues.length > 1 : true) && (
 												<Combobox.ChipRemove
 													className="ml-0.5 cursor-pointer rounded-md hover:text-destructive focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
 													aria-label={`Remove ${item.label}`}
@@ -88,7 +88,7 @@ const MultiDropdown = ({
 									data-required={dataRequired}
 									data-disabled={disabled}
 								/>
-							</>
+							</div>
 						)}
 					</Combobox.Value>
 					<Combobox.Trigger
