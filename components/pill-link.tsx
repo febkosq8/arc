@@ -34,10 +34,15 @@ const PillLink = ({ active = false, className, size = "md", variant = "pill", ..
 		<a
 			className={cx(
 				pillLinkVariants({ variant, size }),
-				variant === "pill" && active && "text-primary!",
+				active &&
+					{
+						pill: "text-primary!",
+						primary: "bg-primary/80 ring-2 ring-ring ring-offset-2",
+						outline: "border-primary bg-accent text-primary",
+					}[variant],
 				className,
 			)}
-			aria-current={variant === "pill" && active ? "page" : undefined}
+			aria-current={active ? "page" : undefined}
 			{...props}
 		/>
 	);

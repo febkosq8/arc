@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
+import { fn } from "storybook/test";
 import { PillLink } from "../components";
 
 const meta = {
@@ -8,10 +9,13 @@ const meta = {
 	tags: ["autodocs"],
 	parameters: {
 		layout: "centered",
+		controls: {
+			exclude: ["href", "onClick", "children"],
+		},
 		docs: {
 			description: {
 				component:
-					"A pill-shaped navigation link. Set active to highlight the current page and mark it with aria-current.",
+					"A navigation link with pill, primary, and outline styles. Set active to highlight the current page and mark it with aria-current.",
 			},
 		},
 	},
@@ -44,7 +48,7 @@ const meta = {
 			table: { type: { summary: "ReactNode" } },
 		},
 	},
-	args: { active: false, variant: "pill", size: "md", href: "#workspace", children: "Workspace" },
+	args: { active: false, variant: "pill", size: "md", href: "#workspace", children: "Workspace", onClick: fn() },
 } satisfies Meta<typeof PillLink>;
 
 export default meta;
@@ -59,11 +63,20 @@ const links = [
 ] as const;
 
 export const Default: Story = {
-	render: (args) => <PillLink {...args} />,
+	render: (args) => (
+		<PillLink
+			{...args}
+			onClick={(e) => {
+				e.preventDefault();
+				args.onClick?.(e);
+			}}
+		/>
+	),
 };
 
 export const Navigation: Story = {
-	render: () => {
+	args: { active: true },
+	render: (args) => {
 		const [path, setPath] = useState<string>(links[0][0]);
 
 		return (
@@ -71,11 +84,13 @@ export const Navigation: Story = {
 				<nav className="flex flex-wrap items-center justify-center gap-3">
 					{links.map(([href, label]) => (
 						<PillLink
+							{...args}
 							key={href}
 							href={href}
-							active={path === href}
+							active={args.active && path === href}
 							onClick={(e) => {
 								e.preventDefault();
+								args.onClick?.(e);
 								setPath(href);
 							}}
 						>

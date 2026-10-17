@@ -76,6 +76,47 @@ export const Default: Story = {
 	},
 };
 
+export const Variants: Story = {
+	render: (args) => {
+		const variants = [
+			"primary",
+			"secondary",
+			"destructive",
+			"ghost",
+			"warning",
+			"outline-primary",
+			"outline-secondary",
+			"outline-destructive",
+			"outline-ghost",
+			"outline-warning",
+		] as const;
+
+		return (
+			<div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+				{variants.map((variant) => (
+					<div key={variant} className="flex flex-col items-center gap-2">
+						<Button {...args} variant={variant}>
+							{variant}
+						</Button>
+						<span className="text-xs text-muted-foreground">{variant}</span>
+					</div>
+				))}
+			</div>
+		);
+	},
+	args: {
+		...meta.args,
+		size: "md",
+	},
+	parameters: {
+		docs: {
+			description: {
+				story: "A comparison of every semantic Button variant.",
+			},
+		},
+	},
+};
+
 export const IconOnly: Story = {
 	render: (args) => (
 		<Button {...args} aria-label="Continue" title="Continue">
