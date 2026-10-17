@@ -12,6 +12,8 @@ export type {
 	LongPressButtonFeedbackContext,
 	LongPressButtonProps,
 } from "./button-long-press";
+export { navigateToHashOnLoad, updateHashOnScroll, useHashNavigationOnLoad } from "./hash-navigation";
+export type { HashNavigationOptions, UpdateHashOnScrollOptions } from "./hash-navigation";
 export { default as Input } from "./input";
 export { default as Card } from "./card";
 export { default as Menu } from "./menu";
