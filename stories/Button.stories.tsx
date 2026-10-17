@@ -10,7 +10,7 @@ const meta = {
 		docs: {
 			description: {
 				component:
-					"Buttons communicate actions and support semantic color variants, responsive sizes, and icon-only layouts.\n\nAny additional props that are not used by the Button API are forwarded to the underlying button element.",
+					"Buttons communicate actions and support semantic color variants, responsive sizes, and icon-only layouts. Touch devices enforce minimum target sizes without overriding larger caller-defined dimensions.\n\nAny additional props that are not used by the Button API are forwarded to the underlying button element.",
 			},
 		},
 	},
