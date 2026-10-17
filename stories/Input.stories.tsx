@@ -33,7 +33,6 @@ const meta = {
 		},
 	},
 	args: {
-		autoComplete: "off",
 		disabled: false,
 		placeholder: "Enter your email",
 		type: "email",
