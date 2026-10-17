@@ -34,12 +34,13 @@ const localTag = spawnSync("git", ["rev-parse", "--verify", "--quiet", tagRef], 
 if (localTag.error) {
 	throw localTag.error;
 }
-if (localTag.status === 0) {
-	throw new Error(`Tag ${tag} already exists locally; no release changes were made.`);
-}
-if (localTag.status !== 1) {
+if (localTag.status !== 0 && localTag.status !== 1) {
 	throw new Error("Unable to check whether the release tag already exists.");
 }
+const localTagExists = localTag.status === 0;
+const previousTagSha = localTagExists ? gitOutput(["rev-parse", tagRef]) : null;
+const previousTagTarget = localTagExists ? gitOutput(["rev-parse", `${tagRef}^{commit}`]) : null;
+const previousTagType = localTagExists ? gitOutput(["cat-file", "-t", tagRef]) : null;
 
 const branch = gitOutput(["branch", "--show-current"]);
 if (branch === "") {
@@ -69,18 +70,28 @@ if (npmVersionExists) {
 }
 
 let localTagCreated = false;
-let tagObjectSha = null;
+let localTagRetargeted = false;
+let tagObjectSha = previousTagSha;
 let branchPushAttempted = false;
 let tagPushAttempted = false;
 let npmPublishAttempted = false;
 
 try {
 	console.log(`Creating and pushing ${tag}, then publishing ${packageSpec}.`);
-	execFileSync("git", ["tag", "-a", tag, "-m", tag, headSha], {
-		cwd: root,
-		stdio: "inherit",
-	});
-	localTagCreated = true;
+	if (localTagExists && (previousTagTarget !== headSha || previousTagType !== "tag")) {
+		console.log(`Retargeting the local ${tag} to the current release commit.`);
+		execFileSync("git", ["tag", "-f", "-a", tag, "-m", tag, headSha], {
+			cwd: root,
+			stdio: "inherit",
+		});
+		localTagRetargeted = true;
+	} else if (!localTagExists) {
+		execFileSync("git", ["tag", "-a", tag, "-m", tag, headSha], {
+			cwd: root,
+			stdio: "inherit",
+		});
+		localTagCreated = true;
+	}
 	tagObjectSha = gitOutput(["rev-parse", tagRef]);
 
 	if (branchBefore !== headSha) {
@@ -158,6 +169,19 @@ try {
 				throw new Error(`Local tag ${tag} changed since this run created it; leaving it untouched.`);
 			}
 			execFileSync("git", ["tag", "-d", tag], { cwd: root, stdio: "inherit" });
+		});
+	}
+	if (localTagRetargeted) {
+		tryRollback(rollbackErrors, `original local tag ${tag}`, () => {
+			const currentTagSha = localRefSha(tagRef);
+			if (currentTagSha === previousTagSha) return;
+			if (currentTagSha !== tagObjectSha) {
+				throw new Error(`Local tag ${tag} changed since this run retargeted it; leaving it untouched.`);
+			}
+			execFileSync("git", ["update-ref", tagRef, previousTagSha, tagObjectSha], {
+				cwd: root,
+				stdio: "inherit",
+			});
 		});
 	}
 
