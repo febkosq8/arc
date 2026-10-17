@@ -1,4 +1,22 @@
+import { execFileSync } from "node:child_process";
 import { createInterface } from "node:readline/promises";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
+const runGit = (args) => execFileSync("git", args, { cwd: root, encoding: "utf8" }).trim();
+
+const localTags = runGit(["tag", "--list", "v*"])
+	.split(/\r?\n/)
+	.filter(Boolean);
+const remoteTags = runGit(["ls-remote", "--tags", "--refs", "origin", "v*"])
+	.split(/\r?\n/)
+	.filter(Boolean)
+	.map((line) => line.split(/\s+/)[1].replace("refs/tags/", ""));
+
+console.log("Current release tags:");
+console.log(`  Local: ${localTags.length ? localTags.join(", ") : "(none)"}`);
+console.log(`  origin: ${remoteTags.length ? remoteTags.join(", ") : "(none)"}`);
 
 const prompt = createInterface({
 	input: process.stdin,
