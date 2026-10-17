@@ -80,7 +80,7 @@ const MenuComponent = ({ className, contentClassName, active, activeClassName, b
 				<BaseMenu.Positioner className="z-50" sideOffset={8} collisionPadding={8}>
 					<BaseMenu.Popup
 						className={cx(
-							"arc-menu-content z-50 flex w-fit min-w-40 max-w-[calc(100vw-1rem)] origin-top-right flex-col overflow-hidden rounded-md border border-border text-foreground shadow-lg ring-1 ring-foreground/10 focus:outline-none",
+							"arc-menu-content z-50 flex bg-popover w-fit min-w-40 max-w-[calc(100vw-1rem)] origin-top-right flex-col overflow-hidden rounded-md border border-border text-foreground shadow-lg ring-1 ring-foreground/10 focus:outline-none",
 							contentClassName,
 						)}
 					>
@@ -118,7 +118,7 @@ const MenuSub = ({ active, buttonText, children }: MenuSubProps) => {
 			</BaseMenu.SubmenuTrigger>
 			<BaseMenu.Portal>
 				<BaseMenu.Positioner className="z-50" side="right" align="start" sideOffset={8} collisionPadding={8}>
-					<BaseMenu.Popup className="arc-menu-content z-50 flex w-fit min-w-40 max-w-[calc(100vw-1rem)] origin-top-right flex-col overflow-hidden rounded-md border border-border text-foreground shadow-lg ring-1 ring-foreground/10 focus:outline-none">
+					<BaseMenu.Popup className="arc-menu-content z-50 flex bg-popover w-fit min-w-40 max-w-[calc(100vw-1rem)] origin-top-right flex-col overflow-hidden rounded-md border border-border text-foreground shadow-lg ring-1 ring-foreground/10 focus:outline-none">
 						<MenuChildren>{children}</MenuChildren>
 					</BaseMenu.Popup>
 				</BaseMenu.Positioner>
