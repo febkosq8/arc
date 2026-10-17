@@ -29,11 +29,50 @@
 }
 
 .arc-pill:hover {
-	background-color: color-mix(in srgb, currentColor 6%, transparent) !important;
+	border-color: hsl(var(--border));
+	background-color: color-mix(in srgb, hsl(var(--background)) 94%, hsl(var(--foreground)) 6%) !important;
+}
+
+.dark .arc-pill:hover {
+	border-color: hsl(var(--primary));
+	background-color: color-mix(in srgb, hsl(var(--background)) 88%, hsl(var(--primary)) 12%) !important;
 }
 
 .arc-menu-content {
 	background-color: color-mix(in srgb, hsl(var(--background)) 92%, hsl(var(--foreground)) 8%);
+}
+
+.arc-menu-content [data-highlighted] {
+	background-color: color-mix(in srgb, hsl(var(--background)) 94%, hsl(var(--foreground)) 6%) !important;
+	color: hsl(var(--primary)) !important;
+}
+
+.dark .arc-menu-content [data-highlighted] {
+	background-color: color-mix(in srgb, hsl(var(--background)) 88%, hsl(var(--primary)) 12%) !important;
+}
+
+.arc-menu-content [data-highlighted] {
+	border-color: hsl(var(--border)) !important;
+}
+
+.dark .arc-menu-content [data-highlighted] {
+	border-color: hsl(var(--primary)) !important;
+}
+
+.arc-menu-content > [role="menuitem"]:not(:last-child),
+.arc-menu-content > .arc-menu-sub:not(:last-child) {
+	position: relative;
+}
+
+.arc-menu-content > [role="menuitem"]:not(:last-child)::after,
+.arc-menu-content > .arc-menu-sub:not(:last-child)::after {
+	position: absolute;
+	right: 0.5rem;
+	bottom: 0;
+	left: 0.5rem;
+	background-color: hsl(var(--border));
+	height: 1px;
+	content: "";
 }
 
 .arc-menu-arrow {
@@ -69,11 +108,11 @@
 	}
 
 	.dark {
-		--background: 20 14.3% 4.1%;
+		--background: 220 15% 14%;
 		--foreground: 60 9.1% 97.8%;
-		--card: 20 14.3% 4.1%;
+		--card: 220 15% 18%;
 		--card-foreground: 60 9.1% 97.8%;
-		--popover: 20 14.3% 10%;
+		--popover: 220 15% 22%;
 		--popover-foreground: 60 9.1% 97.8%;
 		--primary: 20.5 90.2% 48.2%;
 		--primary-foreground: 60 9.1% 97.8%;

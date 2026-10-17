@@ -56,9 +56,9 @@ export const Default: Story = {
 
 		return (
 			<div className="flex w-full min-w-0 flex-col items-center gap-3">
-				<div className="flex w-full min-w-0 flex-wrap items-center justify-center gap-3">
+				<div className="flex w-full min-w-0 flex-nowrap items-center justify-center gap-3 overflow-x-auto">
 					{options.map(([path, label]) => (
-						<Pill key={path} active={selection === path} onClick={() => setSelection(path)}>
+						<Pill key={path} active={selection === path} className="w-fit shrink-0" onClick={() => setSelection(path)}>
 							{label}
 						</Pill>
 					))}

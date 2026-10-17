@@ -26,11 +26,9 @@ const MenuItem = ({ active, className, ...props }: MenuItemProps) => {
 		<DropdownBaseMenu.Item
 			{...props}
 			className={cx(
-				"flex min-h-10 w-full cursor-default items-center justify-start rounded-none! px-3 py-2 text-base font-medium text-foreground outline-none select-none",
+				"flex min-h-10 w-full cursor-default items-center justify-start rounded-md border border-transparent px-3 py-2 text-base font-medium text-foreground outline-none select-none",
 				"data-highlighted:bg-accent data-highlighted:text-primary",
 				"focus-visible:ring-0",
-				"*:rounded-none!",
-				"border-b border-border last:border-b-0",
 				active && "text-primary!",
 				className,
 			)}
@@ -74,7 +72,10 @@ const MenuSub = ({ active, buttonText, children }: MenuSubProps) => {
 	const submenu = (
 		<DropdownBaseMenu.Sub>
 			<DropdownBaseMenu.SubTrigger asChild>
-				<Pill active={isActive} className="flex w-full items-center justify-between rounded-none px-3 py-2 text-base">
+				<Pill
+					active={isActive}
+					className="arc-menu-sub-trigger flex w-full items-center justify-between rounded-md px-3 py-2 text-base"
+				>
 					{buttonText}
 					<FiChevronRight className="-mr-1 ml-2 h-4 w-4" aria-hidden="true" />
 				</Pill>
@@ -93,7 +94,7 @@ const MenuSub = ({ active, buttonText, children }: MenuSubProps) => {
 		</DropdownBaseMenu.Sub>
 	);
 
-	return <div className="arc-menu-sub border-b border-border last:border-b-0">{submenu}</div>;
+	return <div className="arc-menu-sub">{submenu}</div>;
 };
 
 const Menu: MenuComponent = Object.assign(MenuComponent, {
