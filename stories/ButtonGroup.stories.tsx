@@ -13,7 +13,6 @@ const meta = {
 		},
 	},
 	argTypes: {
-		className: { control: false, table: { disable: true } },
 	},
 } satisfies Meta;
 

@@ -12,9 +12,8 @@ const meta = {
 			description: "Message or list of messages. Lists are joined with commas.",
 			table: { type: { summary: "string | string[] | null" } },
 		},
-		className: { control: "text", table: { type: { summary: "string" } } },
 	},
-	args: { data: "This field is required", className: "" },
+	args: { data: "This field is required" },
 } satisfies Meta<typeof ErrorText>;
 
 export default meta;

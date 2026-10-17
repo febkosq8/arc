@@ -1,27 +1,44 @@
-import { cx } from "@rinzai/zen";
+import { cva, cx, VariantProps } from "@rinzai/zen";
 import { useEffect, useMemo, useState } from "react";
 
-export type AvatarUser = {
-	name?: string | null;
-	image?: string | null;
-};
+const avatarVariants = cva(
+	"inline-flex shrink-0 items-center justify-center overflow-hidden rounded-full bg-muted ring-1 ring-border transition-all",
+	{
+		variants: {
+			size: {
+				xs: "size-6 text-xs",
+				sm: "size-7 text-sm",
+				md: "size-8 text-base",
+				lg: "size-10 text-lg",
+				xl: "size-12 text-xl",
+			},
+		},
+		defaultVariants: {
+			size: "md",
+		},
+	},
+);
+
+export type AvatarSize = NonNullable<VariantProps<typeof avatarVariants>["size"]>;
 
 export interface AvatarProps extends React.ComponentPropsWithoutRef<"span"> {
-	user?: AvatarUser | null;
+	name?: string | null;
+	image?: string | null;
+	size?: AvatarSize;
 }
 
-const Avatar = ({ user, className, ...props }: AvatarProps) => {
+const Avatar = ({ name, image: imageSource, size, className, ...props }: AvatarProps) => {
 	const [hasImageError, setHasImageError] = useState(false);
-	const image = user?.image?.trim();
+	const image = imageSource?.trim();
 	const shouldShowImage = !!image && !hasImageError;
 	const initials = useMemo(
 		() =>
-			user?.name
+			name
 				?.split(" ", 3)
 				?.map((word) => word[0])
 				?.filter((letter) => /[A-Za-z]/.test(letter))
 				?.join("") || "U",
-		[user?.name],
+		[name],
 	);
 
 	useEffect(() => {
@@ -29,23 +46,17 @@ const Avatar = ({ user, className, ...props }: AvatarProps) => {
 	}, [image]);
 
 	return (
-		<span
-			className={cx(
-				"inline-flex size-8 shrink-0 items-center justify-center overflow-hidden rounded-full bg-muted ring-1 ring-border transition-all",
-				className,
-			)}
-			{...props}
-		>
+		<span className={cx(avatarVariants({ size, className }))} {...props}>
 			{shouldShowImage ? (
 				<img
 					src={image}
-					alt={user?.name ?? "User avatar"}
-					title={user?.name ?? "User"}
+					alt={name ?? "User avatar"}
+					title={name ?? "User"}
 					className="h-full w-full object-cover"
 					onError={() => setHasImageError(true)}
 				/>
 			) : (
-				<span className="text-base font-medium leading-none text-foreground" title={user?.name ?? "User"}>
+				<span className="font-medium leading-none text-foreground" title={name ?? "User"}>
 					{initials}
 				</span>
 			)}

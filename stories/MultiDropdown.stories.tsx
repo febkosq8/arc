@@ -28,7 +28,6 @@ const meta = {
 			description: "Keeps at least one item selected.",
 			table: { type: { summary: "boolean" }, defaultValue: { summary: "false" } },
 		},
-		className: { control: "text", table: { type: { summary: "string" } } },
 		onChange: { control: false, table: { disable: true } },
 	},
 	args: {
@@ -37,7 +36,6 @@ const meta = {
 		placeholder: "Select options",
 		disabled: false,
 		preventEmpty: false,
-		className: "w-80",
 	},
 } satisfies Meta<typeof MultiDropdown>;
 

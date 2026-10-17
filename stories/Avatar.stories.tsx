@@ -7,16 +7,25 @@ const meta = {
 	tags: ["autodocs"],
 	parameters: { layout: "centered" },
 	argTypes: {
-		user: {
-			control: "object",
-			description: "User whose image or initials are shown. Falls back to initials when the image is missing or fails.",
-			table: { type: { summary: "{ name?: string | null; image?: string | null }" } },
+		name: {
+			control: "text",
+			description: "Name used for the avatar initials and accessible labels.",
 		},
-		className: { control: "text", table: { type: { summary: "string" } } },
+		image: {
+			control: "text",
+			description: "Image URL. Falls back to initials when missing or when the image fails to load.",
+		},
+		size: {
+			control: "select",
+			description: "Avatar dimensions.",
+			table: { defaultValue: { summary: "md" } },
+			options: ["xs", "sm", "md", "lg", "xl"],
+		},
 	},
 	args: {
-		user: { name: "Febin Kosq", image: "https://avatars.githubusercontent.com/u/1?v=4" },
-		className: "",
+		name: "Jamie Rivera",
+		image: "https://avatars.githubusercontent.com/u/1?v=4",
+		size: "md",
 	},
 } satisfies Meta<typeof Avatar>;
 
@@ -26,13 +35,13 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {};
 
 export const Initials: Story = {
-	args: { user: { name: "Febin Kosq", image: null } },
+	args: { name: "Jamie Rivera", image: null, size: "md" },
 };
 
 export const BrokenImage: Story = {
-	args: { user: { name: "Broken Image", image: "https://invalid.example/missing.png" } },
+	args: { name: "Broken Image", image: "https://invalid.example/missing.png", size: "md" },
 };
 
 export const Fallback: Story = {
-	args: { user: null },
+	args: { name: null, image: null, size: "md" },
 };

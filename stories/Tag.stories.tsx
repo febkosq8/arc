@@ -8,9 +8,8 @@ const meta = {
 	parameters: { layout: "centered" },
 	argTypes: {
 		children: { control: "text", table: { type: { summary: "ReactNode" } } },
-		className: { control: "text", table: { type: { summary: "string" } } },
 	},
-	args: { children: "Beta", className: "" },
+	args: { children: "Beta" },
 } satisfies Meta<typeof Tag>;
 
 export default meta;

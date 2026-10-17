@@ -23,10 +23,6 @@ const meta = {
 			table: { disable: true },
 		},
 		selection: { control: "text" },
-		className: {
-			control: false,
-			table: { disable: true },
-		},
 		children: {
 			control: false,
 			table: { disable: true },

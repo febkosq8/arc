@@ -28,7 +28,6 @@ const meta = {
 			description: "Prevents clearing the selection.",
 			table: { type: { summary: "boolean" }, defaultValue: { summary: "false" } },
 		},
-		className: { control: "text", table: { type: { summary: "string" } } },
 		onChange: { control: false, table: { disable: true } },
 	},
 	args: {
@@ -37,7 +36,6 @@ const meta = {
 		placeholder: "Select an option",
 		disabled: false,
 		preventEmpty: false,
-		className: "w-64",
 	},
 } satisfies Meta<typeof Dropdown>;
 

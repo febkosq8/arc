@@ -15,9 +15,8 @@ const meta = {
 		},
 		href: { control: "text", table: { type: { summary: "string" } } },
 		children: { control: "text", table: { type: { summary: "ReactNode" } } },
-		className: { control: "text", table: { type: { summary: "string" } } },
 	},
-	args: { active: false, href: "#workspace", children: "Workspace", className: "" },
+	args: { active: false, href: "#workspace", children: "Workspace" },
 } satisfies Meta<typeof LinkPill>;
 
 export default meta;

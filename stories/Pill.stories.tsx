@@ -19,10 +19,6 @@ const meta = {
 				defaultValue: { summary: "false" },
 			},
 		},
-		className: {
-			control: false,
-			table: { disable: true },
-		},
 		children: {
 			control: false,
 			table: { disable: true },

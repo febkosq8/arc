@@ -14,9 +14,8 @@ const meta = {
 			options: ["_blank", "_self", "_parent", "_top"],
 			table: { type: { summary: "string" }, defaultValue: { summary: "_blank" } },
 		},
-		className: { control: "text", table: { type: { summary: "string" } } },
 	},
-	args: { href: "https://github.com/febkosq8", text: "febkosq8 on GitHub", target: "_blank", className: "" },
+	args: { href: "https://github.com/febkosq8", text: "febkosq8 on GitHub", target: "_blank" },
 } satisfies Meta<typeof TextLink>;
 
 export default meta;

@@ -33,10 +33,6 @@ const meta = {
 			options: ["input", "textarea"],
 			table: { type: { summary: '"input" | "textarea"' } },
 		},
-		className: {
-			control: false,
-			table: { disable: true },
-		},
 	},
 	args: {
 		as: "input",

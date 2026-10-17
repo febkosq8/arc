@@ -20,7 +20,6 @@ const meta = {
 		value: { control: "text", table: { type: { summary: "string" } } },
 		placeholder: { control: "text", table: { type: { summary: "string" } } },
 		disabled: { control: "boolean", table: { type: { summary: "boolean" } } },
-		className: { control: "text", table: { type: { summary: "string" } } },
 		id: { control: false, table: { disable: true } },
 		onChange: { control: false, table: { disable: true } },
 	},
@@ -29,7 +28,6 @@ const meta = {
 		value: "dark",
 		placeholder: "Select a theme",
 		disabled: false,
-		className: "w-64",
 		onChange: () => {},
 	},
 } satisfies Meta<typeof Select>;

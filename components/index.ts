@@ -15,7 +15,7 @@ export type {
 export { navigateToHashOnLoad, updateHashOnScroll, useHashNavigationOnLoad } from "./hash-navigation";
 export type { HashNavigationOptions, UpdateHashOnScrollOptions } from "./hash-navigation";
 export { default as Avatar } from "./avatar";
-export type { AvatarProps, AvatarUser } from "./avatar";
+export type { AvatarProps, AvatarSize } from "./avatar";
 export { default as Divider } from "./divider";
 export { default as Dropdown } from "./dropdown";
 export type { DropdownItem, DropdownProps } from "./dropdown";
