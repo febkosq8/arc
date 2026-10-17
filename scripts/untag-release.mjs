@@ -32,6 +32,6 @@ if (!/^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?$/.test(version)) {
 const tag = `v${version}`;
 
 console.log(`Arc ${version} untag commands (review and run manually):\n`);
-console.log(`git tag --delete ${tag}`);
 console.log(`git push origin --delete ${tag}`);
+console.log(`git tag --delete ${tag}`);
 console.log("\nIf a GitHub Release was created for this tag, delete it manually from GitHub Releases.");

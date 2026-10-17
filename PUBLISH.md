@@ -66,11 +66,11 @@ git tag --list "v*"
 git ls-remote --tags --refs origin "v*"
 ```
 
-Remove the release tag locally and from GitHub:
+Delete the remote tag first, then the local tag. Fetching while the remote tag still exists can recreate the local tag:
 
 ```bash
-git tag --delete vX.Y.Z
 git push origin --delete vX.Y.Z
+git tag --delete vX.Y.Z
 ```
 
 If you created a GitHub Release for this tag, delete it manually from [GitHub Releases](https://github.com/febkosq8/arc/releases); deleting the tag does not remove the release entry.
