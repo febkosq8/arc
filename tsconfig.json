@@ -16,10 +16,8 @@
 		"resolveJsonModule": true,
 		"isolatedModules": true,
 		"noEmit": true,
-		// "verbatimModuleSyntax": true,
-		"baseUrl": ".",
 		"paths": {
-			"@feb/*": ["components/*"]
+			"@feb/*": ["./components/*"]
 		}
 	},
 	"allowDefaultProject": true,
