@@ -2,7 +2,7 @@
 	"name": "@febkosq8/arc",
 	"description": "A React components library for febkosq8",
 	"private": false,
-	"version": "0.6.6",
+	"version": "0.6.7",
 	"type": "module",
 	"main": "./dist/arc.js",
 	"types": "./dist/index.d.ts",
@@ -35,12 +35,14 @@
 	"dependencies": {
 		"@base-ui/react": "1.8.0",
 		"@rinzai/zen": "0.14.0",
+		"luxon": "3.7.2",
 		"react-icons": "5.7.0"
 	},
 	"devDependencies": {
 		"@storybook/addon-docs": "10.6.2",
 		"@storybook/react-vite": "10.6.2",
 		"@tailwindcss/postcss": "4.3.3",
+		"@types/luxon": "3.7.6",
 		"@types/node": "26.6.5",
 		"@types/react": "19.3.0",
 		"@types/react-dom": "19.3.0",
