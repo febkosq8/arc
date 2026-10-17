@@ -10,7 +10,7 @@
 ### Design tokens and CSS
 
 - Use Tailwind utilities and the shared theme tokens (`background`, `foreground`, `card`, `popover`, `primary`, `secondary`, `muted`, `accent`, `destructive`, `success`, `warning`, `border`, `input`, and `ring`). Never introduce arbitrary colors when an Arc token expresses the intent.
-- Keep light and dark themes semantically equivalent. Define shared theme-dependent behavior in [`components/index.css`](components/index.css) with `hsl(var(--token))` or `color-mix`; do not duplicate one-off dark-mode values in individual components.
+- Keep light and dark themes semantically equivalent. Define shared theme-dependent behavior in [`components/index.css`](components/index.css) with `var(--color-token)` or `color-mix`; do not duplicate one-off dark-mode values in individual components.
 - Use `@rinzai/zen`'s `cx` to combine base classes, conditional state classes, and caller-provided `className`. Caller classes should remain able to customize layout where the component API permits it.
 - Use `arc-*` class hooks only for shared CSS behavior, such as theme-aware hover, highlighted menu items, arrows, or visual effects. Keep component-specific layout in the component's `className`.
 
@@ -51,6 +51,17 @@
 - Provide every supported interactive prop as an explicit default in story meta `args`, and configure literal options explicitly in `argTypes` when Storybook cannot infer them.
 - Reflect every component's default prop values in its Storybook stories. Use stories to verify semantics and visual states, not just screenshots.
 - Run the smallest relevant build or Storybook check after component changes; keep exported types and generated declarations buildable.
+
+## Testing unpublished changes in the portfolio
+
+To verify Arc changes in `../Febkosq8` before the user publishes:
+
+1. Run `pnpm run build` in Arc so `dist` is current. Re-run it after every Arc change; `components/index.css` is read live.
+2. In the portfolio's `pnpm-workspace.yaml`, add `overrides: "@febkosq8/arc": "link:../arc"`, and add `fs: { allow: [".", "../arc"] }` under `server` in `vite.config.ts`.
+3. Run `pnpm install` in the portfolio and restart its dev server.
+4. Never commit these temporary overrides. Remove them and run `pnpm install` again once the published version is confirmed.
+
+Portfolio tokens are full colors (`hsl(...)`) while Arc's are raw channels, so use `var(--color-*)` in shared CSS rather than `hsl(var(--token))`.
 
 ## Publishing
 
