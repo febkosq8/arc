@@ -19,3 +19,9 @@ export { default as Pill } from "./pill";
 export { default as Switch } from "./switch";
 export { default as ThemeSwitcher } from "./theme-switcher";
 export type { ThemeSwitcherProps } from "./theme-switcher";
+export { default as TypingAnimation } from "./typing-animation";
+export type {
+	TypingAnimationPerTickUnit,
+	TypingAnimationAfterString,
+	TypingAnimationProps,
+} from "./typing-animation";
