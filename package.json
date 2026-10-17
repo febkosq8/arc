@@ -12,7 +12,7 @@
 		"build-storybook": "storybook build",
 		"prettier": "prettier --write .",
 		"push-npm": "npm publish --access public",
-		"prepublishOnly": "npm run build"
+		"prepublishOnly": "pnpm run build"
 	},
 	"peerDependencies": {
 		"react": "19.3.1",
