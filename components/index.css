@@ -29,13 +29,13 @@
 }
 
 .arc-pill:hover,
-.arc-link-pill:hover {
+.arc-pill-link:hover {
 	border-color: var(--color-border);
 	background-color: color-mix(in srgb, var(--color-background) 94%, var(--color-foreground) 6%) !important;
 }
 
 .dark .arc-pill:hover,
-.dark .arc-link-pill:hover {
+.dark .arc-pill-link:hover {
 	border-color: var(--color-primary);
 	background-color: color-mix(in srgb, var(--color-background) 88%, var(--color-primary) 12%) !important;
 }

@@ -12,7 +12,12 @@
 - Use Tailwind utilities and the shared theme tokens (`background`, `foreground`, `card`, `popover`, `primary`, `secondary`, `muted`, `accent`, `destructive`, `success`, `warning`, `border`, `input`, and `ring`). Never introduce arbitrary colors when an Arc token expresses the intent.
 - Keep light and dark themes semantically equivalent. Define shared theme-dependent behavior in [`components/index.css`](components/index.css) with `var(--color-token)` or `color-mix`; do not duplicate one-off dark-mode values in individual components.
 - Use `@rinzai/zen`'s `cx` to combine base classes, conditional state classes, and caller-provided `className`. Caller classes should remain able to customize layout where the component API permits it.
+- Define component variants with `cva` from `@rinzai/zen`.
 - Use `arc-*` class hooks only for shared CSS behavior, such as theme-aware hover, highlighted menu items, arrows, or visual effects. Keep component-specific layout in the component's `className`.
+
+### Component naming
+
+- For component families with multiple element types or roles, name components and files as `<base><Child>` in PascalCase and `<base>-<child>.tsx` in kebab-case; for example, `PillLink` in `pill-link.tsx`.
 
 ### Shape, spacing, and typography
 

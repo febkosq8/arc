@@ -4,6 +4,11 @@ Notable changes to Arc are recorded here. Release versions follow [Semantic Vers
 
 ## [Unreleased]
 
+### Changed
+
+- Name the pill-shaped navigation link `PillLink`, following the `<base>-<child>` component naming convention.
+- Extend `PillLink` with primary and outline button styles for reusable button-like navigation links.
+
 ## [0.6.0] - 2026-10-17
 
 ### Added
