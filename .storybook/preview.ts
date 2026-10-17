@@ -30,6 +30,12 @@ const preview: Preview = {
 		},
 	],
 	parameters: {
+		docs: {
+			title: "Arc",
+			description: {
+				component: "A React Component Library for Febkosq8",
+			},
+		},
 		controls: {
 			matchers: {
 				color: /(background|color)$/i,
