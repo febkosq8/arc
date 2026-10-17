@@ -13,7 +13,6 @@ const meta = {
 		},
 	},
 	argTypes: {
-		autoComplete: { control: false, table: { disable: true } },
 		className: { control: false, table: { disable: true } },
 	},
 } satisfies Meta;
