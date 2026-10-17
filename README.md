@@ -33,6 +33,26 @@ npm install @febkosq8/arc
 pnpm add @febkosq8/arc
 ```
 
+## Usage
+
+Import Arc's stylesheet from your application CSS:
+
+```css
+@import "@febkosq8/arc/styles.css";
+```
+
+Arc's stylesheet registers its compiled components with Tailwind CSS v4, so their utility classes are generated automatically without an application-level `@source` directive.
+
+Import components from the package:
+
+```tsx
+import { Button } from "@febkosq8/arc";
+
+export function Example() {
+	return <Button>Save</Button>;
+}
+```
+
 ## Explore the project
 
 - [Live Storybook](https://arc.febkosq8.me/)
