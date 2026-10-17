@@ -77,7 +77,7 @@ export default function ThemeSwitcher({ variant = "dropdown", showLabel = false 
 		<div className="arc-theme-switcher">
 			<Menu
 				className="gap-3"
-				contentClassName="min-w-[var(--radix-dropdown-menu-trigger-width)]"
+				contentClassName="min-w-(--anchor-width)"
 				buttonText={
 					<>
 						<ColorModeIcon aria-hidden="true" />

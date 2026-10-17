@@ -32,7 +32,7 @@
 
 ### Component contracts
 
-- Use the correct native element or accessible primitive: buttons for actions, links for navigation, inputs for values, and Radix/Headless UI state and focus behavior where already adopted.
+- Use the correct native element or accessible primitive: buttons for actions, links for navigation, inputs for values, and Base UI state and focus behavior where already adopted.
 - Forward supported native props and preserve caller `className`; do not hide event handlers, refs, labels, or state attributes.
 - Keep stateful props consistent with accessibility. For example, Arc's [`components/pill.tsx`](components/pill.tsx) maps `active` to `aria-pressed`, and switch components must expose their checked state through the switch primitive.
 - Keep icons decorative with `aria-hidden="true"` when adjacent text already communicates their meaning. Provide an accessible name for icon-only controls.
@@ -41,7 +41,7 @@
 ### Composition and responsive behavior
 
 - Compose from existing Arc components and primitives before creating parallel implementations. Arc's component implementations are the source of truth; do not substitute application-level components from other repositories.
-- Keep menu, dropdown, switch, and theme behavior aligned with the existing Radix/Headless UI composition patterns.
+- Keep menu, dropdown, switch, and theme behavior aligned with the existing Base UI composition patterns.
 - Make components responsive through the existing Tailwind breakpoints and fluid layout utilities. Do not encode viewport assumptions in component logic when CSS can handle them.
 - Keep layout concerns in the consuming component when a reusable component does not own that layout.
 
