@@ -60,19 +60,8 @@ const preview: Preview = {
 		},
 		options: {
 			storySort: {
-				order: [
-					"Theme",
-					"Button",
-					"ButtonGroup",
-					"ButtonDoubleClick",
-					"ButtonLongPress",
-					"Card",
-					"Input",
-					"Menu",
-					"Pill",
-					"Switch",
-					"ThemeSwitcher",
-				],
+				method: "alphabetical",
+				order: ["Theme", "Components", "Utilities"],
 			},
 		},
 	},
