@@ -15,22 +15,22 @@ const nestedArgTypes: Record<string, InputType> = {
 		description: "Unit advanced on each animation tick.",
 		table: { defaultValue: { summary: "character" } },
 	},
-	"delay.typing": {
+	"msDelay.typing": {
 		control: { type: "number", min: 0, step: 10 },
 		description: "Delay between typed units in milliseconds.",
 		table: { defaultValue: { summary: "110" } },
 	},
-	"delay.deleting": {
+	"msDelay.deleting": {
 		control: { type: "number", min: 0, step: 10 },
 		description: "Delay between deleted units in milliseconds.",
 		table: { defaultValue: { summary: "55" } },
 	},
-	"delay.hold": {
+	"msDelay.hold": {
 		control: { type: "number", min: 0, step: 100 },
 		description: "Hold time after a string finishes, in milliseconds.",
 		table: { defaultValue: { summary: "1800" } },
 	},
-	"delay.dot": {
+	"msDelay.dot": {
 		control: { type: "number", min: 50, step: 50 },
 		description: "Blink interval of the trailing dot in milliseconds.",
 		table: { defaultValue: { summary: "500" } },
@@ -40,10 +40,10 @@ const nestedArgTypes: Record<string, InputType> = {
 const flatArgs = {
 	"perTick.amount": 1,
 	"perTick.unit": "character" as "character" | "word",
-	"delay.typing": 110,
-	"delay.deleting": 55,
-	"delay.hold": 1800,
-	"delay.dot": 500,
+	"msDelay.typing": 110,
+	"msDelay.deleting": 55,
+	"msDelay.hold": 1800,
+	"msDelay.dot": 500,
 };
 
 const meta = {
@@ -65,7 +65,7 @@ const meta = {
 			table: { defaultValue: { summary: "strings[0]" } },
 		},
 		perTick: { table: { disable: true } },
-		delay: { table: { disable: true } },
+		msDelay: { table: { disable: true } },
 		...nestedArgTypes,
 		waitTillVisible: {
 			control: "boolean",
@@ -115,13 +115,13 @@ const meta = {
 		const {
 			"perTick.amount": amount,
 			"perTick.unit": unit,
-			"delay.typing": typing,
-			"delay.deleting": deleting,
-			"delay.hold": hold,
-			"delay.dot": dot,
+			"msDelay.typing": typing,
+			"msDelay.deleting": deleting,
+			"msDelay.hold": hold,
+			"msDelay.dot": dot,
 			...rest
 		} = args as typeof args & typeof flatArgs;
-		return <TypingAnimation {...rest} perTick={{ amount, unit }} delay={{ typing, deleting, hold, dot }} />;
+		return <TypingAnimation {...rest} perTick={{ amount, unit }} msDelay={{ typing, deleting, hold, dot }} />;
 	},
 } satisfies Meta<typeof TypingAnimation>;
 

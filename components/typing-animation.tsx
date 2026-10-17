@@ -11,7 +11,7 @@ export interface TypingAnimationProps {
 		amount?: number;
 		unit?: TypingAnimationPerTickUnit;
 	};
-	delay?: {
+	msDelay?: {
 		typing?: number;
 		deleting?: number;
 		hold?: number;
@@ -60,7 +60,7 @@ export default function TypingAnimation({
 	strings,
 	placeholder,
 	perTick = { amount: 1, unit: "character" },
-	delay = { typing: 110, deleting: 55, hold: 1800, dot: 500 },
+	msDelay = { typing: 110, deleting: 55, hold: 1800, dot: 500 },
 	waitTillVisible = true,
 	pauseWhenHidden = true,
 	loop = strings.length > 1,
@@ -68,10 +68,10 @@ export default function TypingAnimation({
 	afterString = "clear",
 	trailingDot = false,
 }: TypingAnimationProps) {
-	const typingDelay = delay?.typing ?? 110;
-	const deletingDelay = delay?.deleting ?? 55;
-	const holdDelay = delay?.hold ?? 1800;
-	const dotDelay = delay?.dot ?? 500;
+	const typingDelay = msDelay?.typing ?? 110;
+	const deletingDelay = msDelay?.deleting ?? 55;
+	const holdDelay = msDelay?.hold ?? 1800;
+	const dotDelay = msDelay?.dot ?? 500;
 	const tickAmountInput = perTick?.amount ?? 1;
 	const tickAmount = Number.isFinite(tickAmountInput) ? Math.max(1, Math.floor(tickAmountInput)) : 1;
 	const tickUnit = perTick?.unit ?? "character";
