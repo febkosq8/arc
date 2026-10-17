@@ -30,18 +30,18 @@
 
 .arc-pill:hover,
 .arc-link-pill:hover {
-	border-color: hsl(var(--border));
-	background-color: color-mix(in srgb, hsl(var(--background)) 94%, hsl(var(--foreground)) 6%) !important;
+	border-color: var(--color-border);
+	background-color: color-mix(in srgb, var(--color-background) 94%, var(--color-foreground) 6%) !important;
 }
 
 .dark .arc-pill:hover,
 .dark .arc-link-pill:hover {
-	border-color: hsl(var(--primary));
-	background-color: color-mix(in srgb, hsl(var(--background)) 88%, hsl(var(--primary)) 12%) !important;
+	border-color: var(--color-primary);
+	background-color: color-mix(in srgb, var(--color-background) 88%, var(--color-primary) 12%) !important;
 }
 
 .arc-menu-content {
-	background-color: color-mix(in srgb, hsl(var(--background)) 92%, hsl(var(--foreground)) 8%);
+	background-color: color-mix(in srgb, var(--color-background) 92%, var(--color-foreground) 8%);
 }
 
 .arc-theme-switcher .arc-menu-content [data-highlighted] {
@@ -49,20 +49,20 @@
 }
 
 .arc-menu-content [data-highlighted] {
-	background-color: color-mix(in srgb, hsl(var(--background)) 94%, hsl(var(--foreground)) 6%) !important;
-	color: hsl(var(--primary)) !important;
+	background-color: color-mix(in srgb, var(--color-background) 94%, var(--color-foreground) 6%) !important;
+	color: var(--color-primary) !important;
 }
 
 .dark .arc-menu-content [data-highlighted] {
-	background-color: color-mix(in srgb, hsl(var(--background)) 88%, hsl(var(--primary)) 12%) !important;
+	background-color: color-mix(in srgb, var(--color-background) 88%, var(--color-primary) 12%) !important;
 }
 
 .arc-menu-content [data-highlighted] {
-	border-color: hsl(var(--border)) !important;
+	border-color: var(--color-border) !important;
 }
 
 .dark .arc-menu-content [data-highlighted] {
-	border-color: hsl(var(--primary)) !important;
+	border-color: var(--color-primary) !important;
 }
 
 @layer base {
@@ -243,18 +243,18 @@
 
 /* Track */
 ::-webkit-scrollbar-track {
-	background: hsl(var(--background));
+	background: var(--color-background);
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
 	border-radius: 5px;
-	background: hsl(var(--primary));
+	background: var(--color-primary);
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-	background: hsl(var(--primary));
+	background: var(--color-primary);
 }
 
 * {
