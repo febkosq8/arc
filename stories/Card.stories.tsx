@@ -26,20 +26,22 @@ const meta = {
 		},
 		variant: {
 			control: "select",
-			description: "Card color and border treatment.",
+			description: "Card color and border treatment. Defaults to outline-primary.",
 			options: [
-				undefined,
 				"primary",
 				"secondary",
 				"destructive",
-				"ghost",
 				"warning",
 				"outline-primary",
 				"outline-secondary",
 				"outline-destructive",
-				"outline-ghost",
 				"outline-warning",
 			],
+			table: {
+				defaultValue: {
+					summary: "outline-primary",
+				},
+			},
 		},
 		hoverable: {
 			control: "boolean",
@@ -100,7 +102,7 @@ const meta = {
 		header: "Account settings",
 		content: "Update your profile and notification preferences.",
 		footer: `Last updated ${new Date().toLocaleDateString()}`,
-		variant: undefined,
+		variant: "outline-secondary",
 		hoverable: true,
 		hoverLift: true,
 		hoverBorder: true,
@@ -114,13 +116,17 @@ export default meta;
 type Story = StoryObj<CardStoryArgs>;
 
 export const Default: Story = {
-	render: ({ header, content, footer, ...args }) => (
+    args: {
+        variant: "outline-secondary"
+    },
+
+    render: ({ header, content, footer, ...args }) => (
 		<Card {...args} className="max-w-md">
 			<Card.Header>{header}</Card.Header>
 			<Card.Content>{content}</Card.Content>
 			<Card.Footer>{footer}</Card.Footer>
 		</Card>
-	),
+	)
 };
 
 export const Variants: Story = {
@@ -129,14 +135,12 @@ export const Variants: Story = {
 			{(
 				[
 					"primary",
-					"secondary",
-					"destructive",
-					"ghost",
-					"warning",
 					"outline-primary",
+					"secondary",
 					"outline-secondary",
+					"destructive",
 					"outline-destructive",
-					"outline-ghost",
+					"warning",
 					"outline-warning",
 				] as const
 			).map((variant) => (

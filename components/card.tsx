@@ -6,14 +6,15 @@ const cardVariants = cva("arc-card group relative rounded-lg border border-foreg
 			primary: "border-primary bg-primary text-primary-foreground",
 			secondary: "border-secondary bg-secondary text-secondary-foreground",
 			destructive: "border-destructive bg-destructive text-destructive-foreground",
-			ghost: "border-transparent bg-transparent shadow-none",
 			warning: "border-warning bg-warning text-warning-foreground",
 			"outline-primary": "border-primary bg-background text-primary",
 			"outline-secondary": "border-secondary-foreground bg-background text-secondary-foreground",
 			"outline-destructive": "border-destructive bg-background text-destructive",
-			"outline-ghost": "border-transparent bg-background",
 			"outline-warning": "border-warning bg-background text-warning",
 		},
+	},
+	defaultVariants: {
+		variant: "outline-secondary",
 	},
 });
 
