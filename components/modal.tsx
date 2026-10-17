@@ -55,7 +55,7 @@ const Modal = ({
 					<Dialog.Popup
 						initialFocus={initialFocus}
 						className={cx(
-							"flex w-fit max-w-full flex-col rounded-md border border-border bg-card p-6 text-left align-middle text-foreground shadow-xl",
+							"arc-modal flex w-fit max-w-full flex-col rounded-md border border-border bg-card p-6 text-left align-middle text-foreground shadow-xl",
 							"transition-all duration-300",
 							"data-starting-style:scale-95 data-starting-style:opacity-0",
 							"data-ending-style:scale-95 data-ending-style:opacity-0",

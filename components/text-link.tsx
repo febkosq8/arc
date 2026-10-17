@@ -9,7 +9,7 @@ const TextLink = ({ className, href, text, target = "_blank", rel, ...props }: T
 	return (
 		<a
 			className={cx(
-				"rounded-md text-primary underline transition hover:text-primary/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-opacity-75",
+				"arc-text-link rounded-md text-primary underline transition hover:text-primary/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-opacity-75",
 				className,
 			)}
 			href={href}

@@ -47,7 +47,7 @@ const Dropdown = ({
 			name={name}
 			disabled={disabled}
 		>
-			<div className={cx("relative", className)}>
+			<div className={cx("arc-dropdown relative", className)}>
 				<Combobox.InputGroup
 					className={cx(
 						"relative flex min-h-10 w-full items-center justify-between gap-5 rounded-md border border-border bg-background pr-2 text-foreground shadow-xs",

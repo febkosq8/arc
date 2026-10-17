@@ -51,7 +51,7 @@ const MenuComponent = ({ className, active, activeClassName, buttonText, childre
 	return (
 		<DropdownBaseMenu.Root>
 			<DropdownBaseMenu.Trigger asChild>
-				<Pill active={active} className={cx("w-fit rounded-(--radius)!", active && activeClassName, className)}>
+				<Pill active={active} className={cx("w-fit", active && activeClassName, className)}>
 					{buttonText}
 					<FiChevronDown className="-mr-1 ml-2 h-4 w-4" aria-hidden="true" />
 				</Pill>

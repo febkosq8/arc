@@ -39,7 +39,7 @@ const Switch = ({
 };
 
 const SwitchVariants = cva(
-	"relative inline-flex h-7 w-12 items-center rounded-full bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 hover:ring-2 hover:ring-ring/60 disabled:cursor-not-allowed disabled:opacity-60",
+	"relative inline-flex h-7 w-12 items-center rounded-full border border-border bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 hover:ring-2 hover:ring-ring/60 disabled:cursor-not-allowed disabled:opacity-60",
 	{
 		variants: {
 			variant: {

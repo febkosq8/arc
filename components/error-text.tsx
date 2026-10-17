@@ -10,7 +10,7 @@ const ErrorText = ({ data, className, ...props }: ErrorTextProps) => {
 	return (
 		<em
 			role="alert"
-			className={cx("animate-pulse whitespace-nowrap text-base font-semibold text-destructive", className)}
+			className={cx("arc-error-text animate-pulse whitespace-nowrap text-base font-semibold text-destructive", className)}
 			title={formatted ?? undefined}
 			{...props}
 		>

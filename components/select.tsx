@@ -30,7 +30,7 @@ const Select = ({ id, value, onChange, data, className, disabled, placeholder, .
 			<BaseSelect.Trigger
 				id={id}
 				className={cx(
-					"flex w-full items-center gap-2 overflow-hidden rounded-md border border-border bg-background px-2 py-1 text-foreground shadow-xs focus:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+					"arc-select flex w-full items-center gap-2 overflow-hidden rounded-md border border-border bg-background px-2 py-1 text-foreground shadow-xs focus:outline-none focus-visible:ring-2 focus-visible:ring-ring",
 					"disabled:cursor-not-allowed disabled:bg-muted disabled:text-muted-foreground",
 					className,
 				)}

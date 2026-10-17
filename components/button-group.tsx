@@ -28,7 +28,7 @@ const ButtonGroup = ({
 	<div
 		role="group"
 		className={cx(
-			"inline-flex w-fit gap-0 overflow-hidden rounded-md border border-border",
+			"arc-button-group inline-flex w-fit gap-0 overflow-hidden rounded-md border border-border",
 			"[&>.arc-button]:rounded-none! [&>.arc-button:not(:first-child)]:border-l [&>.arc-button:not(:first-child)]:border-border",
 			"[&>.arc-double-click-button]:z-[1] [&>.arc-double-click-button]:m-0 [&>.arc-double-click-button]:rounded-none! [&>.arc-double-click-button]:p-0",
 			"[&>.arc-double-click-button>.arc-button]:rounded-none! [&>.arc-double-click-button>.arc-double-click-progress-ring]:inset-0 [&>.arc-double-click-button>.arc-double-click-progress-ring]:z-[2] [&>.arc-double-click-button>.arc-double-click-progress-ring]:rounded-[inherit]",

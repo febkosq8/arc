@@ -2,7 +2,7 @@ import { cva, cx, VariantProps } from "@rinzai/zen";
 import { useEffect, useMemo, useState } from "react";
 
 const avatarVariants = cva(
-	"inline-flex shrink-0 items-center justify-center overflow-hidden rounded-full bg-muted ring-1 ring-border transition-all",
+	"arc-avatar inline-flex shrink-0 items-center justify-center overflow-hidden rounded-full bg-muted ring-1 ring-border transition-all",
 	{
 		variants: {
 			size: {

@@ -7,7 +7,7 @@ const data: SelectItem[] = [
 	{ key: "light", label: "Light" },
 	{ key: "dark", label: "Dark" },
 	{ key: "system", label: "System" },
-	{ key: "legacy", label: "Legacy (unavailable)", disabled: true },
+	{ key: "legacy", label: "Legacy", disabled: true },
 ];
 
 const meta = {
@@ -16,7 +16,11 @@ const meta = {
 	tags: ["autodocs"],
 	parameters: {
 		layout: "centered",
-		docs: { description: { component: "A single-select dropdown for choosing one value from a list." } },
+		docs: {
+			description: {
+				component: "A non-searchable single-select dropdown for choosing one value from a list.",
+			},
+		},
 	},
 	argTypes: {
 		data: {
@@ -60,7 +64,7 @@ export const Default: Story = {
 		useEffect(() => setValue(args.value), [args.value]);
 
 		return (
-			<div className="flex flex-col items-center gap-3">
+			<div className="flex w-44 flex-col items-center gap-3">
 				<Select {...args} value={value} onChange={setValue} />
 				<p className="text-sm text-muted-foreground">Current value: {value}</p>
 			</div>

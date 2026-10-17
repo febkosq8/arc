@@ -217,7 +217,7 @@ export default function TypingAnimation({
 				ref={(element) => {
 					containerRef.current = element;
 				}}
-				className="overflow-hidden"
+				className="arc-typing-animation overflow-hidden"
 				style={{ "--typing-roll-offset": rollOffset } as CSSProperties}
 			>
 				<div className="whitespace-pre-line">
@@ -234,7 +234,7 @@ export default function TypingAnimation({
 			ref={(element) => {
 				containerRef.current = element;
 			}}
-			className="inline-grid align-top"
+			className="arc-typing-animation inline-grid align-top"
 		>
 			<span aria-hidden="true" className="invisible col-start-1 row-start-1 whitespace-pre-line">
 				{placeholder ?? strings[0]}
