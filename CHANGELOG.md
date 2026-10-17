@@ -4,7 +4,7 @@ Notable changes to Arc are recorded here. Release versions follow [Semantic Vers
 
 ## [Unreleased]
 
-## [0.5.0] - 2026-10-17
+## [0.5.1] - 2026-10-17
 
 ### Added
 
@@ -18,6 +18,8 @@ Notable changes to Arc are recorded here. Release versions follow [Semantic Vers
 
 - Expand Input with variants, including textarea support, and improve Card, Menu, Switch, and ThemeSwitcher behavior and styling.
 - Improve shared theme styles and dark-mode support, and add `arc-` class hooks for shared component styling.
+- Configure package exports for the compiled JavaScript, TypeScript declarations, and shared styles, and limit published files to the distribution bundle and stylesheet.
+- Run the package build with pnpm before publishing to npm.
 
 ### Fixed
 
