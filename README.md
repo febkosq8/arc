@@ -13,7 +13,7 @@
 
 ---
 
-Arc is a React component library that brings together the UI building blocks I reuse across my projects. It focuses on practical components, consistent styling, and small interaction details, while leaving page layout and product decisions to the application.
+Arc is a React + Tailwind CSS component library that brings together the UI building blocks I reuse across my projects. It focuses on practical components, consistent styling, and small interaction details, while leaving page layout and product decisions to the application.
 
 👉 **[Explore the components in Storybook](https://arc.febkosq8.me/)** 👈
 

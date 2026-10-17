@@ -2,7 +2,7 @@
 	"name": "@febkosq8/arc",
 	"description": "A React components library for febkosq8",
 	"private": false,
-	"version": "0.4.0",
+	"version": "0.5.0",
 	"type": "module",
 	"homepage": "https://www.npmjs.com/package/@febkosq8/arc",
 	"repository": "https://github.com/febkosq8/arc",
