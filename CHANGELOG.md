@@ -4,7 +4,7 @@ Notable changes to Arc are recorded here. Release versions follow [Semantic Vers
 
 ## [Unreleased]
 
-## [0.5.1] - 2026-10-17
+## [0.6.0] - 2026-10-17
 
 ### Added
 
@@ -13,6 +13,8 @@ Notable changes to Arc are recorded here. Release versions follow [Semantic Vers
 - Add TypingAnimation and hash-navigation helpers.
 - Add button variants and sizes, plus new Avatar sizes and Tag variants.
 - Add Storybook examples and documentation for the expanded component library.
+- Add a labeled ThemeSwitcher Storybook example.
+- Allow Menu dropdown content styling to be customized.
 
 ### Changed
 
@@ -20,6 +22,7 @@ Notable changes to Arc are recorded here. Release versions follow [Semantic Vers
 - Improve shared theme styles and dark-mode support, and add `arc-` class hooks for shared component styling.
 - Configure package exports for the compiled JavaScript, TypeScript declarations, and shared styles, and limit published files to the distribution bundle and stylesheet.
 - Run the package build with pnpm before publishing to npm.
+- Refine ThemeSwitcher dropdown sizing and option alignment, and add dividers between theme choices.
 
 ### Fixed
 
