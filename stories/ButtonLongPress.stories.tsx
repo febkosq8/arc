@@ -86,13 +86,19 @@ export const Default: Story = {
 				"outline-warning",
 			],
 			description: "Base variant used before the long-press feedback is active.",
-			table: { defaultValue: { summary: "primary" } },
+			table: {
+				type: { summary: "ButtonVariant" },
+				defaultValue: { summary: "primary" },
+			},
 		},
 		feedbackVariant: {
 			control: "select",
 			options: ["primary", "secondary", "destructive", "warning"],
 			description: "Variant used for the long-press feedback indicator.",
-			table: { defaultValue: { summary: "warning" } },
+			table: {
+				type: { summary: '"primary" | "secondary" | "destructive" | "warning"' },
+				defaultValue: { summary: "warning" },
+			},
 		},
 		feedbackContent: {
 			control: "text",

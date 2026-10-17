@@ -39,6 +39,10 @@ const meta = {
 				"outline-warning",
 			],
 			table: {
+				type: {
+					summary:
+						'"primary" | "secondary" | "destructive" | "warning" | "outline-primary" | "outline-secondary" | "outline-destructive" | "outline-warning"',
+				},
 				defaultValue: {
 					summary: "outline-primary",
 				},

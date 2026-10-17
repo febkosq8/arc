@@ -11,7 +11,14 @@ const meta = {
 	component: Pill,
 	tags: ["autodocs"],
 	argTypes: {
-		active: { control: "boolean" },
+		active: {
+			control: "boolean",
+			description: "Marks the pill as selected and sets its pressed state.",
+			table: {
+				type: { summary: "boolean" },
+				defaultValue: { summary: "false" },
+			},
+		},
 		className: {
 			control: false,
 			table: { disable: true },
@@ -20,11 +27,13 @@ const meta = {
 			control: false,
 			table: { disable: true },
 		},
-		autoComplete: {
-			control: false,
-			table: { disable: true },
+		selection: {
+			control: "text",
+			description: "Initial selection used by the interactive story.",
+			table: {
+				type: { summary: "string" },
+			},
 		},
-		selection: { control: "text" },
 	},
 	args: {
 		children: null,

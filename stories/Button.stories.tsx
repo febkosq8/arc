@@ -15,11 +15,9 @@ const meta = {
 		},
 	},
 	argTypes: {
-		autoComplete: { control: false, table: { disable: true } },
-		className: { control: false, table: { disable: true } },
 		children: {
 			control: "text",
-			description: "Text displayed inside the button",
+			description: "Content displayed inside the button",
 			table: {
 				type: {
 					summary: "ReactNode",

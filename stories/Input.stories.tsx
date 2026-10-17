@@ -13,6 +13,7 @@ const meta = {
 		disabled: {
 			control: "boolean",
 			table: {
+				type: { summary: '"default" | "ghost"' },
 				defaultValue: {
 					summary: "false",
 				},
@@ -30,6 +31,7 @@ const meta = {
 		as: {
 			control: "select",
 			options: ["input", "textarea"],
+			table: { type: { summary: '"input" | "textarea"' } },
 		},
 		className: {
 			control: false,

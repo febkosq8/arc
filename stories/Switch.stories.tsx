@@ -12,9 +12,9 @@ const meta = {
 	argTypes: {
 		checked: { control: "boolean" },
 		disabled: { control: "boolean" },
-		onChange: { 
-			control: false, 
-			table: { disable: true } 
+		onChange: {
+			control: false,
+			table: { disable: true },
 		},
 		children: {
 			control: false,
@@ -23,6 +23,11 @@ const meta = {
 		variant: {
 			control: "select",
 			options: ["primary", "secondary", "danger", "success"],
+			description: "Switch color variant.",
+			table: {
+				type: { summary: '"primary" | "secondary" | "danger" | "success"' },
+				defaultValue: { summary: "primary" },
+			},
 		},
 	},
 	args: {

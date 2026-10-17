@@ -63,6 +63,10 @@ export const Default: Story = {
 			control: { type: "number", min: 0, step: 100 },
 			description: "Maximum time allowed between the first and second click, in milliseconds.",
 			table: {
+				type: {
+					summary:
+						'"primary" | "secondary" | "destructive" | "ghost" | "warning" | "outline-primary" | "outline-secondary" | "outline-destructive" | "outline-ghost" | "outline-warning"',
+				},
 				defaultValue: {
 					summary: "2000",
 				},
@@ -84,6 +88,7 @@ export const Default: Story = {
 			],
 			description: "Base variant used before the double-click feedback is active.",
 			table: {
+				type: { summary: '"primary" | "secondary" | "destructive" | "warning"' },
 				defaultValue: {
 					summary: "primary",
 				},

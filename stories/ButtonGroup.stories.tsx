@@ -95,6 +95,7 @@ export const Default: Story = {
 			options: ["horizontal", "vertical"],
 			description: "Direction in which the buttons are arranged.",
 			table: {
+				type: { summary: '"horizontal" | "vertical"' },
 				defaultValue: {
 					summary: "horizontal",
 				},
@@ -116,6 +117,7 @@ export const Default: Story = {
 			],
 			description: "Variant applied to the selected button.",
 			table: {
+				type: { summary: "ButtonGroupVariant" },
 				defaultValue: {
 					summary: "none",
 				},
@@ -144,6 +146,7 @@ export const Default: Story = {
 				"outline-ghost",
 				"outline-warning",
 			],
+			table: { type: { summary: "ButtonGroupVariant" } },
 			description: "Variant used by the first button.",
 		},
 		button2Content: {
@@ -164,6 +167,7 @@ export const Default: Story = {
 				"outline-ghost",
 				"outline-warning",
 			],
+			table: { type: { summary: "ButtonGroupVariant" } },
 			description: "Variant used by the second button.",
 		},
 		button3Content: {
@@ -184,6 +188,7 @@ export const Default: Story = {
 				"outline-ghost",
 				"outline-warning",
 			],
+			table: { type: { summary: "ButtonGroupVariant" } },
 			description: "Variant used by the third button.",
 		},
 	},
@@ -268,6 +273,7 @@ export const WithInteractionButtons: InteractionStory = {
 			options: ["horizontal", "vertical"],
 			description: "Direction in which the interaction buttons are arranged.",
 			table: {
+				type: { summary: '"horizontal" | "vertical"' },
 				defaultValue: {
 					summary: "horizontal",
 				},
@@ -296,6 +302,7 @@ export const WithInteractionButtons: InteractionStory = {
 				"outline-ghost",
 				"outline-warning",
 			],
+			table: { type: { summary: "ButtonGroupVariant" } },
 			description: "Variant used by the double-click button.",
 		},
 		doubleClickButtonFeedbackVariant: {
@@ -303,6 +310,7 @@ export const WithInteractionButtons: InteractionStory = {
 			options: ["primary", "secondary", "destructive", "warning"],
 			description: "Feedback indicator variant used by the double-click button.",
 			table: {
+				type: { summary: '"primary" | "secondary" | "destructive" | "warning"' },
 				defaultValue: {
 					summary: "warning",
 				},
@@ -322,6 +330,7 @@ export const WithInteractionButtons: InteractionStory = {
 				"outline-ghost",
 				"outline-warning",
 			],
+			table: { type: { summary: "ButtonGroupVariant" } },
 			description: "Base variant used by the normal button.",
 		},
 		longPressButtonVariant: {
@@ -338,6 +347,7 @@ export const WithInteractionButtons: InteractionStory = {
 				"outline-ghost",
 				"outline-warning",
 			],
+			table: { type: { summary: "ButtonGroupVariant" } },
 			description: "Variant used by the long-press button.",
 		},
 		longPressButtonFeedbackVariant: {
@@ -345,6 +355,7 @@ export const WithInteractionButtons: InteractionStory = {
 			options: ["primary", "secondary", "destructive", "warning"],
 			description: "Feedback indicator variant used by the long-press button.",
 			table: {
+				type: { summary: '"primary" | "secondary" | "destructive" | "warning"' },
 				defaultValue: {
 					summary: "warning",
 				},
@@ -366,6 +377,7 @@ export const WithInteractionButtons: InteractionStory = {
 			],
 			description: "Variant applied to the selected interaction button.",
 			table: {
+				type: { summary: "ButtonGroupVariant" },
 				defaultValue: {
 					summary: "primary",
 				},
