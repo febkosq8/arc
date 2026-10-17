@@ -15,12 +15,14 @@ export interface TypingAnimationProps {
 		typing?: number;
 		deleting?: number;
 		hold?: number;
+		dot?: number;
 	};
 	waitTillVisible?: boolean;
 	pauseWhenHidden?: boolean;
 	loop?: boolean;
-	visibilityThreshold?: number;
+	minVisiblePercent?: number;
 	afterString?: TypingAnimationAfterString;
+	trailingDot?: boolean;
 }
 
 function getAfterStringSeparator(afterString: TypingAnimationAfterString) {
@@ -58,22 +60,26 @@ export default function TypingAnimation({
 	strings,
 	placeholder,
 	perTick = { amount: 1, unit: "character" },
-	delay = { typing: 110, deleting: 55, hold: 1800 },
+	delay = { typing: 110, deleting: 55, hold: 1800, dot: 500 },
 	waitTillVisible = true,
 	pauseWhenHidden = true,
 	loop = strings.length > 1,
-	visibilityThreshold = 0,
+	minVisiblePercent = 0,
 	afterString = "clear",
+	trailingDot = false,
 }: TypingAnimationProps) {
 	const typingDelay = delay?.typing ?? 110;
 	const deletingDelay = delay?.deleting ?? 55;
 	const holdDelay = delay?.hold ?? 1800;
+	const dotDelay = delay?.dot ?? 500;
 	const tickAmountInput = perTick?.amount ?? 1;
 	const tickAmount = Number.isFinite(tickAmountInput) ? Math.max(1, Math.floor(tickAmountInput)) : 1;
 	const tickUnit = perTick?.unit ?? "character";
 	const [currentText, setCurrentText] = useState("");
 	const [finishedStrings, setFinishedStrings] = useState<string[]>([]);
 	const [isVisible, setIsVisible] = useState(!waitTillVisible);
+	const [isHolding, setIsHolding] = useState(false);
+	const [isDotShown, setIsDotShown] = useState(false);
 	const containerRef = useRef<HTMLDivElement | HTMLSpanElement>(null);
 	const stringIndexRef = useRef(0);
 	const characterIndexRef = useRef(0);
@@ -95,12 +101,12 @@ export default function TypingAnimation({
 					setIsVisible(false);
 				}
 			},
-			{ root: element.closest("main"), threshold: visibilityThreshold },
+			{ root: element.closest("main"), threshold: Math.min(100, Math.max(0, minVisiblePercent)) / 100 },
 		);
 
 		observer.observe(element);
 		return () => observer.disconnect();
-	}, [pauseWhenHidden, waitTillVisible, visibilityThreshold]);
+	}, [pauseWhenHidden, waitTillVisible, minVisiblePercent]);
 
 	useEffect(() => {
 		if (!isVisible || strings.length === 0) return;
@@ -114,9 +120,11 @@ export default function TypingAnimation({
 		deletingRef.current = false;
 		setCurrentText("");
 		setFinishedStrings([]);
+		setIsHolding(false);
 
 		const animate = () => {
 			if (!loop && stringIndexRef.current >= strings.length) return;
+			setIsHolding(false);
 
 			const string = strings[stringIndexRef.current];
 			const delayMatch = string.match(/^<--delay-(\d+)-->$/);
@@ -153,7 +161,10 @@ export default function TypingAnimation({
 					!accumulate &&
 					characterIndexRef.current === string.length &&
 					(loop || stringIndexRef.current < strings.length - 1);
-				if (!accumulate && characterIndexRef.current === string.length && !deletingRef.current && !loop) return;
+				if (!accumulate && characterIndexRef.current === string.length && !deletingRef.current && !loop) {
+					setIsHolding(true);
+					return;
+				}
 				if (accumulate && characterIndexRef.current === string.length) {
 					setFinishedStrings((current) => [...current, string]);
 					setCurrentText("");
@@ -175,12 +186,26 @@ export default function TypingAnimation({
 					: deletingRef.current
 						? deletingDelay
 						: typingDelay;
+			setIsHolding(nextDelay === holdDelay);
 			timeout = setTimeout(animate, nextDelay);
 		};
 
 		animate();
 		return () => clearTimeout(timeout);
 	}, [deletingDelay, isVisible, loop, holdDelay, afterString, strings, tickAmount, tickUnit, typingDelay]);
+
+	useEffect(() => {
+		if (!trailingDot || !isHolding) {
+			setIsDotShown(false);
+			return;
+		}
+
+		setIsDotShown(true);
+		const interval = setInterval(() => setIsDotShown((current) => !current), dotDelay);
+		return () => clearInterval(interval);
+	}, [trailingDot, isHolding, dotDelay]);
+
+	const dot = isDotShown ? "." : "";
 
 	const isAccumulating = afterString !== "clear";
 	const separator = getAfterStringSeparator(afterString);
@@ -198,6 +223,7 @@ export default function TypingAnimation({
 				<div className="whitespace-pre-line">
 					{finishedStrings.join(separator)}
 					{currentText && `${finishedStrings.length > 0 ? separator : ""}${currentText}`}
+					{dot}
 				</div>
 			</div>
 		);
@@ -212,8 +238,12 @@ export default function TypingAnimation({
 		>
 			<span aria-hidden="true" className="invisible col-start-1 row-start-1 whitespace-pre-line">
 				{placeholder ?? strings[0]}
+				{trailingDot && "."}
 			</span>
-			<span className="col-start-1 row-start-1 whitespace-pre-line">{currentText}</span>
+			<span className="col-start-1 row-start-1 whitespace-pre-line">
+				{currentText}
+				{dot}
+			</span>
 		</span>
 	);
 }
