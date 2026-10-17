@@ -61,6 +61,7 @@ const preview: Preview = {
 		options: {
 			storySort: {
 				order: [
+					"Theme",
 					"Button",
 					"ButtonGroup",
 					"ButtonDoubleClick",

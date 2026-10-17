@@ -166,7 +166,7 @@
 		@apply text-4xl font-extrabold tracking-tight;
 	}
 	.typography-heading-2 {
-		@apply border-b pb-2 text-3xl font-semibold tracking-tight transition-colors;
+		@apply pb-2 text-3xl font-bold tracking-tight transition-colors;
 	}
 	.typography-heading-3 {
 		@apply text-2xl font-semibold tracking-tight;
