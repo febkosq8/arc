@@ -22,6 +22,15 @@ const meta = {
 				},
 			},
 		},
+		showLabel: {
+			control: "boolean",
+			description: "Show the current theme name alongside the icon.",
+			table: {
+				defaultValue: {
+					summary: "false",
+				},
+			},
+		},
 	},
 } satisfies Meta<typeof ThemeSwitcher>;
 
