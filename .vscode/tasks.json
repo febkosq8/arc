@@ -11,6 +11,17 @@
 				"reveal": "always",
 				"focus": true
 			}
+		},
+		{
+			"label": "Get Commands to Untag Arc release",
+			"type": "process",
+			"command": "node",
+			"args": ["${workspaceFolder}/scripts/untag-release.mjs"],
+			"problemMatcher": [],
+			"presentation": {
+				"reveal": "always",
+				"focus": true
+			}
 		}
 	]
 }

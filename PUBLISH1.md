@@ -12,7 +12,7 @@ Arc is in the `0.x` development series, so the API is not yet considered stable.
 
 ## Release
 
-Run **Publish Arc release** from VS Code's **Terminal > Run Task** menu to print the release commands. The task reads `package.json`'s `version`, prompting if it is missing, and does not execute Git or npm commands. Review and run the printed commands manually. If npm requires an authenticator code, pass it with `--otp`; if npm opens a browser authentication flow, complete it in the terminal and retry publishing. Prepare the release as described below before running the task. GitHub Release creation remains manual.
+Run **Get Commands for Arc release** from VS Code's **Terminal > Run Task** menu to print the release commands. The task reads `package.json`'s `version`, prompting if it is missing, and does not execute Git or npm commands. Review and run the printed commands manually. If npm requires an authenticator code, pass it with `--otp`; if npm opens a browser authentication flow, complete it in the terminal and retry publishing. Prepare the release as described below before running the task. GitHub Release creation remains manual.
 
 1. Choose the version and update `version` in `package.json`. Finalize the matching dated section in [`CHANGELOG.md`](./CHANGELOG.md), then verify the build:
 
@@ -49,10 +49,28 @@ If publishing fails because the version already exists, increment the patch vers
 
 ## Unpublish
 
-To remove a specific release from npm, run:
+Run **Get Commands to Untag Arc release** from VS Code's **Terminal > Run Task** menu to print the local and remote tag deletion commands. Enter the release version when prompted, then review and run the commands manually; this task does not unpublish the npm package.
+
+To remove a specific release, replace `X.Y.Z` below with its version. Remove the npm package version:
 
 ```bash
 npm unpublish @febkosq8/arc@X.Y.Z
 ```
 
-Replace `X.Y.Z` with the version to remove. npm restricts unpublishing, so the command may be rejected if the release is not eligible under npm's unpublishing policy. For releases that should remain installable by existing users but no longer be recommended, deprecate the version instead of unpublishing it.
+npm restricts unpublishing, so the command may be rejected if the release is not eligible under npm's unpublishing policy. For releases that should remain installable by existing users but no longer be recommended, deprecate the version instead of unpublishing it.
+
+To find the release tag, list local tags and tags on GitHub:
+
+```bash
+git tag --list "v*"
+git ls-remote --tags --refs origin "v*"
+```
+
+Remove the release tag locally and from GitHub:
+
+```bash
+git tag --delete vX.Y.Z
+git push origin --delete vX.Y.Z
+```
+
+If you created a GitHub Release for this tag, delete it manually from [GitHub Releases](https://github.com/febkosq8/arc/releases); deleting the tag does not remove the release entry.
