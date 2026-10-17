@@ -15,7 +15,7 @@
 	}
 }
 
-.double-click-progress-ring {
+.arc-double-click-progress-ring {
 	-webkit-mask:
 		linear-gradient(#000 0 0) content-box,
 		linear-gradient(#000 0 0);
@@ -89,7 +89,7 @@
 
 .arc-button-group
 	> :is(.arc-double-click-button, .arc-long-press-button)
-	> .double-click-progress-ring {
+	> .arc-double-click-progress-ring {
 	border-radius: inherit;
 	inset: 0;
 	z-index: 2;
@@ -259,6 +259,40 @@
 	}
 	.typography-muted {
 		@apply text-sm text-muted-foreground;
+	}
+
+	.arc-card-cursor-border {
+		--card-pointer-x: 50%;
+		--card-pointer-y: 50%;
+	}
+
+	.arc-card-cursor-border::before {
+		position: absolute;
+		opacity: 0;
+		z-index: 20;
+		-webkit-mask:
+			linear-gradient(#000 0 0) content-box,
+			linear-gradient(#000 0 0);
+		-webkit-mask-composite: xor;
+		mask:
+			linear-gradient(#000 0 0) content-box,
+			linear-gradient(#000 0 0);
+		mask-composite: exclude;
+		transition: opacity 300ms ease-out;
+		inset: 0;
+		border-radius: inherit;
+		background: radial-gradient(
+			300px circle at var(--card-pointer-x) var(--card-pointer-y),
+			color-mix(in srgb, var(--primary) 55%, var(--foreground)),
+			transparent 68%
+		);
+		padding: 1px;
+		pointer-events: none;
+		content: "";
+	}
+
+	.arc-card-cursor-border:hover::before {
+		opacity: 1;
 	}
 
 	.typography-heading-2:first-child {

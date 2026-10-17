@@ -139,7 +139,7 @@ const DoubleClickButton = ({
 			{button}
 			<span
 				aria-hidden="true"
-				className="double-click-progress-ring pointer-events-none absolute inset-0 rounded-md p-px"
+				className="arc-double-click-progress-ring pointer-events-none absolute inset-0 rounded-md p-px"
 				style={
 				{
 					background: isWaiting

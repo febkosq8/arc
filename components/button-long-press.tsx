@@ -132,7 +132,7 @@ const LongPressButton = ({
 			/>
 			<span
 				aria-hidden="true"
-				className="double-click-progress-ring pointer-events-none absolute inset-0 rounded-md p-px"
+				className="arc-double-click-progress-ring pointer-events-none absolute inset-0 rounded-md p-px"
 				style={{
 					background: isPressing
 						? `conic-gradient(from 90deg, color-mix(in srgb, ${feedbackColor} 90%, white) calc(var(--double-click-progress) * 1%), transparent 0)`
