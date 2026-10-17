@@ -65,10 +65,6 @@
 	border-color: hsl(var(--primary)) !important;
 }
 
-.arc-menu-arrow {
-	fill: color-mix(in srgb, hsl(var(--background)) 92%, hsl(var(--foreground)) 8%);
-}
-
 @layer base {
 	:root {
 		--background: 220 14% 94%;

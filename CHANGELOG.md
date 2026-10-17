@@ -19,6 +19,7 @@ Notable changes to Arc are recorded here. Release versions follow [Semantic Vers
 ### Changed
 
 - Expand Input with variants, including textarea support, and improve Card, Menu, Switch, and ThemeSwitcher behavior and styling.
+- Consolidate Menu and Switch primitives on Base UI, removing Radix UI and Headless UI component dependencies.
 - Improve shared theme styles and dark-mode support, and add `arc-` class hooks for shared component styling.
 - Configure package exports for the compiled JavaScript, TypeScript declarations, and shared styles, and limit published files to the distribution bundle and stylesheet.
 - Run the package build with pnpm before publishing to npm.

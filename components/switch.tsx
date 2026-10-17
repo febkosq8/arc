@@ -1,4 +1,4 @@
-import { Switch as SwitchBase } from "@headlessui/react";
+import { Switch as BaseSwitch } from "@base-ui/react/switch";
 import { cva, cx } from "@rinzai/zen";
 import { JSX } from "react";
 export interface SwitchProps {
@@ -17,29 +17,27 @@ const Switch = ({
 	...rest
 }: SwitchProps) => {
 	return (
-		<SwitchBase
+		<BaseSwitch.Root
 			checked={checked}
 			disabled={disabled}
-			onChange={onChange}
+			onCheckedChange={onChange}
 			className={cx("arc-switch", SwitchVariants({ variant, disabled }))}
 			{...rest}
 		>
 			{children ? (
 				children(checked)
 			) : (
-				<div className="relative h-full w-full">
-					<span
-						aria-hidden="true"
-						className={SwitchThumbVariants({ variant, checked, disabled })}
-					/>
-				</div>
+				<BaseSwitch.Thumb
+					aria-hidden="true"
+					className={SwitchThumbVariants({ variant, checked, disabled })}
+				/>
 			)}
-		</SwitchBase>
+		</BaseSwitch.Root>
 	);
 };
 
 const SwitchVariants = cva(
-	"relative inline-flex h-7 w-12 items-center rounded-full border border-border bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 hover:ring-2 hover:ring-ring/60 disabled:cursor-not-allowed disabled:opacity-60",
+	"relative inline-flex h-7 w-12 items-center rounded-full border border-border bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 hover:not-data-disabled:ring-2 hover:not-data-disabled:ring-ring/60 data-disabled:cursor-not-allowed data-disabled:opacity-60",
 	{
 		variants: {
 			variant: {
