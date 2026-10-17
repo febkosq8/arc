@@ -1,5 +1,6 @@
 import Menu from "@feb/menu";
 import Pill from "@feb/pill";
+import { cx } from "@rinzai/zen";
 import { FiMonitor, FiMoon, FiSun } from "react-icons/fi";
 import { useEffect, useState } from "react";
 
@@ -61,7 +62,7 @@ export default function ThemeSwitcher({ variant = "dropdown", showLabel = false 
 					aria-label={`Switch to ${nextColorMode} theme`}
 					title={`Switch to ${nextColorMode} theme`}
 					onClick={toggleColorMode}
-					className="w-fit gap-2"
+					className="w-fit gap-3"
 				>
 					<ColorModeIcon aria-hidden="true" />
 					{showLabel && colorModeLabel[colorMode]}
@@ -75,7 +76,8 @@ export default function ThemeSwitcher({ variant = "dropdown", showLabel = false 
 	return (
 		<div className="arc-theme-switcher">
 			<Menu
-				className="gap-2"
+				className="gap-3"
+				contentClassName="min-w-[var(--radix-dropdown-menu-trigger-width)]"
 				buttonText={
 					<>
 						<ColorModeIcon aria-hidden="true" />
@@ -83,47 +85,54 @@ export default function ThemeSwitcher({ variant = "dropdown", showLabel = false 
 					</>
 				}
 			>
-				<>
-					<Menu.Item className="border-0! p-0! focus-visible:outline-none">
-						<Pill
-							active={colorMode === "system"}
-							title="System Theme"
-							onClick={() => {
-								setColorMode("system");
-							}}
-							className="flex w-full justify-start gap-2 whitespace-nowrap rounded-t-md rounded-b-none p-2"
-						>
-							<FiMonitor className="size-4" aria-hidden="true" />
-							{showLabel && colorModeLabel.system}
-						</Pill>
-					</Menu.Item>
-					<Menu.Item className="border-0! p-0! focus-visible:outline-none">
-						<Pill
-							active={colorMode === "light"}
-							title="Light Theme"
-							onClick={() => {
-								setColorMode("light");
-							}}
-							className="flex w-full justify-start gap-2 whitespace-nowrap rounded-none p-2"
-						>
-							<FiSun className="size-4" aria-hidden="true" />
-							{showLabel && colorModeLabel.light}
-						</Pill>
-					</Menu.Item>
-					<Menu.Item className="border-0! p-0! focus-visible:outline-none">
-						<Pill
-							active={colorMode === "dark"}
-							title="Dark Theme"
-							onClick={() => {
-								setColorMode("dark");
-							}}
-							className="flex w-full justify-start gap-2 whitespace-nowrap rounded-b-md rounded-t-none p-2"
-						>
-							<FiMoon className="size-4" aria-hidden="true" />
-							{showLabel && colorModeLabel.dark}
-						</Pill>
-					</Menu.Item>
-				</>
+				<Menu.Item className="border-0! p-0! focus-visible:outline-none">
+					<Pill
+						active={colorMode === "system"}
+						title="System Theme"
+						onClick={() => {
+							setColorMode("system");
+						}}
+						className={cx(
+							"flex w-full gap-3 whitespace-nowrap rounded-t-md rounded-b-none p-2",
+							showLabel ? "justify-start" : "justify-center",
+						)}
+					>
+						<FiMonitor className="size-4" aria-hidden="true" />
+						{showLabel && colorModeLabel.system}
+					</Pill>
+				</Menu.Item>
+				<Menu.Item className="border-0! p-0! focus-visible:outline-none">
+					<Pill
+						active={colorMode === "light"}
+						title="Light Theme"
+						onClick={() => {
+							setColorMode("light");
+						}}
+						className={cx(
+							"flex w-full gap-3 whitespace-nowrap rounded-none p-2",
+							showLabel ? "justify-start" : "justify-center",
+						)}
+					>
+						<FiSun className="size-4" aria-hidden="true" />
+						{showLabel && colorModeLabel.light}
+					</Pill>
+				</Menu.Item>
+				<Menu.Item className="border-0! p-0! focus-visible:outline-none">
+					<Pill
+						active={colorMode === "dark"}
+						title="Dark Theme"
+						onClick={() => {
+							setColorMode("dark");
+						}}
+						className={cx(
+							"flex w-full gap-3 whitespace-nowrap rounded-b-md rounded-t-none p-2",
+							showLabel ? "justify-start" : "justify-center",
+						)}
+					>
+						<FiMoon className="size-4" aria-hidden="true" />
+						{showLabel && colorModeLabel.dark}
+					</Pill>
+				</Menu.Item>
 			</Menu>
 		</div>
 	);

@@ -6,6 +6,7 @@ import { Children, ComponentPropsWithoutRef, Fragment, ReactNode, isValidElement
 
 interface MenuProps {
 	className?: string;
+	contentClassName?: string;
 	active?: boolean;
 	activeClassName?: string;
 	buttonText: string | ReactNode;
@@ -47,7 +48,7 @@ const MenuItem = ({ active, className, ...props }: MenuItemProps) => {
 	);
 };
 
-const MenuComponent = ({ className, active, activeClassName, buttonText, children }: MenuProps) => {
+const MenuComponent = ({ className, contentClassName, active, activeClassName, buttonText, children }: MenuProps) => {
 	return (
 		<DropdownBaseMenu.Root>
 			<DropdownBaseMenu.Trigger asChild>
@@ -60,7 +61,10 @@ const MenuComponent = ({ className, active, activeClassName, buttonText, childre
 				<DropdownBaseMenu.Content
 					loop={true}
 					sideOffset={8}
-					className="arc-menu-content z-50 flex w-fit min-w-40 origin-top-right flex-col overflow-hidden rounded-md border border-border text-foreground shadow-lg ring-1 ring-foreground/10 focus:outline-none"
+					className={cx(
+						"arc-menu-content z-50 flex w-fit min-w-40 origin-top-right flex-col overflow-hidden rounded-md border border-border text-foreground shadow-lg ring-1 ring-foreground/10 focus:outline-none",
+						contentClassName,
+					)}
 				>
 					<MenuChildren>{children}</MenuChildren>
 				</DropdownBaseMenu.Content>

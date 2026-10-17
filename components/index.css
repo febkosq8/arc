@@ -44,10 +44,6 @@
 	background-color: color-mix(in srgb, hsl(var(--background)) 92%, hsl(var(--foreground)) 8%);
 }
 
-.arc-theme-switcher .arc-menu-content {
-	min-width: 0;
-}
-
 .arc-theme-switcher .arc-menu-content [data-highlighted] {
 	border-color: transparent !important;
 }

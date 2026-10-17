@@ -44,3 +44,10 @@ export const Default: Story = {
 		showLabel: false,
 	},
 };
+
+export const WithLabel: Story = {
+	args: {
+		variant: "dropdown",
+		showLabel: true,
+	},
+};
