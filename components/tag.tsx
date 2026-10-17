@@ -1,6 +1,12 @@
-import { cva, cx, type VariantProps } from "@rinzai/zen";
+import { cva, cx } from "@rinzai/zen";
 
-const tagVariants = cva(
+export type TagVariant = "primary" | "secondary" | "success" | "warning" | "destructive" | "outline";
+
+type VariantClassProps = { class?: never; className?: never } | { class?: never; className: string | undefined };
+
+type TagVariantOptions = VariantClassProps & { variant?: TagVariant | null };
+
+const tagVariants: (props?: TagVariantOptions) => string = cva(
 	"arc-tag inline-flex w-fit items-center rounded-full border border-transparent px-1.5 py-0.5 text-xs font-bold",
 	{
 		variants: {
@@ -18,8 +24,6 @@ const tagVariants = cva(
 		},
 	},
 );
-
-export type TagVariant = NonNullable<VariantProps<typeof tagVariants>["variant"]>;
 
 export interface TagProps extends React.ComponentPropsWithoutRef<"div"> {
 	variant?: TagVariant;

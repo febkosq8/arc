@@ -1,7 +1,13 @@
-import { cva, cx, VariantProps } from "@rinzai/zen";
+import { cva, cx } from "@rinzai/zen";
 import { useEffect, useMemo, useState } from "react";
 
-const avatarVariants = cva(
+type VariantClassProps = { class?: never; className?: never } | { class?: never; className: string | undefined };
+
+type AvatarVariantOptions = VariantClassProps & {
+	size?: "xs" | "sm" | "md" | "lg" | "xl" | null;
+};
+
+const avatarVariants: (props?: AvatarVariantOptions) => string = cva(
 	"arc-avatar inline-flex shrink-0 items-center justify-center overflow-hidden rounded-full bg-muted ring-1 ring-border transition-all",
 	{
 		variants: {
@@ -19,7 +25,7 @@ const avatarVariants = cva(
 	},
 );
 
-export type AvatarSize = NonNullable<VariantProps<typeof avatarVariants>["size"]>;
+export type AvatarSize = NonNullable<AvatarVariantOptions["size"]>;
 
 export interface AvatarProps extends React.ComponentPropsWithoutRef<"span"> {
 	name?: string | null;

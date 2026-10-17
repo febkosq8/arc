@@ -1,7 +1,25 @@
-import { cva, cx, VariantProps } from "@rinzai/zen";
+import { cva, cx } from "@rinzai/zen";
 import ButtonGroup from "./button-group";
 
-const buttonVariants = cva(
+type VariantClassProps = { class?: never; className?: never } | { class?: never; className: string | undefined };
+
+type ButtonVariantOptions = VariantClassProps & {
+	variant?:
+		| "primary"
+		| "secondary"
+		| "destructive"
+		| "ghost"
+		| "warning"
+		| "outline-primary"
+		| "outline-secondary"
+		| "outline-destructive"
+		| "outline-ghost"
+		| "outline-warning"
+		| null;
+	size?: "xs" | "sm" | "md" | "lg" | "xl" | "icon-xs" | "icon-sm" | "icon-md" | "icon-lg" | "icon-xl" | null;
+};
+
+const buttonVariants: (props?: ButtonVariantOptions) => string = cva(
 	"inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 truncate",
 	{
 		variants: {
@@ -42,8 +60,10 @@ const buttonVariants = cva(
 	},
 );
 
-export interface ButtonProps
-	extends React.ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {}
+export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+	variant?: ButtonVariantOptions["variant"];
+	size?: ButtonVariantOptions["size"];
+}
 
 interface ButtonComponent extends React.FC<ButtonProps> {
 	Group: typeof ButtonGroup;

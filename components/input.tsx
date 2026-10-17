@@ -1,7 +1,14 @@
-import { cva, cx, type VariantProps } from "@rinzai/zen";
+import { cva, cx } from "@rinzai/zen";
 import { ComponentPropsWithoutRef } from "react";
 
-const inputVariants = cva(
+type VariantClassProps = { class?: never; className?: never } | { class?: never; className: string | undefined };
+
+type InputVariantOptions = VariantClassProps & {
+	variant?: "default" | "ghost" | null;
+	as?: "input" | "textarea" | null;
+};
+
+const inputVariants: (props?: InputVariantOptions) => string = cva(
 	"arc-input rounded border text-foreground placeholder:text-muted-foreground focus:border-transparent focus:outline-hidden focus:ring-2 focus:ring-ring disabled:cursor-not-allowed disabled:border-muted disabled:bg-muted",
 	{
 		variants: {
@@ -22,8 +29,8 @@ const inputVariants = cva(
 );
 
 export type InputProps =
-	| (ComponentPropsWithoutRef<"input"> & VariantProps<typeof inputVariants> & { as?: "input" })
-	| (ComponentPropsWithoutRef<"textarea"> & VariantProps<typeof inputVariants> & { as: "textarea" });
+	| (ComponentPropsWithoutRef<"input"> & Omit<InputVariantOptions, "class" | "className"> & { as?: "input" })
+	| (ComponentPropsWithoutRef<"textarea"> & Omit<InputVariantOptions, "class" | "className"> & { as: "textarea" });
 
 const Input = ({ as = "input", className, variant, ...rest }: InputProps) => {
 	const classNames = cx(inputVariants({ as, variant }), className);

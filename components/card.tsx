@@ -1,24 +1,39 @@
-import { cva, cx, type VariantProps } from "@rinzai/zen";
+import { cva, cx } from "@rinzai/zen";
 
-const cardVariants = cva("arc-card group relative rounded-lg border border-foreground/40 bg-card/90 p-3 shadow-xs", {
-	variants: {
-		variant: {
-			primary: "border-primary bg-primary text-primary-foreground",
-			secondary: "border-secondary bg-secondary text-secondary-foreground",
-			destructive: "border-destructive bg-destructive text-destructive-foreground",
-			warning: "border-warning bg-warning text-warning-foreground",
-			"outline-primary": "border-primary bg-background text-primary",
-			"outline-secondary": "border-secondary-foreground bg-background text-secondary-foreground",
-			"outline-destructive": "border-destructive bg-background text-destructive",
-			"outline-warning": "border-warning bg-background text-warning",
+export type CardVariant =
+	| "primary"
+	| "secondary"
+	| "destructive"
+	| "warning"
+	| "outline-primary"
+	| "outline-secondary"
+	| "outline-destructive"
+	| "outline-warning";
+
+type VariantClassProps = { class?: never; className?: never } | { class?: never; className: string | undefined };
+
+type CardVariantOptions = VariantClassProps & { variant?: CardVariant | null };
+
+const cardVariants: (props?: CardVariantOptions) => string = cva(
+	"arc-card group relative rounded-lg border border-foreground/40 bg-card/90 p-3 shadow-xs",
+	{
+		variants: {
+			variant: {
+				primary: "border-primary bg-primary text-primary-foreground",
+				secondary: "border-secondary bg-secondary text-secondary-foreground",
+				destructive: "border-destructive bg-destructive text-destructive-foreground",
+				warning: "border-warning bg-warning text-warning-foreground",
+				"outline-primary": "border-primary bg-background text-primary",
+				"outline-secondary": "border-secondary-foreground bg-background text-secondary-foreground",
+				"outline-destructive": "border-destructive bg-background text-destructive",
+				"outline-warning": "border-warning bg-background text-warning",
+			},
+		},
+		defaultVariants: {
+			variant: "outline-secondary",
 		},
 	},
-	defaultVariants: {
-		variant: "outline-secondary",
-	},
-});
-
-export type CardVariant = NonNullable<VariantProps<typeof cardVariants>["variant"]>;
+);
 
 interface CardProps extends React.ComponentPropsWithoutRef<"div"> {
 	variant?: CardVariant;
