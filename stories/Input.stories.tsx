@@ -7,12 +7,8 @@ const meta = {
 	tags: ["autodocs"],
 	argTypes: {
 		autoComplete: {
-			control: "text",
-			table: {
-				defaultValue: {
-					summary: "off",
-				},
-			},
+			control: false,
+			table: { disable: true },
 		},
 		disabled: {
 			control: "boolean",
@@ -31,8 +27,17 @@ const meta = {
 				},
 			},
 		},
+		as: {
+			control: "select",
+			options: ["input", "textarea"],
+		},
+		className: {
+			control: false,
+			table: { disable: true },
+		},
 	},
 	args: {
+		as: "input",
 		disabled: false,
 		placeholder: "Enter your email",
 		type: "email",
@@ -44,3 +49,11 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
+
+export const Textarea: Story = {
+	args: {
+		as: "textarea",
+		placeholder: "Write a message...",
+		rows: 5,
+	},
+};

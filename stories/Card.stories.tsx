@@ -12,6 +12,8 @@ const meta = {
 	component: Card,
 	tags: ["autodocs"],
 	argTypes: {
+		autoComplete: { control: false, table: { disable: true } },
+		className: { control: false, table: { disable: true } },
 		header: {
 			control: "text",
 			description: "Text displayed in the card header.",

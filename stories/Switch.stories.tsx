@@ -20,6 +20,14 @@ const meta = {
 			control: false,
 			table: { disable: true },
 		},
+		className: {
+			control: false,
+			table: { disable: true },
+		},
+		autoComplete: {
+			control: false,
+			table: { disable: true },
+		},
 		variant: {
 			control: "select",
 			options: ["primary", "secondary", "danger", "success"],

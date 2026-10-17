@@ -12,6 +12,7 @@ const meta = {
 	tags: ["autodocs"],
 	args: {
 		active: false,
+		activeClassName: "",
 		children: null,
 		selection: "/account/profile",
 	},

@@ -20,6 +20,10 @@ const meta = {
 			control: false,
 			table: { disable: true },
 		},
+		autoComplete: {
+			control: false,
+			table: { disable: true },
+		},
 		selection: { control: "text" },
 	},
 	args: {

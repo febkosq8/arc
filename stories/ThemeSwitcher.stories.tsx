@@ -5,6 +5,10 @@ const meta = {
 	title: "Components/ThemeSwitcher",
 	component: ThemeSwitcher,
 	tags: ["autodocs"],
+	argTypes: {
+		autoComplete: { control: false, table: { disable: true } },
+		className: { control: false, table: { disable: true } },
+	},
 	parameters: {
 		layout: "centered",
 	},

@@ -21,7 +21,6 @@ const preview: Preview = {
 					"Menu",
 					"Pill",
 					"Switch",
-					"TextArea",
 					"ThemeSwitcher",
 				],
 			},
