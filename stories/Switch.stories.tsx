@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Switch } from "../components";
 
 const meta = {
@@ -10,12 +10,24 @@ const meta = {
 		layout: "centered",
 	},
 	argTypes: {
+		checked: { control: "boolean" },
+		disabled: { control: "boolean" },
+		onChange: { 
+			control: false, 
+			table: { disable: true } 
+		},
+		children: {
+			control: false,
+			table: { disable: true },
+		},
 		variant: {
 			control: "select",
-			options: ["primary", "danger", "success"],
+			options: ["primary", "secondary", "danger", "success"],
 		},
 	},
 	args: {
+		checked: false,
+		disabled: false,
 		variant: "primary",
 	},
 } satisfies Meta<typeof Switch>;
@@ -25,21 +37,14 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
 	render: (args) => {
-		const [checked, setChecked] = useState(false);
-		return <Switch {...args} checked={checked} onChange={setChecked} />;
-	},
-};
+		const [checked, setChecked] = useState(args.checked ?? false);
+		useEffect(() => setChecked(args.checked ?? false), [args.checked]);
 
-export const Checked: Story = {
-	args: {
-		checked: true,
-		variant: "success",
-	},
-};
-
-export const Disabled: Story = {
-	args: {
-		disabled: true,
-		checked: true,
+		return (
+			<div className="flex flex-col items-center gap-3">
+				<Switch {...args} checked={checked} onChange={setChecked} />
+				<p className="text-sm text-muted-foreground">Current state: {checked ? "enabled" : "disabled"}</p>
+			</div>
+		);
 	},
 };

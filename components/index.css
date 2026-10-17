@@ -139,6 +139,8 @@
 		--accent-foreground: 220 20% 12%;
 		--destructive: 0 84.2% 60.2%;
 		--destructive-foreground: 60 9.1% 97.8%;
+		--success: 142 71% 45%;
+		--success-foreground: 144 70% 98%;
 		--warning: 38 92% 50%;
 		--warning-foreground: 24 10% 10%;
 		--border: 220 10% 82%;
@@ -164,6 +166,8 @@
 		--accent-foreground: 60 9.1% 97.8%;
 		--destructive: 0 72.2% 50.6%;
 		--destructive-foreground: 60 9.1% 97.8%;
+		--success: 142 70% 45%;
+		--success-foreground: 144 70% 98%;
 		--warning: 38 92% 50%;
 		--warning-foreground: 24 10% 10%;
 		--border: 12 6.5% 15.1%;
@@ -189,6 +193,8 @@
 	--color-accent-foreground: hsl(var(--accent-foreground));
 	--color-destructive: hsl(var(--destructive));
 	--color-destructive-foreground: hsl(var(--destructive-foreground));
+	--color-success: hsl(var(--success));
+	--color-success-foreground: hsl(var(--success-foreground));
 	--color-warning: hsl(var(--warning));
 	--color-warning-foreground: hsl(var(--warning-foreground));
 	--color-border: hsl(var(--border));
