@@ -12,7 +12,7 @@ Arc is in the `0.x` development series, so the API is not yet considered stable.
 
 ## Release
 
-You can run **Publish Arc release** from VS Code's **Terminal > Run Task** menu to push the current branch and version tag, then publish to npm. The task uses `package.json`'s `version`; if it is missing, it prompts for one. It checks the remote tag and npm version before making changes. If a local tag already exists, it reuses it when it points to the current release commit; otherwise, it retargets it locally and restores the original tag if a later step fails. If a later step fails, it also attempts to remove a remote tag created by the task and restore the branch only if the remote branch has not changed since the task pushed it. If npm publication may have completed, it attempts to unpublish that version; npm may reject the unpublish, in which case the task reports incomplete rollback. Prepare the release as described below before running the task. GitHub Release creation remains manual.
+Run **Publish Arc release** from VS Code's **Terminal > Run Task** menu to print the release commands. The task reads `package.json`'s `version`, prompting if it is missing, and does not execute Git or npm commands. Review and run the printed commands manually. If npm requires an authenticator code, pass it with `--otp`; if npm opens a browser authentication flow, complete it in the terminal and retry publishing. Prepare the release as described below before running the task. GitHub Release creation remains manual.
 
 1. Choose the version and update `version` in `package.json`. Finalize the matching dated section in [`CHANGELOG.md`](./CHANGELOG.md), then verify the build:
 
