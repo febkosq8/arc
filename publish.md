@@ -46,3 +46,13 @@ Run **Publish Arc release** from VS Code's **Terminal > Run Task** menu to print
 5. On [GitHub Releases](https://github.com/febkosq8/arc/releases), create a release from the `vX.Y.Z` tag and use the matching changelog entry as its notes.
 
 If publishing fails because the version already exists, increment the patch version and prepare a new release; published npm versions cannot be reused.
+
+## Unpublish
+
+To remove a specific release from npm, run:
+
+```bash
+npm unpublish @febkosq8/arc@X.Y.Z
+```
+
+Replace `X.Y.Z` with the version to remove. npm restricts unpublishing, so the command may be rejected if the release is not eligible under npm's unpublishing policy. For releases that should remain installable by existing users but no longer be recommended, deprecate the version instead of unpublishing it.
