@@ -1,7 +1,34 @@
+/// <reference types="vite/client" />
+
 import type { Preview } from "@storybook/react-vite";
+import { createElement, useEffect } from "react";
 import "../components/index.css";
 
 const preview: Preview = {
+	decorators: [
+		(Story, context) => {
+			const isDark = context.globals.backgrounds?.value === "dark";
+
+			useEffect(() => {
+				document.documentElement.classList.toggle("dark", isDark);
+
+				return () => {
+					document.documentElement.classList.remove("dark");
+				};
+			}, [isDark]);
+
+			return createElement(
+				"div",
+				{
+					style: {
+						backgroundColor: "hsl(var(--background))",
+						color: "hsl(var(--foreground))",
+					},
+				},
+				createElement(Story),
+			);
+		},
+	],
 	parameters: {
 		controls: {
 			matchers: {

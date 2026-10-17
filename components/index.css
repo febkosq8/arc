@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @property --double-click-progress {
 	syntax: "<number>";
 	inherits: false;
@@ -26,115 +28,16 @@
 	mask-composite: exclude;
 }
 
-.arc-button-group > :is(.arc-button, .arc-double-click-button, .arc-long-press-button) {
-	border-radius: 0 !important;
-}
-
-.arc-button-ghost {
-	color: hsl(var(--foreground));
-}
-
-.arc-button-ghost > svg {
-	color: inherit;
-}
-
-.arc-button-ghost:hover {
-	color: hsl(var(--accent-foreground));
-}
-
 .arc-pill:hover {
 	background-color: color-mix(in srgb, currentColor 6%, transparent) !important;
 }
 
-.arc-button-group > :is(.arc-button, .arc-double-click-button, .arc-long-press-button):not(:first-child) {
-	border-color: hsl(var(--border));
+.arc-menu-content {
+	background-color: color-mix(in srgb, hsl(var(--background)) 92%, hsl(var(--foreground)) 8%);
 }
 
-.arc-button-group-horizontal > :is(.arc-button, .arc-double-click-button, .arc-long-press-button):first-child {
-	border-radius: 0;
-}
-
-.arc-button-group-horizontal > :is(.arc-button, .arc-double-click-button, .arc-long-press-button):last-child {
-	border-radius: 0;
-}
-
-.arc-button-group-horizontal > :is(.arc-button, .arc-double-click-button, .arc-long-press-button):not(:first-child) {
-	border-left-width: 1px;
-	border-color: hsl(var(--border));
-}
-
-.arc-button-group-vertical > :is(.arc-button, .arc-double-click-button, .arc-long-press-button) {
-	width: 100%;
-}
-
-.arc-button-group-vertical > :is(.arc-button, .arc-double-click-button, .arc-long-press-button):first-child {
-	border-radius: 0;
-}
-
-.arc-button-group-vertical > :is(.arc-button, .arc-double-click-button, .arc-long-press-button):last-child {
-	border-radius: 0;
-}
-
-.arc-button-group-vertical > :is(.arc-button, .arc-double-click-button, .arc-long-press-button):not(:first-child) {
-	border-top-width: 1px;
-	border-left-width: 0;
-	border-color: hsl(var(--border));
-}
-
-.arc-button-group > :is(.arc-double-click-button, .arc-long-press-button) > .arc-button {
-	border-radius: 0 !important;
-}
-
-.arc-button-group > :is(.arc-double-click-button, .arc-long-press-button) {
-	z-index: 1;
-	margin: 0;
-	border-radius: 0 !important;
-	padding: 0;
-}
-
-.arc-button-group > :is(.arc-double-click-button, .arc-long-press-button) > .arc-double-click-progress-ring {
-	z-index: 2;
-	inset: 0;
-	border-radius: inherit;
-}
-
-.arc-button-group-horizontal > :is(.arc-double-click-button, .arc-long-press-button):first-child {
-	border-radius: 5px 0 0 5px !important;
-}
-
-.arc-button-group-horizontal > :is(.arc-double-click-button, .arc-long-press-button):last-child {
-	border-radius: 0 5px 5px 0 !important;
-}
-
-.arc-button-group-vertical > :is(.arc-double-click-button, .arc-long-press-button):first-child {
-	border-radius: 5px 5px 0 0 !important;
-}
-
-.arc-button-group-vertical > :is(.arc-double-click-button, .arc-long-press-button):last-child {
-	border-radius: 0 0 5px 5px !important;
-}
-
-.arc-button-group-horizontal > :is(.arc-double-click-button, .arc-long-press-button):not(:first-child) {
-	border-left-width: 1px;
-	border-color: hsl(var(--border));
-}
-
-.arc-button-group-horizontal > :is(.arc-double-click-button, .arc-long-press-button):not(:first-child) > .arc-button {
-	border-left-width: 0;
-}
-
-.arc-button-group-vertical > :is(.arc-double-click-button, .arc-long-press-button) > .arc-button {
-	width: 100%;
-}
-
-.arc-button-group-vertical > :is(.arc-double-click-button, .arc-long-press-button):not(:first-child) {
-	border-top-width: 1px;
-	border-left-width: 0;
-	border-color: hsl(var(--border));
-}
-
-.arc-button-group-vertical > :is(.arc-double-click-button, .arc-long-press-button):not(:first-child) > .arc-button {
-	border-top-width: 0;
+.arc-menu-arrow {
+	fill: color-mix(in srgb, hsl(var(--background)) 92%, hsl(var(--foreground)) 8%);
 }
 
 @layer base {

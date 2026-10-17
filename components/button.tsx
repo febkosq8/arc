@@ -9,7 +9,7 @@ const buttonVariants = cva(
 				primary: "bg-primary text-primary-foreground hover:bg-primary/90",
 				secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
 				destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
-				ghost: "arc-button-ghost hover:bg-accent hover:text-accent-foreground",
+				ghost: "text-foreground hover:bg-accent hover:text-accent-foreground [&>svg]:text-inherit",
 				warning: "bg-warning text-warning-foreground hover:bg-warning/90",
 				"outline-primary":
 					"border border-primary bg-background text-primary hover:bg-primary hover:text-primary-foreground",
@@ -18,7 +18,7 @@ const buttonVariants = cva(
 				"outline-destructive":
 					"border border-destructive bg-background text-destructive hover:bg-destructive hover:text-destructive-foreground",
 				"outline-ghost":
-					"arc-button-ghost border border-transparent bg-background hover:bg-accent hover:text-accent-foreground",
+					"border border-transparent bg-background text-foreground hover:bg-accent hover:text-accent-foreground [&>svg]:text-inherit",
 				"outline-warning":
 					"border border-warning bg-background text-warning hover:bg-warning hover:text-warning-foreground",
 			},

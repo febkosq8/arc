@@ -26,10 +26,11 @@ const MenuItem = ({ active, className, ...props }: MenuItemProps) => {
 		<DropdownBaseMenu.Item
 			{...props}
 			className={cx(
-				"flex min-h-10 w-full cursor-default items-center justify-start rounded-none! px-3 py-2 text-base font-medium text-popover-foreground outline-none select-none",
+				"flex min-h-10 w-full cursor-default items-center justify-start rounded-none! px-3 py-2 text-base font-medium text-foreground outline-none select-none",
 				"data-highlighted:bg-accent data-highlighted:text-primary",
-				"focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset",
+				"focus-visible:ring-0",
 				"*:rounded-none!",
+				"border-b border-border last:border-b-0",
 				active && "text-primary!",
 				className,
 			)}
@@ -41,7 +42,7 @@ const MenuComponent = ({ className, active, activeClassName, buttonText, childre
 	return (
 		<DropdownBaseMenu.Root>
 			<DropdownBaseMenu.Trigger asChild>
-				<Pill active={active} className={cx("w-fit", active && activeClassName, className)}>
+				<Pill active={active} className={cx("w-fit rounded-[var(--radius)]!", active && activeClassName, className)}>
 					{buttonText}
 					<FiChevronDown className="-mr-1 ml-2 h-4 w-4" aria-hidden="true" />
 				</Pill>
@@ -50,7 +51,7 @@ const MenuComponent = ({ className, active, activeClassName, buttonText, childre
 				<DropdownBaseMenu.Content
 					loop={true}
 					sideOffset={8}
-					className="z-50 flex w-fit min-w-40 origin-top-right flex-col overflow-hidden divide-y divide-border rounded-md border border-border bg-background text-foreground shadow-lg ring-1 ring-foreground/10 focus:outline-none dark:bg-popover"
+					className="arc-menu-content z-50 flex w-fit min-w-40 origin-top-right flex-col overflow-hidden rounded-md border border-border text-foreground shadow-lg ring-1 ring-foreground/10 focus:outline-none"
 				>
 					{children}
 				</DropdownBaseMenu.Content>
@@ -83,16 +84,16 @@ const MenuSub = ({ active, buttonText, children }: MenuSubProps) => {
 					loop={true}
 					sideOffset={8}
 					arrowPadding={2}
-					className="z-50 flex w-fit min-w-40 origin-top-right flex-col overflow-hidden divide-y divide-border rounded-md border border-border bg-background text-foreground shadow-lg ring-1 ring-foreground/10 focus:outline-none dark:bg-popover"
+					className="arc-menu-content z-50 flex w-fit min-w-40 origin-top-right flex-col overflow-hidden rounded-md border border-border text-foreground shadow-lg ring-1 ring-foreground/10 focus:outline-none"
 				>
 					{children}
-					<DropdownBaseMenu.Arrow className="size-2 fill-background dark:fill-popover" />
+					<DropdownBaseMenu.Arrow className="arc-menu-arrow size-2" />
 				</DropdownBaseMenu.SubContent>
 			</DropdownBaseMenu.Portal>
 		</DropdownBaseMenu.Sub>
 	);
 
-	return <div className="arc-menu-sub">{submenu}</div>;
+	return <div className="arc-menu-sub border-b border-border last:border-b-0">{submenu}</div>;
 };
 
 const Menu: MenuComponent = Object.assign(MenuComponent, {
