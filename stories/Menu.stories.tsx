@@ -17,12 +17,15 @@ const meta = {
 		selection: "/account/profile",
 	},
 	argTypes: {
-		active: { control: "boolean" },
+		active: { control: "boolean", description: "Highlights the menu trigger as the current section." },
 		activeClassName: {
 			control: false,
 			table: { disable: true },
 		},
-		selection: { control: "text" },
+		selection: {
+			control: "text",
+			description: "Path of the selected item used by the interactive story to mark the active menu item.",
+		},
 		children: {
 			control: false,
 			table: { disable: true },
@@ -30,6 +33,11 @@ const meta = {
 	},
 	parameters: {
 		layout: "centered",
+		docs: {
+			description: {
+				component: "A dropdown navigation menu with items and nested submenus. Active items are highlighted.",
+			},
+		},
 	},
 } satisfies Meta<MenuStoryArgs>;
 

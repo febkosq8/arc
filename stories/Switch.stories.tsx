@@ -8,10 +8,11 @@ const meta = {
 	tags: ["autodocs"],
 	parameters: {
 		layout: "centered",
+		docs: { description: { component: "A toggle switch for turning a setting on or off, with color variants." } },
 	},
 	argTypes: {
-		checked: { control: "boolean" },
-		disabled: { control: "boolean" },
+		checked: { control: "boolean", description: "Whether the switch is on." },
+		disabled: { control: "boolean", description: "Disables the switch and blocks interaction." },
 		onChange: {
 			control: false,
 			table: { disable: true },

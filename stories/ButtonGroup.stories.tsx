@@ -12,8 +12,7 @@ const meta = {
 			},
 		},
 	},
-	argTypes: {
-	},
+	argTypes: {},
 } satisfies Meta;
 
 export default meta;

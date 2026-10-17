@@ -22,15 +22,35 @@ const meta = {
 	title: "Components/DropdownMulti",
 	component: MultiDropdown,
 	tags: ["autodocs"],
-	parameters: { layout: "centered" },
+	parameters: {
+		layout: "centered",
+		docs: {
+			description: {
+				component: "A searchable multi-select dropdown that shows the selected options as removable chips.",
+			},
+		},
+	},
 	argTypes: {
-		items: { control: "object", table: { type: { summary: "DropdownItem[]" } } },
-		value: { control: "object", table: { type: { summary: "string[]" } } },
+		items: {
+			control: "object",
+			description: "Options to choose from. Each has a key, a label and an optional disabled flag.",
+			table: { type: { summary: "DropdownItem[]" } },
+		},
+		value: {
+			control: "object",
+			description: "Keys of the currently selected options.",
+			table: { type: { summary: "string[]" } },
+		},
 		placeholder: {
 			control: "text",
+			description: "Text shown when nothing is selected.",
 			table: { type: { summary: "string" }, defaultValue: { summary: "Select options" } },
 		},
-		disabled: { control: "boolean", table: { type: { summary: "boolean" } } },
+		disabled: {
+			control: "boolean",
+			description: "Disables the dropdown, including removing chips.",
+			table: { type: { summary: "boolean" } },
+		},
 		preventEmpty: {
 			control: "boolean",
 			description: "Keeps at least one item selected.",

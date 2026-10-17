@@ -5,7 +5,10 @@ const meta = {
 	title: "Components/Divider",
 	component: Divider,
 	tags: ["autodocs"],
-	argTypes: {
+	parameters: {
+		docs: {
+			description: { component: "A thin horizontal rule that visually separates sections of content." },
+		},
 	},
 } satisfies Meta<typeof Divider>;
 

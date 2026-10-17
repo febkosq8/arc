@@ -5,6 +5,11 @@ const meta = {
 	title: "Components/Input",
 	component: Input,
 	tags: ["autodocs"],
+	parameters: {
+		docs: {
+			description: { component: "A text input that can also render as a textarea, with default and ghost styles." },
+		},
+	},
 	argTypes: {
 		autoComplete: {
 			control: false,
@@ -12,8 +17,9 @@ const meta = {
 		},
 		disabled: {
 			control: "boolean",
+			description: "Disables the field and blocks interaction.",
 			table: {
-				type: { summary: '"default" | "ghost"' },
+				type: { summary: "boolean" },
 				defaultValue: {
 					summary: "false",
 				},
@@ -21,6 +27,7 @@ const meta = {
 		},
 		variant: {
 			control: "select",
+			description: "Visual style: default has a border, ghost is borderless.",
 			options: ["default", "ghost"],
 			table: {
 				defaultValue: {
@@ -30,6 +37,7 @@ const meta = {
 		},
 		as: {
 			control: "select",
+			description: "Element to render: a single-line input or a multi-line textarea.",
 			options: ["input", "textarea"],
 			table: { type: { summary: '"input" | "textarea"' } },
 		},

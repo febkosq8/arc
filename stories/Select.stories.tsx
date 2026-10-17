@@ -14,12 +14,31 @@ const meta = {
 	title: "Components/Select",
 	component: Select,
 	tags: ["autodocs"],
-	parameters: { layout: "centered" },
+	parameters: {
+		layout: "centered",
+		docs: { description: { component: "A single-select dropdown for choosing one value from a list." } },
+	},
 	argTypes: {
-		data: { control: "object", table: { type: { summary: "SelectItem[]" } } },
-		value: { control: "text", table: { type: { summary: "string" } } },
-		placeholder: { control: "text", table: { type: { summary: "string" } } },
-		disabled: { control: "boolean", table: { type: { summary: "boolean" } } },
+		data: {
+			control: "object",
+			description: "Options to choose from. Each has a key, a label and an optional disabled flag.",
+			table: { type: { summary: "SelectItem[]" } },
+		},
+		value: {
+			control: "text",
+			description: "Key of the currently selected option.",
+			table: { type: { summary: "string" } },
+		},
+		placeholder: {
+			control: "text",
+			description: "Text shown when nothing is selected.",
+			table: { type: { summary: "string" } },
+		},
+		disabled: {
+			control: "boolean",
+			description: "Disables the select and blocks interaction.",
+			table: { type: { summary: "boolean" } },
+		},
 		id: { control: false, table: { disable: true } },
 		onChange: { control: false, table: { disable: true } },
 	},

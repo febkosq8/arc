@@ -22,15 +22,36 @@ const meta = {
 	title: "Components/Dropdown",
 	component: Dropdown,
 	tags: ["autodocs"],
-	parameters: { layout: "centered" },
+	parameters: {
+		layout: "centered",
+		docs: {
+			description: {
+				component:
+					"A searchable single-select dropdown. Clicking the selected option again clears it unless preventEmpty is set.",
+			},
+		},
+	},
 	argTypes: {
-		items: { control: "object", table: { type: { summary: "DropdownItem[]" } } },
-		value: { control: "text", table: { type: { summary: "string | number" } } },
+		items: {
+			control: "object",
+			description: "Options to choose from. Each has a key, a label and an optional disabled flag.",
+			table: { type: { summary: "DropdownItem[]" } },
+		},
+		value: {
+			control: "text",
+			description: "Key of the currently selected option.",
+			table: { type: { summary: "string | number" } },
+		},
 		placeholder: {
 			control: "text",
+			description: "Text shown when nothing is selected.",
 			table: { type: { summary: "string" }, defaultValue: { summary: "Select an option" } },
 		},
-		disabled: { control: "boolean", table: { type: { summary: "boolean" } } },
+		disabled: {
+			control: "boolean",
+			description: "Disables the dropdown and blocks interaction.",
+			table: { type: { summary: "boolean" } },
+		},
 		preventEmpty: {
 			control: "boolean",
 			description: "Prevents clearing the selection.",

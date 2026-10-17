@@ -7,6 +7,7 @@ const meta = {
 	tags: ["autodocs"],
 	parameters: {
 		layout: "centered",
+		docs: { description: { component: "Switches between light, dark and system themes via a dropdown or a toggle." } },
 	},
 	argTypes: {
 		variant: {

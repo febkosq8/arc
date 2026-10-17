@@ -6,6 +6,7 @@ const meta = {
 	parameters: {
 		layout: "fullscreen",
 		controls: { disable: true },
+		docs: { description: { component: "Reference for the Arc color tokens, typography and foundations." } },
 	},
 } satisfies Meta;
 

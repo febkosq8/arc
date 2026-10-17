@@ -5,7 +5,15 @@ const meta = {
 	title: "Components/Avatar",
 	component: Avatar,
 	tags: ["autodocs"],
-	parameters: { layout: "centered" },
+	parameters: {
+		layout: "centered",
+		docs: {
+			description: {
+				component:
+					"A circular user avatar that shows an image and falls back to initials when it is missing or fails to load.",
+			},
+		},
+	},
 	argTypes: {
 		name: {
 			control: "text",

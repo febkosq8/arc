@@ -14,6 +14,14 @@ const sectionIds = ["intro", "about", "skills", "projects", "blog", "testimonial
 const meta = {
 	title: "Utilities/navigateToHashOnLoad",
 	tags: ["autodocs"],
+	parameters: {
+		docs: {
+			description: {
+				component:
+					"Scrolls to the element matching the URL hash once it appears after the page loads, retrying until found.",
+			},
+		},
+	},
 	argTypes: {
 		intervalMs: {
 			control: { type: "number", min: 50, step: 50 },

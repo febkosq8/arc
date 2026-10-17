@@ -28,12 +28,14 @@
 	mask-composite: exclude;
 }
 
-.arc-pill:hover {
+.arc-pill:hover,
+.arc-link-pill:hover {
 	border-color: hsl(var(--border));
 	background-color: color-mix(in srgb, hsl(var(--background)) 94%, hsl(var(--foreground)) 6%) !important;
 }
 
-.dark .arc-pill:hover {
+.dark .arc-pill:hover,
+.dark .arc-link-pill:hover {
 	border-color: hsl(var(--primary));
 	background-color: color-mix(in srgb, hsl(var(--background)) 88%, hsl(var(--primary)) 12%) !important;
 }

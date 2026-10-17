@@ -11,6 +11,14 @@ const meta = {
 	title: "Components/Card",
 	component: Card,
 	tags: ["autodocs"],
+	parameters: {
+		docs: {
+			description: {
+				component:
+					"A bordered container with optional header, content and footer sections, plus configurable hover effects.",
+			},
+		},
+	},
 	argTypes: {
 		header: {
 			control: "text",
@@ -26,7 +34,7 @@ const meta = {
 		},
 		variant: {
 			control: "select",
-			description: "Card color and border treatment. Defaults to outline-primary.",
+			description: "Card color and border treatment. Defaults to outline-secondary.",
 			options: [
 				"primary",
 				"secondary",
@@ -43,7 +51,7 @@ const meta = {
 						'"primary" | "secondary" | "destructive" | "warning" | "outline-primary" | "outline-secondary" | "outline-destructive" | "outline-warning"',
 				},
 				defaultValue: {
-					summary: "outline-primary",
+					summary: "outline-secondary",
 				},
 			},
 		},

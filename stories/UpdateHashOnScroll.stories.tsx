@@ -10,6 +10,13 @@ type UpdateHashOnScrollStoryArgs = {
 const meta = {
 	title: "Utilities/updateHashOnScroll",
 	tags: ["autodocs"],
+	parameters: {
+		docs: {
+			description: {
+				component: "Updates the URL hash to match the section currently scrolled into view.",
+			},
+		},
+	},
 	argTypes: {
 		sectionIds: {
 			control: "object",

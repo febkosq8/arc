@@ -5,7 +5,10 @@ const meta = {
 	title: "Components/ErrorText",
 	component: ErrorText,
 	tags: ["autodocs"],
-	parameters: { layout: "centered" },
+	parameters: {
+		layout: "centered",
+		docs: { description: { component: "Inline validation text for showing one or more error messages." } },
+	},
 	argTypes: {
 		data: {
 			control: "object",

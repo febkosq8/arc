@@ -10,6 +10,11 @@ const meta = {
 	title: "Components/Pill",
 	component: Pill,
 	tags: ["autodocs"],
+	parameters: {
+		docs: {
+			description: { component: "A rounded pill button that can be marked active, used for tabs and navigation." },
+		},
+	},
 	argTypes: {
 		active: {
 			control: "boolean",

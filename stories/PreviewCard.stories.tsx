@@ -6,25 +6,43 @@ const meta = {
 	title: "Components/PreviewCard",
 	component: PreviewCard,
 	tags: ["autodocs"],
-	parameters: { layout: "centered" },
+	parameters: {
+		layout: "centered",
+		docs: {
+			description: {
+				component: "A card that appears next to a trigger on hover or click to show extra details.",
+			},
+		},
+	},
 	argTypes: {
 		trigger: {
 			control: "inline-radio",
+			description: "Interaction that opens the card.",
 			options: ["hover", "click"],
 			table: { type: { summary: '"hover" | "click"' }, defaultValue: { summary: "hover" } },
 		},
 		side: {
 			control: "inline-radio",
+			description: "Side of the trigger the card appears on.",
 			options: ["top", "bottom", "left", "right"],
 			table: { type: { summary: '"top" | "bottom" | "left" | "right"' }, defaultValue: { summary: "bottom" } },
 		},
 		align: {
 			control: "inline-radio",
+			description: "Alignment of the card along the chosen side.",
 			options: ["start", "center", "end"],
 			table: { type: { summary: '"start" | "center" | "end"' }, defaultValue: { summary: "center" } },
 		},
-		cardContent: { control: "text", table: { type: { summary: "ReactNode" } } },
-		children: { control: "text", table: { type: { summary: "ReactNode" } } },
+		cardContent: {
+			control: "text",
+			description: "Content shown inside the card.",
+			table: { type: { summary: "ReactNode" } },
+		},
+		children: {
+			control: "text",
+			description: "Trigger content that opens the card.",
+			table: { type: { summary: "ReactNode" } },
+		},
 		triggerRender: { control: false, table: { disable: true } },
 	},
 	args: {
