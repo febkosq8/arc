@@ -11,9 +11,7 @@ export interface LongPressButtonFeedbackContext {
 	feedbackVariant: "primary" | "secondary" | "destructive" | "warning";
 }
 
-export type LongPressButtonFeedbackContent =
-	| ReactNode
-	| ((context: LongPressButtonFeedbackContext) => ReactNode);
+export type LongPressButtonFeedbackContent = ReactNode | ((context: LongPressButtonFeedbackContext) => ReactNode);
 
 export interface LongPressButtonProps extends ButtonProps {
 	longPressDuration?: number;
@@ -82,7 +80,10 @@ const LongPressButton = ({
 		);
 
 	return (
-		<span className="arc-long-press-button relative inline-flex" data-long-press-state={isPressing ? "pressing" : undefined}>
+		<span
+			className="arc-long-press-button relative inline-flex"
+			data-long-press-state={isPressing ? "pressing" : undefined}
+		>
 			<Button
 				{...props}
 				children={buttonContent}
@@ -133,19 +134,19 @@ const LongPressButton = ({
 			<span
 				aria-hidden="true"
 				className="arc-double-click-progress-ring pointer-events-none absolute inset-0 rounded-md p-px"
-				style={{
-					background: isPressing
-						? `conic-gradient(from 90deg, color-mix(in srgb, ${feedbackColor} 90%, white) calc(var(--double-click-progress) * 1%), transparent 0)`
-						: "transparent",
-					"--double-click-progress": 100,
-					"--double-click-timeout": `${longPressDuration}ms`,
-					animation: isPressing
-						? "double-click-countdown var(--double-click-timeout) linear forwards"
-						: "none",
-				} as CSSProperties & {
-					"--double-click-progress": number;
-					"--double-click-timeout": string;
-				}}
+				style={
+					{
+						background: isPressing
+							? `conic-gradient(from 90deg, color-mix(in srgb, ${feedbackColor} 90%, white) calc(var(--double-click-progress) * 1%), transparent 0)`
+							: "transparent",
+						"--double-click-progress": 100,
+						"--double-click-timeout": `${longPressDuration}ms`,
+						animation: isPressing ? "double-click-countdown var(--double-click-timeout) linear forwards" : "none",
+					} as CSSProperties & {
+						"--double-click-progress": number;
+						"--double-click-timeout": string;
+					}
+				}
 			/>
 		</span>
 	);

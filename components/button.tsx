@@ -42,8 +42,7 @@ const buttonVariants = cva(
 );
 
 export interface ButtonProps
-	extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-		VariantProps<typeof buttonVariants> {}
+	extends React.ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {}
 
 interface ButtonComponent extends React.FC<ButtonProps> {
 	Group: typeof ButtonGroup;
@@ -51,9 +50,9 @@ interface ButtonComponent extends React.FC<ButtonProps> {
 
 const Button: ButtonComponent = Object.assign(
 	({ className, variant, size, ...props }: ButtonProps) => {
-	return <button className={cx("arc-button", buttonVariants({ variant, size, className }))} {...props} />;
+		return <button className={cx("arc-button", buttonVariants({ variant, size, className }))} {...props} />;
 	},
 	{ Group: ButtonGroup },
 );
 
-export default Button 
+export default Button;

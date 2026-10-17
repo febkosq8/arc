@@ -1,8 +1,12 @@
 {
-    "tabWidth": 4,
-    "printWidth": 120,
-    "singleQuote": true,
-    "trailingComma": "all",
-    "bracketSpacing": true,
-    "plugins": ["prettier-plugin-organize-imports"]
+	"tabWidth": 2,
+	"useTabs": true,
+	"printWidth": 120,
+	"plugins": [
+		"prettier-plugin-css-order",
+		"prettier-plugin-organize-attributes",
+		"prettier-plugin-tailwindcss",
+		"prettier-plugin-organize-imports"
+	],
+	"tailwindStylesheet": "./components/index.css"
 }

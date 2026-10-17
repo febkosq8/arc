@@ -41,9 +41,7 @@ const ButtonGroup = ({
 				return child;
 			}
 
-			return child.props["aria-pressed"] === true
-				? cloneElement(child, { variant: selectedVariant })
-				: child;
+			return child.props["aria-pressed"] === true ? cloneElement(child, { variant: selectedVariant }) : child;
 		})}
 	</div>
 );

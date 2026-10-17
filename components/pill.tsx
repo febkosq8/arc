@@ -1,21 +1,23 @@
 import { cx } from "@rinzai/zen";
 
-interface PillProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface PillProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 	active?: boolean;
 }
 
-const Pill = (({ active, className, ...props }:PillProps) => {
+const Pill = ({ active = false, className, ...props }: PillProps) => {
 	return (
 		<button
+			type="button"
 			className={cx(
 				"arc-pill",
-				`rounded-md p-3 text-xl   font-bold transition inline-flex w-full items-center justify-center text-foreground hover:bg-accent hover:text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-opacity-75  whitespace-nowrap hover:ring-0 hover:outline-none `,
-				active ? "text-primary" : "text-muted-foreground",
+				"inline-flex w-full items-center justify-center whitespace-nowrap rounded-md p-3 text-xl font-bold text-foreground transition hover:bg-accent hover:text-primary hover:outline-none hover:ring-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-opacity-75",
+				active ? "text-primary!" : "text-muted-foreground",
 				className,
 			)}
+			aria-pressed={active}
 			{...props}
 		/>
 	);
-});
+};
 
 export default Pill;

@@ -12,13 +12,12 @@ const meta = {
 	tags: ["autodocs"],
 	args: {
 		active: false,
-		buttonText: "Options",
 		children: null,
 		selection: "/account/profile",
 	},
 	argTypes: {
 		active: { control: "boolean" },
-		buttonText: { control: "text" },
+		activeClassName: { control: false, table: { disable: true } },
 		selection: { control: "text" },
 		className: {
 			control: false,
@@ -45,56 +44,51 @@ export const Default: Story = {
 		return (
 			<div className="flex w-full min-w-0 flex-col items-center gap-3">
 				<div className="flex w-full min-w-0 flex-col items-center gap-4 sm:flex-row sm:flex-wrap sm:justify-center">
-				<Menu
-					active={selection.startsWith("/workspace/")}
-					buttonText="Workspace"
-				>
-					<Menu.Item active={selection === "/workspace/overview"} asChild>
-						<Pill onClick={() => setSelection("/workspace/overview")}>Overview</Pill>
-					</Menu.Item>
-					<Menu.Item active={selection === "/workspace/projects"} asChild>
-						<Pill onClick={() => setSelection("/workspace/projects")}>Projects</Pill>
-					</Menu.Item>
-					<Menu.Item active={selection === "/workspace/activity"} asChild>
-						<Pill onClick={() => setSelection("/workspace/activity")}>Activity</Pill>
-					</Menu.Item>
-				</Menu>
-				<Menu
-					active={selection.startsWith("/account/")}
-					buttonText="Account"
-				>
-					<Menu.Sub buttonText="Settings">
-						<Menu.Item active={selection === "/account/profile"} asChild>
-							<Pill onClick={() => setSelection("/account/profile")}>Profile</Pill>
+					<Menu
+						active={selection.startsWith("/workspace/")}
+						activeClassName={args.activeClassName}
+						buttonText="Workspace"
+					>
+						<Menu.Item active={selection === "/workspace/overview"} asChild>
+							<Pill onClick={() => setSelection("/workspace/overview")}>Overview</Pill>
 						</Menu.Item>
-						<Menu.Item active={selection === "/account/security"} asChild>
-							<Pill onClick={() => setSelection("/account/security")}>Security</Pill>
+						<Menu.Item active={selection === "/workspace/projects"} asChild>
+							<Pill onClick={() => setSelection("/workspace/projects")}>Projects</Pill>
 						</Menu.Item>
-						<Menu.Item active={selection === "/account/preferences"} asChild>
-							<Pill onClick={() => setSelection("/account/preferences")}>Preferences</Pill>
+						<Menu.Item active={selection === "/workspace/activity"} asChild>
+							<Pill onClick={() => setSelection("/workspace/activity")}>Activity</Pill>
 						</Menu.Item>
-					</Menu.Sub>
-					<Menu.Item active={selection === "/account/notifications"} asChild>
-						<Pill onClick={() => setSelection("/account/notifications")}>Notifications</Pill>
-					</Menu.Item>
-					<Menu.Item active={selection === "/account/billing"} asChild>
-						<Pill onClick={() => setSelection("/account/billing")}>Billing</Pill>
-					</Menu.Item>
-				</Menu>
-				<Menu
-					active={selection.startsWith("/help/")}
-					buttonText="Help"
-				>
-					<Menu.Item active={selection === "/help/docs"} asChild>
-						<Pill onClick={() => setSelection("/help/docs")}>Documentation</Pill>
-					</Menu.Item>
-					<Menu.Item active={selection === "/help/shortcuts"} asChild>
-						<Pill onClick={() => setSelection("/help/shortcuts")}>Keyboard shortcuts</Pill>
-					</Menu.Item>
-					<Menu.Item active={selection === "/help/support"} asChild>
-						<Pill onClick={() => setSelection("/help/support")}>Contact support</Pill>
-					</Menu.Item>
-				</Menu>
+					</Menu>
+					<Menu active={selection.startsWith("/account/")} activeClassName={args.activeClassName} buttonText="Account">
+						<Menu.Sub buttonText="Settings">
+							<Menu.Item active={selection === "/account/profile"} asChild>
+								<Pill onClick={() => setSelection("/account/profile")}>Profile</Pill>
+							</Menu.Item>
+							<Menu.Item active={selection === "/account/security"} asChild>
+								<Pill onClick={() => setSelection("/account/security")}>Security</Pill>
+							</Menu.Item>
+							<Menu.Item active={selection === "/account/preferences"} asChild>
+								<Pill onClick={() => setSelection("/account/preferences")}>Preferences</Pill>
+							</Menu.Item>
+						</Menu.Sub>
+						<Menu.Item active={selection === "/account/notifications"} asChild>
+							<Pill onClick={() => setSelection("/account/notifications")}>Notifications</Pill>
+						</Menu.Item>
+						<Menu.Item active={selection === "/account/billing"} asChild>
+							<Pill onClick={() => setSelection("/account/billing")}>Billing</Pill>
+						</Menu.Item>
+					</Menu>
+					<Menu active={selection.startsWith("/help/")} activeClassName={args.activeClassName} buttonText="Help">
+						<Menu.Item active={selection === "/help/docs"} asChild>
+							<Pill onClick={() => setSelection("/help/docs")}>Documentation</Pill>
+						</Menu.Item>
+						<Menu.Item active={selection === "/help/shortcuts"} asChild>
+							<Pill onClick={() => setSelection("/help/shortcuts")}>Keyboard shortcuts</Pill>
+						</Menu.Item>
+						<Menu.Item active={selection === "/help/support"} asChild>
+							<Pill onClick={() => setSelection("/help/support")}>Contact support</Pill>
+						</Menu.Item>
+					</Menu>
 				</div>
 				<p className="max-w-full break-all text-center text-sm text-muted-foreground">Current selection: {selection}</p>
 			</div>

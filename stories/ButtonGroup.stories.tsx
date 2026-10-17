@@ -66,11 +66,7 @@ export const Default: Story = {
 
 		return (
 			<div className="flex flex-col items-start gap-3">
-				<Button.Group
-					orientation={orientation}
-					selectedVariant={selectedVariant}
-					aria-label="Navigation"
-				>
+				<Button.Group orientation={orientation} selectedVariant={selectedVariant} aria-label="Navigation">
 					{buttons.map((label) => {
 						const isSelected = selected === label.name;
 
@@ -86,9 +82,7 @@ export const Default: Story = {
 						);
 					})}
 				</Button.Group>
-				<span className="text-sm text-muted-foreground">
-					Selected: {selected}
-				</span>
+				<span className="text-sm text-muted-foreground">Selected: {selected}</span>
 			</div>
 		);
 	},
@@ -227,17 +221,11 @@ export const WithInteractionButtons: InteractionStory = {
 		longPressButtonFeedbackVariant,
 		selectedVariant,
 	}) => {
-		const [selected, setSelected] = useState<
-			"double-click" | "normal" | "long-press"
-		>("normal");
+		const [selected, setSelected] = useState<"double-click" | "normal" | "long-press">("normal");
 
 		return (
 			<div className="flex flex-col items-start gap-3">
-				<Button.Group
-					orientation={orientation}
-					selectedVariant={selectedVariant}
-					aria-label="Button interactions"
-				>
+				<Button.Group orientation={orientation} selectedVariant={selectedVariant} aria-label="Button interactions">
 					<DoubleClickButton
 						doubleClickTimeout={interactionDuration}
 						variant={doubleClickButtonVariant}
@@ -266,11 +254,7 @@ export const WithInteractionButtons: InteractionStory = {
 				</Button.Group>
 				<span className="text-sm text-muted-foreground">
 					Selected:{" "}
-					{selected === "double-click"
-						? "Double-click"
-						: selected === "normal"
-							? "Normal button"
-							: "Long press"}
+					{selected === "double-click" ? "Double-click" : selected === "normal" ? "Normal button" : "Long press"}
 				</span>
 			</div>
 		);
@@ -287,8 +271,7 @@ export const WithInteractionButtons: InteractionStory = {
 			},
 			interactionDuration: {
 				control: { type: "number", min: 0, step: 100 },
-				description:
-					"Shared time limit used by the double-click and long-press buttons, in milliseconds.",
+				description: "Shared time limit used by the double-click and long-press buttons, in milliseconds.",
 				table: {
 					defaultValue: {
 						summary: "2500",

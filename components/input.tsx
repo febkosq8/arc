@@ -19,13 +19,7 @@ const inputVariants = cva(
 export interface InputProps extends ComponentPropsWithoutRef<"input">, VariantProps<typeof inputVariants> {}
 
 const Input = ({ className, variant, ...rest }: InputProps) => {
-	return (
-		<input
-			{...rest}
-			autoComplete="off"
-			className={cx(inputVariants({ variant }), className)}
-		/>
-	);
+	return <input {...rest} autoComplete="off" className={cx(inputVariants({ variant }), className)} />;
 };
 
 export default Input;

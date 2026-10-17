@@ -8,6 +8,7 @@ import { Children, ComponentPropsWithoutRef, ReactNode, isValidElement } from "r
 interface MenuProps {
 	className?: string;
 	active?: boolean;
+	activeClassName?: string;
 	buttonText: string | ReactNode;
 	children: ReactNode;
 }
@@ -37,11 +38,11 @@ const MenuItem = ({ active, className, ...props }: MenuItemProps) => {
 	);
 };
 
-const MenuComponent = ({ className, active, buttonText, children }: MenuProps) => {
+const MenuComponent = ({ className, active, activeClassName, buttonText, children }: MenuProps) => {
 	return (
 		<DropdownBaseMenu.Root>
 			<DropdownBaseMenu.Trigger asChild>
-				<Pill active={active} className={cx("w-fit", className)}>
+				<Pill active={active} className={cx("w-fit", active && activeClassName, className)}>
 					{buttonText}
 					<FontAwesomeIcon icon={faChevronDown} className="-mr-1 ml-2 h-4 w-4" aria-hidden="true" />
 				</Pill>
@@ -55,7 +56,7 @@ const MenuComponent = ({ className, active, buttonText, children }: MenuProps) =
 					{children}
 				</DropdownBaseMenu.Content>
 			</DropdownBaseMenu.Portal>
-			</DropdownBaseMenu.Root>
+		</DropdownBaseMenu.Root>
 	);
 };
 
@@ -92,11 +93,7 @@ const MenuSub = ({ active, buttonText, children }: MenuSubProps) => {
 		</DropdownBaseMenu.Sub>
 	);
 
-	return (
-		<div className="arc-menu-sub">
-			{submenu}
-		</div>
-	);
+	return <div className="arc-menu-sub">{submenu}</div>;
 };
 
 const Menu: MenuComponent = Object.assign(MenuComponent, {

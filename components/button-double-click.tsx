@@ -11,9 +11,7 @@ export interface DoubleClickButtonFeedbackContext {
 	feedbackVariant: "primary" | "secondary" | "destructive" | "warning";
 }
 
-export type DoubleClickButtonFeedbackContent =
-	| ReactNode
-	| ((context: DoubleClickButtonFeedbackContext) => ReactNode);
+export type DoubleClickButtonFeedbackContent = ReactNode | ((context: DoubleClickButtonFeedbackContext) => ReactNode);
 
 export interface DoubleClickButtonProps extends ButtonProps {
 	doubleClickTimeout?: number;
@@ -45,10 +43,13 @@ const DoubleClickButton = ({
 		warning: "var(--color-warning)",
 	}[feedbackVariant ?? "warning"];
 
-	useEffect(() => () => {
-		if (timerRef.current) clearTimeout(timerRef.current);
-		if (intervalRef.current) clearInterval(intervalRef.current);
-	}, []);
+	useEffect(
+		() => () => {
+			if (timerRef.current) clearTimeout(timerRef.current);
+			if (intervalRef.current) clearInterval(intervalRef.current);
+		},
+		[],
+	);
 
 	const resolvedFeedbackContent =
 		typeof feedbackContent === "function"
@@ -66,22 +67,10 @@ const DoubleClickButton = ({
 			children
 		) : (
 			<span className="grid">
-				<span
-					className={cx(
-						"col-start-1 row-start-1",
-						isWaiting ? "invisible" : "visible",
-					)}
-					aria-hidden={isWaiting}
-				>
+				<span className={cx("col-start-1 row-start-1", isWaiting ? "invisible" : "visible")} aria-hidden={isWaiting}>
 					{children}
 				</span>
-				<span
-					className={cx(
-						"col-start-1 row-start-1",
-						isWaiting ? "visible" : "invisible",
-					)}
-					aria-hidden={!isWaiting}
-				>
+				<span className={cx("col-start-1 row-start-1", isWaiting ? "visible" : "invisible")} aria-hidden={!isWaiting}>
 					{resolvedFeedbackContent}
 				</span>
 			</span>
@@ -91,17 +80,16 @@ const DoubleClickButton = ({
 		<Button
 			{...props}
 			children={buttonContent}
-			className={cx(
-				className,
-			)}
-			style={{
-			...style,
-			} as CSSProperties & { "--double-click-timeout"?: string }}
+			className={cx(className)}
+			style={
+				{
+					...style,
+				} as CSSProperties & { "--double-click-timeout"?: string }
+			}
 			variant={variant}
 			data-double-click-state={isWaiting ? "waiting" : undefined}
 			onClick={(event) => {
-				const isSecondClick =
-					isWaiting && Date.now() <= deadlineRef.current;
+				const isSecondClick = isWaiting && Date.now() <= deadlineRef.current;
 
 				if (isSecondClick) {
 					setIsWaiting(false);
@@ -141,19 +129,17 @@ const DoubleClickButton = ({
 				aria-hidden="true"
 				className="arc-double-click-progress-ring pointer-events-none absolute inset-0 rounded-md p-px"
 				style={
-				{
-					background: isWaiting
-						? `conic-gradient(from 90deg, color-mix(in srgb, ${feedbackColor} 90%, white) calc(var(--double-click-progress) * 1%), transparent 0)`
-						: "transparent",
-					"--double-click-progress": 100,
-					"--double-click-timeout": `${doubleClickTimeout}ms`,
-					animation: isWaiting
-						? "double-click-countdown var(--double-click-timeout) linear forwards"
-						: "none",
-				} as CSSProperties & {
-				"--double-click-progress": number;
-				"--double-click-timeout": string;
-				}
+					{
+						background: isWaiting
+							? `conic-gradient(from 90deg, color-mix(in srgb, ${feedbackColor} 90%, white) calc(var(--double-click-progress) * 1%), transparent 0)`
+							: "transparent",
+						"--double-click-progress": 100,
+						"--double-click-timeout": `${doubleClickTimeout}ms`,
+						animation: isWaiting ? "double-click-countdown var(--double-click-timeout) linear forwards" : "none",
+					} as CSSProperties & {
+						"--double-click-progress": number;
+						"--double-click-timeout": string;
+					}
 				}
 			/>
 		</span>

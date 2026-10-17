@@ -36,14 +36,7 @@ type Story = StoryObj<{
 }>;
 
 export const Default: Story = {
-	render: ({
-		children,
-		longPressDuration,
-		preventClick,
-		variant,
-		feedbackVariant,
-		feedbackContent,
-	}) => {
+	render: ({ children, longPressDuration, preventClick, variant, feedbackVariant, feedbackContent }) => {
 		const [message, setMessage] = useState("Press and hold for 2500ms");
 
 		return (
@@ -58,9 +51,7 @@ export const Default: Story = {
 				>
 					{children}
 				</LongPressButton>
-				<span className="text-sm text-muted-foreground">
-					{message.replace("2500", String(longPressDuration))}
-				</span>
+				<span className="text-sm text-muted-foreground">{message.replace("2500", String(longPressDuration))}</span>
 			</div>
 		);
 	},

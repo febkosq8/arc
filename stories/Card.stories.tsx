@@ -116,17 +116,17 @@ export default meta;
 type Story = StoryObj<CardStoryArgs>;
 
 export const Default: Story = {
-    args: {
-        variant: "outline-secondary"
-    },
+	args: {
+		variant: "outline-secondary",
+	},
 
-    render: ({ header, content, footer, ...args }) => (
+	render: ({ header, content, footer, ...args }) => (
 		<Card {...args} className="max-w-md">
 			<Card.Header>{header}</Card.Header>
 			<Card.Content>{content}</Card.Content>
 			<Card.Footer>{footer}</Card.Footer>
 		</Card>
-	)
+	),
 };
 
 export const Variants: Story = {

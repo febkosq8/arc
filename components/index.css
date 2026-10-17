@@ -30,121 +30,94 @@
 	border-radius: 0 !important;
 }
 
-.arc-button-group
-	> :is(.arc-button, .arc-double-click-button, .arc-long-press-button):not(:first-child) {
+.arc-button-group > :is(.arc-button, .arc-double-click-button, .arc-long-press-button):not(:first-child) {
 	border-color: hsl(var(--border));
 }
 
-.arc-button-group-horizontal
-	> :is(.arc-button, .arc-double-click-button, .arc-long-press-button):first-child {
+.arc-button-group-horizontal > :is(.arc-button, .arc-double-click-button, .arc-long-press-button):first-child {
 	border-radius: 0;
 }
 
-.arc-button-group-horizontal
-	> :is(.arc-button, .arc-double-click-button, .arc-long-press-button):last-child {
+.arc-button-group-horizontal > :is(.arc-button, .arc-double-click-button, .arc-long-press-button):last-child {
 	border-radius: 0;
 }
 
-.arc-button-group-horizontal
-	> :is(.arc-button, .arc-double-click-button, .arc-long-press-button):not(:first-child) {
+.arc-button-group-horizontal > :is(.arc-button, .arc-double-click-button, .arc-long-press-button):not(:first-child) {
 	border-left-width: 1px;
 	border-color: hsl(var(--border));
 }
 
-.arc-button-group-vertical
-	> :is(.arc-button, .arc-double-click-button, .arc-long-press-button) {
+.arc-button-group-vertical > :is(.arc-button, .arc-double-click-button, .arc-long-press-button) {
 	width: 100%;
 }
 
-.arc-button-group-vertical
-	> :is(.arc-button, .arc-double-click-button, .arc-long-press-button):first-child {
+.arc-button-group-vertical > :is(.arc-button, .arc-double-click-button, .arc-long-press-button):first-child {
 	border-radius: 0;
 }
 
-.arc-button-group-vertical
-	> :is(.arc-button, .arc-double-click-button, .arc-long-press-button):last-child {
+.arc-button-group-vertical > :is(.arc-button, .arc-double-click-button, .arc-long-press-button):last-child {
 	border-radius: 0;
 }
 
-.arc-button-group-vertical
-	> :is(.arc-button, .arc-double-click-button, .arc-long-press-button):not(:first-child) {
-	border-left-width: 0;
+.arc-button-group-vertical > :is(.arc-button, .arc-double-click-button, .arc-long-press-button):not(:first-child) {
 	border-top-width: 1px;
+	border-left-width: 0;
 	border-color: hsl(var(--border));
 }
 
-.arc-button-group
-	> :is(.arc-double-click-button, .arc-long-press-button)
-	> .arc-button {
+.arc-button-group > :is(.arc-double-click-button, .arc-long-press-button) > .arc-button {
 	border-radius: 0 !important;
 }
 
-.arc-button-group
-	> :is(.arc-double-click-button, .arc-long-press-button) {
-	border-radius: 0 !important;
-	margin: 0;
-	padding: 0;
+.arc-button-group > :is(.arc-double-click-button, .arc-long-press-button) {
 	z-index: 1;
+	margin: 0;
+	border-radius: 0 !important;
+	padding: 0;
 }
 
-.arc-button-group
-	> :is(.arc-double-click-button, .arc-long-press-button)
-	> .arc-double-click-progress-ring {
-	border-radius: inherit;
-	inset: 0;
+.arc-button-group > :is(.arc-double-click-button, .arc-long-press-button) > .arc-double-click-progress-ring {
 	z-index: 2;
+	inset: 0;
+	border-radius: inherit;
 }
 
-.arc-button-group-horizontal
-	> :is(.arc-double-click-button, .arc-long-press-button):first-child {
+.arc-button-group-horizontal > :is(.arc-double-click-button, .arc-long-press-button):first-child {
 	border-radius: 5px 0 0 5px !important;
 }
 
-.arc-button-group-horizontal
-	> :is(.arc-double-click-button, .arc-long-press-button):last-child {
+.arc-button-group-horizontal > :is(.arc-double-click-button, .arc-long-press-button):last-child {
 	border-radius: 0 5px 5px 0 !important;
 }
 
-.arc-button-group-vertical
-	> :is(.arc-double-click-button, .arc-long-press-button):first-child {
+.arc-button-group-vertical > :is(.arc-double-click-button, .arc-long-press-button):first-child {
 	border-radius: 5px 5px 0 0 !important;
 }
 
-.arc-button-group-vertical
-	> :is(.arc-double-click-button, .arc-long-press-button):last-child {
+.arc-button-group-vertical > :is(.arc-double-click-button, .arc-long-press-button):last-child {
 	border-radius: 0 0 5px 5px !important;
 }
 
-.arc-button-group-horizontal
-	> :is(.arc-double-click-button, .arc-long-press-button):not(:first-child)
-	{
+.arc-button-group-horizontal > :is(.arc-double-click-button, .arc-long-press-button):not(:first-child) {
 	border-left-width: 1px;
 	border-color: hsl(var(--border));
 }
 
-.arc-button-group-horizontal
-	> :is(.arc-double-click-button, .arc-long-press-button):not(:first-child)
-	> .arc-button {
+.arc-button-group-horizontal > :is(.arc-double-click-button, .arc-long-press-button):not(:first-child) > .arc-button {
 	border-left-width: 0;
 }
 
-.arc-button-group-vertical
-	> :is(.arc-double-click-button, .arc-long-press-button)
-	> .arc-button {
+.arc-button-group-vertical > :is(.arc-double-click-button, .arc-long-press-button) > .arc-button {
 	width: 100%;
 }
 
-.arc-button-group-vertical
-	> :is(.arc-double-click-button, .arc-long-press-button):not(:first-child)
-	{
-	border-left-width: 0;
+.arc-button-group-vertical > :is(.arc-double-click-button, .arc-long-press-button):not(:first-child) {
 	border-top-width: 1px;
+	border-left-width: 0;
 	border-color: hsl(var(--border));
 }
 
-.arc-button-group-vertical
-	> :is(.arc-double-click-button, .arc-long-press-button):not(:first-child)
-	> .arc-button {
+.arc-button-group-vertical > :is(.arc-double-click-button, .arc-long-press-button):not(:first-child) > .arc-button {
 	border-top-width: 0;
 }
 
@@ -255,7 +228,7 @@
 		@apply text-lg font-semibold;
 	}
 	.typography-small {
-		@apply text-sm font-medium leading-none;
+		@apply text-sm leading-none font-medium;
 	}
 	.typography-muted {
 		@apply text-sm text-muted-foreground;
@@ -323,8 +296,8 @@
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-	background: hsl(var(--primary));
 	border-radius: 5px;
+	background: hsl(var(--primary));
 }
 
 /* Handle on hover */

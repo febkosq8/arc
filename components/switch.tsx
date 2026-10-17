@@ -78,4 +78,4 @@ const SwitchVariants = cva("relative inline-flex h-6 w-11 items-center rounded-f
 		},
 	],
 });
-export default Switch
+export default Switch;
