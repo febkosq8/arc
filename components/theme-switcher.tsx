@@ -1,44 +1,73 @@
-import { faLaptop, faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Menu from "@feb/menu";
 import Pill from "@feb/pill";
+import { FiMonitor, FiMoon, FiSun } from "react-icons/fi";
 import { useEffect, useState } from "react";
+
 type Color = "light" | "dark" | "system";
 
-export default function ThemeSwitcher() {
-	const colorModeIcon = { light: faSun, dark: faMoon, system: faLaptop };
-	const localStorageString = `theme`;
+export interface ThemeSwitcherProps {
+	variant?: "dropdown" | "toggle";
+}
+
+const colorModeIcon = { light: FiSun, dark: FiMoon, system: FiMonitor };
+const localStorageString = "theme";
+
+const isDarkColorMode = (colorMode: Color) =>
+	colorMode === "dark" ||
+	(colorMode === "system" &&
+		typeof window !== "undefined" &&
+		window.matchMedia("(prefers-color-scheme: dark)").matches);
+
+const getStoredColorMode = (): Color => {
+	if (typeof window === "undefined") {
+		return "system";
+	}
+
+	const storedColorMode = window.localStorage.getItem(localStorageString);
+	return storedColorMode === "light" || storedColorMode === "dark" || storedColorMode === "system"
+		? storedColorMode
+		: "system";
+};
+
+export default function ThemeSwitcher({ variant = "dropdown" }: ThemeSwitcherProps) {
+	const [colorMode, setColorMode] = useState<Color>(getStoredColorMode);
+
 	useEffect(() => {
-		if (typeof window !== "undefined" && !(localStorageString in localStorage)) {
-			localStorage.setItem(localStorageString, "system");
+		if (typeof window === "undefined") {
+			return;
 		}
-	}, []);
-	const [colorMode, setColorMode] = useState<Color>(
-		typeof window !== "undefined" ? ((localStorage.getItem(localStorageString) as Color) ?? "system") : "system",
-	);
-	useEffect(() => {
-		if (["light", "dark"].includes(colorMode)) {
-			if (colorMode === "dark") {
-				document.documentElement.classList.add("dark");
-				setColorMode("dark");
-			} else if (colorMode === "light") {
-				document.documentElement.classList.remove("dark");
-				setColorMode("light");
-			}
-			localStorage.setItem(localStorageString, colorMode);
-		} else {
-			const isSystemThemeDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-			if (isSystemThemeDark) {
-				document.documentElement.classList.add("dark");
-			} else {
-				document.documentElement.classList.remove("dark");
-			}
-			localStorage.setItem(localStorageString, "system");
-		}
+
+		document.documentElement.classList.toggle("dark", isDarkColorMode(colorMode));
+		window.localStorage.setItem(localStorageString, colorMode);
 	}, [colorMode]);
+
+	const toggleColorMode = () => {
+		setColorMode(isDarkColorMode(colorMode) ? "light" : "dark");
+	};
+
+	if (variant === "toggle") {
+		const isDark = isDarkColorMode(colorMode);
+		const ColorModeIcon = colorModeIcon[colorMode];
+
+		return (
+			<div className="arc-theme-switcher">
+				<Pill
+					active={isDark}
+					aria-label={`Switch to ${isDark ? "light" : "dark"} theme`}
+					title={`Switch to ${isDark ? "light" : "dark"} theme`}
+					onClick={toggleColorMode}
+				>
+					<ColorModeIcon aria-hidden="true" />
+				</Pill>
+			</div>
+		);
+	}
+
+	const ColorModeIcon = colorModeIcon[colorMode];
+
 	return (
 		<div className="arc-theme-switcher">
-			<Menu buttonText={<FontAwesomeIcon icon={colorModeIcon[colorMode] ?? faLaptop} />}>
+			<Menu buttonText={<ColorModeIcon aria-hidden="true" />}>
 				<>
 					<Menu.Item className="focus-visible:outline-none">
 						<Pill
@@ -47,9 +76,9 @@ export default function ThemeSwitcher() {
 							onClick={() => {
 								setColorMode("system");
 							}}
-							className="flex w-full whitespace-nowrap p-6 rounded-t-sm rounded-b-none"
+							className="flex w-full whitespace-nowrap rounded-t-sm rounded-b-none p-6"
 						>
-							<FontAwesomeIcon icon={faLaptop} className={"size-4"} />
+							<FiMonitor className="size-4" aria-hidden="true" />
 						</Pill>
 					</Menu.Item>
 					<Menu.Item className="focus-visible:outline-none">
@@ -59,9 +88,9 @@ export default function ThemeSwitcher() {
 							onClick={() => {
 								setColorMode("light");
 							}}
-							className="flex w-full whitespace-nowrap p-6 rounded-none"
+							className="flex w-full whitespace-nowrap rounded-none p-6"
 						>
-							<FontAwesomeIcon icon={faSun} className={"size-4"} />
+							<FiSun className="size-4" aria-hidden="true" />
 						</Pill>
 					</Menu.Item>
 					<Menu.Item className="focus-visible:outline-none">
@@ -71,9 +100,9 @@ export default function ThemeSwitcher() {
 							onClick={() => {
 								setColorMode("dark");
 							}}
-							className="flex w-full whitespace-nowrap p-6 rounded-b-sm rounded-t-none"
+							className="flex w-full whitespace-nowrap rounded-b-sm rounded-t-none p-6"
 						>
-							<FontAwesomeIcon icon={faMoon} className={"size-4"} />
+							<FiMoon className="size-4" aria-hidden="true" />
 						</Pill>
 					</Menu.Item>
 				</>

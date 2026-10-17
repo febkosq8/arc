@@ -18,3 +18,4 @@ export { default as Menu } from "./menu";
 export { default as Pill } from "./pill";
 export { default as Switch } from "./switch";
 export { default as ThemeSwitcher } from "./theme-switcher";
+export type { ThemeSwitcherProps } from "./theme-switcher";

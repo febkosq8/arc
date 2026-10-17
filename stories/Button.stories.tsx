@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button } from "../components";
+import { FiArrowRight } from "react-icons/fi";
 
 const meta = {
 	title: "Components/Button",
@@ -82,7 +81,7 @@ export const Default: Story = {
 export const IconOnly: Story = {
 	render: (args) => (
 		<Button {...args} aria-label="Continue" title="Continue">
-			<FontAwesomeIcon icon={faArrowRight} aria-hidden="true" className="h-4 w-4" />
+			<FiArrowRight aria-hidden="true" className="h-4 w-4" />
 		</Button>
 	),
 	parameters: {

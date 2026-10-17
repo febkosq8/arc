@@ -1,8 +1,7 @@
 import Pill from "@feb/pill";
-import { faChevronDown, faChevronRight } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as DropdownBaseMenu from "@radix-ui/react-dropdown-menu";
 import { cx } from "@rinzai/zen";
+import { FiChevronDown, FiChevronRight } from "react-icons/fi";
 import { Children, ComponentPropsWithoutRef, ReactNode, isValidElement } from "react";
 
 interface MenuProps {
@@ -44,7 +43,7 @@ const MenuComponent = ({ className, active, activeClassName, buttonText, childre
 			<DropdownBaseMenu.Trigger asChild>
 				<Pill active={active} className={cx("w-fit", active && activeClassName, className)}>
 					{buttonText}
-					<FontAwesomeIcon icon={faChevronDown} className="-mr-1 ml-2 h-4 w-4" aria-hidden="true" />
+					<FiChevronDown className="-mr-1 ml-2 h-4 w-4" aria-hidden="true" />
 				</Pill>
 			</DropdownBaseMenu.Trigger>
 			<DropdownBaseMenu.Portal>
@@ -76,7 +75,7 @@ const MenuSub = ({ active, buttonText, children }: MenuSubProps) => {
 			<DropdownBaseMenu.SubTrigger asChild>
 				<Pill active={isActive} className="flex w-full items-center justify-between rounded-none px-3 py-2 text-base">
 					{buttonText}
-					<FontAwesomeIcon icon={faChevronRight} className="-mr-1 ml-2 h-4 w-4" aria-hidden="true" />
+					<FiChevronRight className="-mr-1 ml-2 h-4 w-4" aria-hidden="true" />
 				</Pill>
 			</DropdownBaseMenu.SubTrigger>
 			<DropdownBaseMenu.Portal>
