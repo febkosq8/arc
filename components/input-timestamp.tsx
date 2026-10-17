@@ -11,7 +11,9 @@ const InputTimestamp = ({ value, format = `$ISO$ ($RELATIVE$)`, ...rest }: Input
 	const formattedValue = useMemo(() => {
 		return value ? DateHandler.getFormattedTime(value, format) : "";
 	}, [value, format]);
-	return <Input type="text" disabled readOnly value={formattedValue} {...rest} />;
+	return (
+		<Input type="text" disabled readOnly value={formattedValue} size={Math.max(formattedValue.length, 1)} {...rest} />
+	);
 };
 
 export default InputTimestamp;

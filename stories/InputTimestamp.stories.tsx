@@ -1,7 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { InputTimestamp } from "../components";
 
-const sampleTimestamp = Date.now();
+const hour = 60 * 60 * 1000;
+const fourteenDays = 14 * 24 * hour;
+const sampleTimestamp = Date.now() - (hour + Math.random() * (fourteenDays - hour));
 
 const meta = {
 	title: "Components/InputTimestamp",
@@ -47,11 +49,16 @@ export const Default: Story = {
 	},
 };
 
-export const Empty: Story = {};
-
 export const AbsoluteTimeOnly: Story = {
 	args: {
 		value: sampleTimestamp,
 		format: "$ISO$",
+	},
+};
+
+export const RelativeTimeOnly: Story = {
+	args: {
+		value: sampleTimestamp,
+		format: "$RELATIVE$",
 	},
 };
