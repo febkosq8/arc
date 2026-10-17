@@ -6,9 +6,7 @@ import { fileURLToPath } from "node:url";
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const runGit = (args) => execFileSync("git", args, { cwd: root, encoding: "utf8" }).trim();
 
-const localTags = runGit(["tag", "--list", "v*"])
-	.split(/\r?\n/)
-	.filter(Boolean);
+const localTags = runGit(["tag", "--list", "v*"]).split(/\r?\n/).filter(Boolean);
 const remoteTags = runGit(["ls-remote", "--tags", "--refs", "origin", "v*"])
 	.split(/\r?\n/)
 	.filter(Boolean)
@@ -34,4 +32,5 @@ const tag = `v${version}`;
 console.log(`Arc ${version} untag commands (review and run manually):\n`);
 console.log(`git push origin --delete ${tag}`);
 console.log(`git tag --delete ${tag}`);
+console.log(`npm unpublish @febkosq8/arc@${version}`);
 console.log("\nIf a GitHub Release was created for this tag, delete it manually from GitHub Releases.");

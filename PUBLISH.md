@@ -49,7 +49,7 @@ If publishing fails because the version already exists, increment the patch vers
 
 ## Unpublish
 
-Run **Get Commands to Untag Arc release** from VS Code's **Terminal > Run Task** menu to print the local and remote tag deletion commands. Enter the release version when prompted, then review and run the commands manually; this task does not unpublish the npm package.
+Run **Get Commands to Untag Arc release** from VS Code's **Terminal > Run Task** menu to print the local and remote tag deletion commands and the npm unpublish command. Enter the release version when prompted, then review and run the commands manually; this task does not execute them.
 
 To remove a specific release, replace `X.Y.Z` below with its version. Remove the npm package version:
 

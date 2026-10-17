@@ -27,5 +27,3 @@ console.log(`git tag -a ${tag} -m "${tag}"`);
 console.log("git push");
 console.log(`git push origin ${tag}`);
 console.log("pnpm run push-npm");
-console.log(`\nIf npm requires an authenticator code, run: pnpm run push-npm -- --otp=YOUR_6_DIGIT_CODE`);
-console.log("If npm opens a browser authentication flow, complete it in the terminal, then rerun the publish command.");
