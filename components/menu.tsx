@@ -3,7 +3,7 @@ import { faChevronDown, faChevronRight } from "@fortawesome/free-solid-svg-icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as DropdownBaseMenu from "@radix-ui/react-dropdown-menu";
 import { cx } from "@rinzai/zen";
-import { ReactNode } from "react";
+import { Children, ComponentPropsWithoutRef, ReactNode, isValidElement } from "react";
 
 interface MenuProps {
 	className?: string;
@@ -13,13 +13,33 @@ interface MenuProps {
 }
 
 interface MenuComponent extends React.FC<MenuProps> {
-	Item: typeof DropdownBaseMenu.Item;
+	Item: typeof MenuItem;
+	Sub: typeof MenuSub;
 }
 
-const MenuComponent = ({ className, active, buttonText, children }:MenuProps) => {
+type MenuItemProps = ComponentPropsWithoutRef<typeof DropdownBaseMenu.Item> & {
+	active?: boolean;
+};
+
+const MenuItem = ({ active, className, ...props }: MenuItemProps) => {
 	return (
-		<div className="arc-menu">
-			<DropdownBaseMenu.Root>
+		<DropdownBaseMenu.Item
+			{...props}
+			className={cx(
+				"flex min-h-10 w-full cursor-default items-center justify-start rounded-none! px-3 py-2 text-base font-medium text-popover-foreground outline-none select-none",
+				"data-highlighted:bg-accent data-highlighted:text-primary",
+				"focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset",
+				"*:rounded-none!",
+				active && "text-primary!",
+				className,
+			)}
+		/>
+	);
+};
+
+const MenuComponent = ({ className, active, buttonText, children }: MenuProps) => {
+	return (
+		<DropdownBaseMenu.Root>
 			<DropdownBaseMenu.Trigger asChild>
 				<Pill active={active} className={cx("w-fit", className)}>
 					{buttonText}
@@ -29,33 +49,31 @@ const MenuComponent = ({ className, active, buttonText, children }:MenuProps) =>
 			<DropdownBaseMenu.Portal>
 				<DropdownBaseMenu.Content
 					loop={true}
-					sideOffset={2}
-					className="w-fit origin-top-right divide-y border-2 border-border divide-border rounded-md bg-background shadow-lg ring-1 ring-background ring-opacity-5 focus:outline-none focus-visible:ring-0"
+					sideOffset={8}
+					className="z-50 flex w-fit min-w-40 origin-top-right flex-col overflow-hidden divide-y divide-border rounded-md border border-border bg-popover shadow-lg ring-1 ring-foreground/10 focus:outline-none"
 				>
 					{children}
 				</DropdownBaseMenu.Content>
 			</DropdownBaseMenu.Portal>
 			</DropdownBaseMenu.Root>
-		</div>
 	);
 };
 
-const Menu: MenuComponent = Object.assign(MenuComponent, {
-	Item: DropdownBaseMenu.Item,
-});
-
 interface MenuSubProps {
 	active?: boolean;
-	buttonText: string;
+	buttonText: string | ReactNode;
 	children: ReactNode;
 }
 
 const MenuSub = ({ active, buttonText, children }: MenuSubProps) => {
-	return (
-		<div className="arc-menu-sub">
-			<DropdownBaseMenu.Sub>
+	const hasActiveChild = Children.toArray(children).some(
+		(child) => isValidElement<MenuItemProps>(child) && child.type === MenuItem && child.props.active,
+	);
+	const isActive = active || hasActiveChild;
+	const submenu = (
+		<DropdownBaseMenu.Sub>
 			<DropdownBaseMenu.SubTrigger asChild>
-				<Pill active={active} className="flex w-full items-center justify-between whitespace-nowrap">
+				<Pill active={isActive} className="flex w-full items-center justify-between rounded-none px-3 py-2 text-base">
 					{buttonText}
 					<FontAwesomeIcon icon={faChevronRight} className="-mr-1 ml-2 h-4 w-4" aria-hidden="true" />
 				</Pill>
@@ -63,21 +81,26 @@ const MenuSub = ({ active, buttonText, children }: MenuSubProps) => {
 			<DropdownBaseMenu.Portal>
 				<DropdownBaseMenu.SubContent
 					loop={true}
-					sideOffset={2}
+					sideOffset={8}
 					arrowPadding={2}
-					className="w-fit origin-top-right divide-y border-2 border-gray-600 divide-gray-100 rounded-md bg-neutral-900 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+					className="z-50 flex w-fit min-w-40 origin-top-right flex-col overflow-hidden divide-y divide-border rounded-md border border-border bg-popover shadow-lg ring-1 ring-foreground/10 focus:outline-none"
 				>
 					{children}
-					<DropdownBaseMenu.Arrow className="fill-black dark:fill-stone-200 size-2" />
+					<DropdownBaseMenu.Arrow className="size-2 fill-popover" />
 				</DropdownBaseMenu.SubContent>
 			</DropdownBaseMenu.Portal>
-			</DropdownBaseMenu.Sub>
+		</DropdownBaseMenu.Sub>
+	);
+
+	return (
+		<div className="arc-menu-sub">
+			{submenu}
 		</div>
 	);
 };
 
-Object.assign(Menu, {
-	Item: DropdownBaseMenu.Item,
+const Menu: MenuComponent = Object.assign(MenuComponent, {
+	Item: MenuItem,
 	Sub: MenuSub,
 });
 
