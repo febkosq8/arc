@@ -207,7 +207,7 @@ export const Default: Story = {
 
 type InteractionStory = StoryObj<{
 	orientation: "horizontal" | "vertical";
-	interactionDuration: number;
+	interactionMsDuration: number;
 	doubleClickButtonVariant: ButtonGroupVariant;
 	doubleClickButtonFeedbackVariant: FeedbackVariant;
 	normalButtonVariant: ButtonGroupVariant;
@@ -221,7 +221,7 @@ type FeedbackVariant = "primary" | "secondary" | "destructive" | "warning";
 export const WithInteractionButtons: InteractionStory = {
 	render: ({
 		orientation,
-		interactionDuration,
+		interactionMsDuration,
 		doubleClickButtonVariant,
 		doubleClickButtonFeedbackVariant,
 		normalButtonVariant,
@@ -235,7 +235,7 @@ export const WithInteractionButtons: InteractionStory = {
 			<div className="flex flex-col items-start gap-3">
 				<Button.Group orientation={orientation} selectedVariant={selectedVariant} aria-label="Button interactions">
 					<DoubleClickButton
-						doubleClickTimeout={interactionDuration}
+						doubleClickMsDuration={interactionMsDuration}
 						variant={doubleClickButtonVariant}
 						feedbackVariant={doubleClickButtonFeedbackVariant}
 						aria-pressed={selected === "double-click"}
@@ -251,7 +251,7 @@ export const WithInteractionButtons: InteractionStory = {
 						Normal button
 					</Button>
 					<LongPressButton
-						longPressDuration={interactionDuration}
+						longPressMsDuration={interactionMsDuration}
 						variant={longPressButtonVariant}
 						feedbackVariant={longPressButtonFeedbackVariant}
 						aria-pressed={selected === "long-press"}
@@ -278,7 +278,7 @@ export const WithInteractionButtons: InteractionStory = {
 					summary: "horizontal",
 				},
 			},
-			interactionDuration: {
+			interactionMsDuration: {
 				control: { type: "number", min: 0, step: 100 },
 				description: "Shared time limit used by the double-click and long-press buttons, in milliseconds.",
 				table: {
@@ -386,7 +386,7 @@ export const WithInteractionButtons: InteractionStory = {
 	},
 	args: {
 		orientation: "horizontal",
-		interactionDuration: 2500,
+		interactionMsDuration: 2500,
 		doubleClickButtonVariant: "secondary",
 		doubleClickButtonFeedbackVariant: "destructive",
 		normalButtonVariant: "secondary",

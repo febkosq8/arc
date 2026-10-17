@@ -5,7 +5,7 @@ import Button, { type ButtonProps } from "./button";
 export interface DoubleClickButtonFeedbackContext {
 	isWaiting: boolean;
 	isActive: boolean;
-	doubleClickTimeout: number;
+	doubleClickMsDuration: number;
 	remainingTime: number;
 	variant: ButtonProps["variant"];
 	feedbackVariant: "primary" | "secondary" | "destructive" | "warning";
@@ -14,13 +14,13 @@ export interface DoubleClickButtonFeedbackContext {
 export type DoubleClickButtonFeedbackContent = ReactNode | ((context: DoubleClickButtonFeedbackContext) => ReactNode);
 
 export interface DoubleClickButtonProps extends ButtonProps {
-	doubleClickTimeout?: number;
+	doubleClickMsDuration?: number;
 	feedbackVariant?: "primary" | "secondary" | "destructive" | "warning";
 	feedbackContent?: DoubleClickButtonFeedbackContent;
 }
 
 const DoubleClickButton = ({
-	doubleClickTimeout = 2000,
+	doubleClickMsDuration = 2000,
 	feedbackVariant = "warning",
 	feedbackContent,
 	variant = "primary",
@@ -56,7 +56,7 @@ const DoubleClickButton = ({
 			? feedbackContent({
 					isWaiting,
 					isActive: false,
-					doubleClickTimeout,
+					doubleClickMsDuration,
 					remainingTime,
 					variant,
 					feedbackVariant,
@@ -98,10 +98,10 @@ const DoubleClickButton = ({
 					if (intervalRef.current) clearInterval(intervalRef.current);
 					onDoubleClick?.(event);
 				} else {
-					const deadline = Date.now() + doubleClickTimeout;
+					const deadline = Date.now() + doubleClickMsDuration;
 					deadlineRef.current = deadline;
 					setIsWaiting(true);
-					setRemainingTime(doubleClickTimeout);
+					setRemainingTime(doubleClickMsDuration);
 					if (timerRef.current) clearTimeout(timerRef.current);
 					if (intervalRef.current) clearInterval(intervalRef.current);
 					intervalRef.current = setInterval(() => {
@@ -111,7 +111,7 @@ const DoubleClickButton = ({
 						setIsWaiting(false);
 						setRemainingTime(0);
 						if (intervalRef.current) clearInterval(intervalRef.current);
-					}, doubleClickTimeout);
+					}, doubleClickMsDuration);
 				}
 				onClick?.(event);
 			}}
@@ -134,7 +134,7 @@ const DoubleClickButton = ({
 							? `conic-gradient(from 90deg, color-mix(in srgb, ${feedbackColor} 90%, white) calc(var(--double-click-progress) * 1%), transparent 0)`
 							: "transparent",
 						"--double-click-progress": 100,
-						"--double-click-timeout": `${doubleClickTimeout}ms`,
+						"--double-click-timeout": `${doubleClickMsDuration}ms`,
 						animation: isWaiting ? "double-click-countdown var(--double-click-timeout) linear forwards" : "none",
 					} as CSSProperties & {
 						"--double-click-progress": number;

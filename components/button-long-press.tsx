@@ -5,7 +5,7 @@ import Button, { type ButtonProps } from "./button";
 export interface LongPressButtonFeedbackContext {
 	isPressing: boolean;
 	isActive: boolean;
-	longPressDuration: number;
+	longPressMsDuration: number;
 	remainingTime: number;
 	variant: ButtonProps["variant"];
 	feedbackVariant: "primary" | "secondary" | "destructive" | "warning";
@@ -14,7 +14,7 @@ export interface LongPressButtonFeedbackContext {
 export type LongPressButtonFeedbackContent = ReactNode | ((context: LongPressButtonFeedbackContext) => ReactNode);
 
 export interface LongPressButtonProps extends ButtonProps {
-	longPressDuration?: number;
+	longPressMsDuration?: number;
 	onLongPress?: (event: React.PointerEvent<HTMLButtonElement>) => void;
 	preventClick?: boolean;
 	feedbackVariant?: LongPressButtonFeedbackContext["feedbackVariant"];
@@ -22,7 +22,7 @@ export interface LongPressButtonProps extends ButtonProps {
 }
 
 const LongPressButton = ({
-	longPressDuration = 2500,
+	longPressMsDuration = 2500,
 	onLongPress,
 	onClick,
 	preventClick = true,
@@ -59,7 +59,7 @@ const LongPressButton = ({
 			? feedbackContent({
 					isPressing,
 					isActive: longPressRef.current,
-					longPressDuration,
+					longPressMsDuration,
 					remainingTime,
 					variant,
 					feedbackVariant,
@@ -94,10 +94,10 @@ const LongPressButton = ({
 					props.onPointerDown?.(event);
 					longPressRef.current = false;
 					clearPress();
-					const deadline = Date.now() + longPressDuration;
+					const deadline = Date.now() + longPressMsDuration;
 					deadlineRef.current = deadline;
 					setIsPressing(true);
-					setRemainingTime(longPressDuration);
+					setRemainingTime(longPressMsDuration);
 					intervalRef.current = setInterval(() => {
 						setRemainingTime(Math.max(0, deadlineRef.current - Date.now()));
 					}, 50);
@@ -107,7 +107,7 @@ const LongPressButton = ({
 						setRemainingTime(0);
 						clearPress();
 						onLongPress?.(event);
-					}, longPressDuration);
+					}, longPressMsDuration);
 				}}
 				onPointerUp={(event) => {
 					props.onPointerUp?.(event);
@@ -140,7 +140,7 @@ const LongPressButton = ({
 							? `conic-gradient(from 90deg, color-mix(in srgb, ${feedbackColor} 90%, white) calc(var(--double-click-progress) * 1%), transparent 0)`
 							: "transparent",
 						"--double-click-progress": 100,
-						"--double-click-timeout": `${longPressDuration}ms`,
+						"--double-click-timeout": `${longPressMsDuration}ms`,
 						animation: isPressing ? "double-click-countdown var(--double-click-timeout) linear forwards" : "none",
 					} as CSSProperties & {
 						"--double-click-progress": number;

@@ -22,7 +22,7 @@ export default meta;
 
 type Story = StoryObj<{
 	children: string;
-	longPressDuration: number;
+	longPressMsDuration: number;
 	preventClick: boolean;
 	variant:
 		| "primary"
@@ -40,13 +40,13 @@ type Story = StoryObj<{
 }>;
 
 export const Default: Story = {
-	render: ({ children, longPressDuration, preventClick, variant, feedbackVariant, feedbackContent }) => {
+	render: ({ children, longPressMsDuration, preventClick, variant, feedbackVariant, feedbackContent }) => {
 		const [message, setMessage] = useState("Press and hold for 2500ms");
 
 		return (
 			<div className="flex flex-col items-start gap-3">
 				<LongPressButton
-					longPressDuration={longPressDuration}
+					longPressMsDuration={longPressMsDuration}
 					preventClick={preventClick}
 					variant={variant}
 					feedbackVariant={feedbackVariant}
@@ -55,13 +55,13 @@ export const Default: Story = {
 				>
 					{children}
 				</LongPressButton>
-				<span className="text-sm text-muted-foreground">{message.replace("2500", String(longPressDuration))}</span>
+				<span className="text-sm text-muted-foreground">{message.replace("2500", String(longPressMsDuration))}</span>
 			</div>
 		);
 	},
 	argTypes: {
 		children: { control: "text", description: "Button label." },
-		longPressDuration: {
+		longPressMsDuration: {
 			control: { type: "number", min: 0, step: 50 },
 			description: "How long the button must be held, in milliseconds.",
 			table: { defaultValue: { summary: "2500" } },
@@ -107,7 +107,7 @@ export const Default: Story = {
 	},
 	args: {
 		children: "Press and hold",
-		longPressDuration: 2500,
+		longPressMsDuration: 2500,
 		preventClick: true,
 		variant: "secondary",
 		feedbackVariant: "primary",

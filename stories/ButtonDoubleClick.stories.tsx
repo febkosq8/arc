@@ -22,7 +22,7 @@ export default meta;
 
 type Story = StoryObj<{
 	children: string;
-	doubleClickTimeout: number;
+	doubleClickMsDuration: number;
 	variant:
 		| "primary"
 		| "secondary"
@@ -39,13 +39,13 @@ type Story = StoryObj<{
 }>;
 
 export const Default: Story = {
-	render: ({ children, doubleClickTimeout, variant, feedbackVariant, feedbackContent }) => {
+	render: ({ children, doubleClickMsDuration, variant, feedbackVariant, feedbackContent }) => {
 		const [message, setMessage] = useState("Waiting for a double-click");
 
 		return (
 			<div className="flex flex-col items-start gap-3">
 				<DoubleClickButton
-					doubleClickTimeout={doubleClickTimeout}
+					doubleClickMsDuration={doubleClickMsDuration}
 					variant={variant}
 					feedbackVariant={feedbackVariant}
 					feedbackContent={feedbackContent}
@@ -59,7 +59,7 @@ export const Default: Story = {
 	},
 	argTypes: {
 		children: { control: "text", description: "Button label." },
-		doubleClickTimeout: {
+		doubleClickMsDuration: {
 			control: { type: "number", min: 0, step: 100 },
 			description: "Maximum time allowed between the first and second click, in milliseconds.",
 			table: {
@@ -112,7 +112,7 @@ export const Default: Story = {
 	},
 	args: {
 		children: "Double-click me",
-		doubleClickTimeout: 2000,
+		doubleClickMsDuration: 2000,
 		variant: "secondary",
 		feedbackVariant: "primary",
 		feedbackContent: "Click again",

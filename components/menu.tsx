@@ -50,7 +50,7 @@ const MenuComponent = ({ className, active, activeClassName, buttonText, childre
 				<DropdownBaseMenu.Content
 					loop={true}
 					sideOffset={8}
-					className="z-50 flex w-fit min-w-40 origin-top-right flex-col overflow-hidden divide-y divide-border rounded-md border border-border bg-popover shadow-lg ring-1 ring-foreground/10 focus:outline-none"
+					className="z-50 flex w-fit min-w-40 origin-top-right flex-col overflow-hidden divide-y divide-border rounded-md border border-border bg-background text-foreground shadow-lg ring-1 ring-foreground/10 focus:outline-none dark:bg-popover"
 				>
 					{children}
 				</DropdownBaseMenu.Content>
@@ -83,10 +83,10 @@ const MenuSub = ({ active, buttonText, children }: MenuSubProps) => {
 					loop={true}
 					sideOffset={8}
 					arrowPadding={2}
-					className="z-50 flex w-fit min-w-40 origin-top-right flex-col overflow-hidden divide-y divide-border rounded-md border border-border bg-popover shadow-lg ring-1 ring-foreground/10 focus:outline-none"
+					className="z-50 flex w-fit min-w-40 origin-top-right flex-col overflow-hidden divide-y divide-border rounded-md border border-border bg-background text-foreground shadow-lg ring-1 ring-foreground/10 focus:outline-none dark:bg-popover"
 				>
 					{children}
-					<DropdownBaseMenu.Arrow className="size-2 fill-popover" />
+					<DropdownBaseMenu.Arrow className="size-2 fill-background dark:fill-popover" />
 				</DropdownBaseMenu.SubContent>
 			</DropdownBaseMenu.Portal>
 		</DropdownBaseMenu.Sub>
