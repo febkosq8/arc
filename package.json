@@ -2,8 +2,21 @@
 	"name": "@febkosq8/arc",
 	"description": "A React components library for febkosq8",
 	"private": false,
-	"version": "0.5.0",
+	"version": "0.5.1",
 	"type": "module",
+	"main": "./dist/arc.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/arc.js"
+		},
+		"./styles.css": "./components/index.css"
+	},
+	"files": [
+		"dist",
+		"components/index.css"
+	],
 	"homepage": "https://www.npmjs.com/package/@febkosq8/arc",
 	"repository": "https://github.com/febkosq8/arc",
 	"scripts": {
