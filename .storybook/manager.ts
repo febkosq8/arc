@@ -1,11 +1,8 @@
-import packageJson from "../package.json";
 import { addons } from "storybook/manager-api";
-import { create, themes } from "storybook/theming";
+import { dark, light } from "./theme";
+
+const prefersLight = window.matchMedia?.("(prefers-color-scheme: light)").matches;
 
 addons.setConfig({
-	theme: create({
-		...themes.dark,
-		brandTitle: `Arc v${packageJson.version}`,
-		brandUrl: "https://www.npmjs.com/package/@febkosq8/arc",
-	}),
+	theme: prefersLight ? light : dark,
 });

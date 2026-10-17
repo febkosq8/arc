@@ -61,7 +61,7 @@ export default function ThemeSwitcher({ variant = "dropdown", showLabel = false 
 					aria-label={`Switch to ${nextColorMode} theme`}
 					title={`Switch to ${nextColorMode} theme`}
 					onClick={toggleColorMode}
-					className="w-fit gap-2 p-2"
+					className="w-fit gap-2"
 				>
 					<ColorModeIcon aria-hidden="true" />
 					{showLabel && colorModeLabel[colorMode]}
@@ -75,7 +75,7 @@ export default function ThemeSwitcher({ variant = "dropdown", showLabel = false 
 	return (
 		<div className="arc-theme-switcher">
 			<Menu
-				className={showLabel ? "gap-2" : undefined}
+				className="gap-2"
 				buttonText={
 					<>
 						<ColorModeIcon aria-hidden="true" />

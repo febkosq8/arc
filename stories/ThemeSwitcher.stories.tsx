@@ -40,5 +40,6 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
 	args: {
 		variant: "dropdown",
+		showLabel: false,
 	},
 };
