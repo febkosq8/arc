@@ -19,7 +19,7 @@
 	],
 	"homepage": "https://www.npmjs.com/package/@febkosq8/arc",
 	"repository": "https://github.com/febkosq8/arc",
-	"packageManager": "pnpm@12.11.2",
+	"packageManager": "pnpm@12.14.0",
 	"scripts": {
 		"build": "vite build",
 		"storybook": "storybook dev -p 6006",
