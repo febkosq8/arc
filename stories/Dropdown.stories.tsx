@@ -4,10 +4,10 @@ import { Dropdown } from "../components";
 import type { DropdownItem } from "../components";
 
 const items: DropdownItem[] = [
-	{ key: "apple", text: "Apple" },
-	{ key: "banana", text: "Banana" },
-	{ key: "cherry", text: "Cherry" },
-	{ key: "durian", text: "Durian (unavailable)", disabled: true },
+	{ key: "apple", label: "Apple" },
+	{ key: "banana", label: "Banana" },
+	{ key: "cherry", label: "Cherry" },
+	{ key: "durian", label: "Durian", disabled: true },
 ];
 
 const meta = {
@@ -28,6 +28,9 @@ const meta = {
 			description: "Prevents clearing the selection.",
 			table: { type: { summary: "boolean" }, defaultValue: { summary: "false" } },
 		},
+		className: { control: false, table: { disable: true } },
+		"data-name": { control: false, table: { disable: true } },
+		"data-required": { control: false, table: { disable: true } },
 		onChange: { control: false, table: { disable: true } },
 	},
 	args: {

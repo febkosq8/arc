@@ -42,7 +42,7 @@ const MultiDropdown = ({
 				if (preventEmpty && newValues.length === 0) return;
 				onChange?.(newValues);
 			}}
-			itemToStringLabel={(item) => item?.text ?? ""}
+			itemToStringLabel={(item) => item?.label ?? ""}
 			itemToStringValue={(item) => String(item?.key ?? "")}
 			isItemEqualToValue={(a, b) => String(a.key) === String(b.key)}
 			name={name}
@@ -65,11 +65,11 @@ const MultiDropdown = ({
 											key={item.key}
 											className="inline-flex items-center gap-1 rounded-md border border-border bg-muted px-2 py-0.5 text-sm text-foreground"
 										>
-											<span className="max-w-32 truncate">{item.text}</span>
+											<span className="max-w-32 truncate">{item.label}</span>
 											{(preventEmpty ? selectedValues.length > 1 : true) && (
 												<Combobox.ChipRemove
 													className="ml-0.5 cursor-pointer rounded-md hover:text-destructive focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-													aria-label={`Remove ${item.text}`}
+													aria-label={`Remove ${item.label}`}
 												>
 													<RxCross1 className="h-3 w-3" aria-hidden="true" />
 												</Combobox.ChipRemove>
@@ -121,8 +121,8 @@ const MultiDropdown = ({
 										<Combobox.ItemIndicator className="flex items-center">
 											<FaCheck className="h-3 w-3" aria-hidden="true" />
 										</Combobox.ItemIndicator>
-										<span title={item.text} className="block truncate">
-											{item.text}
+										<span title={item.label} className="block truncate">
+											{item.label}
 										</span>
 									</Combobox.Item>
 								)}

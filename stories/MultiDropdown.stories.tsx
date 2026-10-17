@@ -4,10 +4,10 @@ import { MultiDropdown } from "../components";
 import type { DropdownItem } from "../components";
 
 const items: DropdownItem[] = [
-	{ key: "apple", text: "Apple" },
-	{ key: "banana", text: "Banana" },
-	{ key: "cherry", text: "Cherry" },
-	{ key: "durian", text: "Durian (unavailable)", disabled: true },
+	{ key: "apple", label: "Apple" },
+	{ key: "banana", label: "Banana" },
+	{ key: "cherry", label: "Cherry" },
+	{ key: "durian", label: "Durian (unavailable)", disabled: true },
 ];
 
 const meta = {

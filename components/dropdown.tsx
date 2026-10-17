@@ -2,7 +2,7 @@ import { Combobox } from "@base-ui/react/combobox";
 import { cx } from "@rinzai/zen";
 import { FaCheck, FaChevronDown } from "react-icons/fa6";
 
-export type DropdownItem = { key: string | number; text: string; disabled?: boolean };
+export type DropdownItem = { key: string | number; label: string; disabled?: boolean };
 
 export interface DropdownProps {
 	items: DropdownItem[];
@@ -37,9 +37,11 @@ const Dropdown = ({
 			value={selectedItem}
 			onValueChange={(newValue) => {
 				if (preventEmpty && newValue === null) return;
-				onChange?.(newValue);
+				const isSelectedAgain =
+					newValue !== null && selectedItem !== null && String(newValue.key) === String(selectedItem.key);
+				onChange?.(!preventEmpty && isSelectedAgain ? null : newValue);
 			}}
-			itemToStringLabel={(item) => item?.text ?? ""}
+			itemToStringLabel={(item) => item?.label ?? ""}
 			itemToStringValue={(item) => String(item?.key ?? "")}
 			isItemEqualToValue={(a, b) => String(a.key) === String(b.key)}
 			name={name}
@@ -90,8 +92,8 @@ const Dropdown = ({
 										<Combobox.ItemIndicator className="flex items-center">
 											<FaCheck className="h-3 w-3" aria-hidden="true" />
 										</Combobox.ItemIndicator>
-										<span title={item.text} className="block truncate">
-											{item.text}
+										<span title={item.label} className="block truncate">
+											{item.label}
 										</span>
 									</Combobox.Item>
 								)}

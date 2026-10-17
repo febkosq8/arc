@@ -135,9 +135,9 @@
 		color: hsl(var(--foreground)) !important;
 	}
 
-	.sbdocs input,
-	.sbdocs select,
-	.sbdocs textarea {
+	.sbdocs input:not(.docs-story *),
+	.sbdocs select:not(.docs-story *),
+	.sbdocs textarea:not(.docs-story *) {
 		border-color: hsl(var(--border));
 		background: hsl(var(--card));
 		color: hsl(var(--foreground));
@@ -247,9 +247,9 @@
 		color: hsl(var(--accent-foreground)) !important;
 	}
 
-	.sbdocs input:focus,
-	.sbdocs select:focus,
-	.sbdocs textarea:focus {
+	.sbdocs input:not(.docs-story *):focus,
+	.sbdocs select:not(.docs-story *):focus,
+	.sbdocs textarea:not(.docs-story *):focus {
 		outline: none;
 		box-shadow: 0 0 0 2px hsl(var(--ring) / 0.25);
 		border-color: hsl(var(--ring));
