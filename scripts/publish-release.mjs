@@ -48,9 +48,9 @@ if (branch === "") {
 
 const upstream = gitOutput([
 	"for-each-ref",
-	"--format=%(upstream:remotename)%n%(upstream:remoteref)",
+	"--format=%(upstream:remotename)%09%(upstream:remoteref)",
 	`refs/heads/${branch}`,
-]).split(/\r?\n/);
+]).split("\t");
 const remote = upstream[0];
 const branchRef = upstream[1];
 if (!remote || !branchRef?.startsWith("refs/heads/")) {
