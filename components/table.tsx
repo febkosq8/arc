@@ -294,6 +294,9 @@ const Table = ({
 								<FaChevronLeft aria-hidden="true" className="h-3.5 w-3.5" />
 							</Button>
 						</div>
+						<span aria-hidden="true" className="text-muted-foreground px-1">
+							·
+						</span>
 						<span className="text-center text-xs font-medium">
 							<span className="text-foreground">
 								{totalRows > 0 ? `${totalRows} ${totalRows === 1 ? "row" : "rows"}` : "No rows"}
@@ -304,6 +307,9 @@ const Table = ({
 									{hasActiveFilters && " · filtered"}
 								</span>
 							)}
+						</span>
+						<span aria-hidden="true" className="text-muted-foreground px-1">
+							·
 						</span>
 						<div className="flex items-center gap-1">
 							<Button
