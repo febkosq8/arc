@@ -33,7 +33,7 @@
 	0%,
 	100% {
 		transform: scale(0.45);
-		opacity: 0.35;
+		opacity: 0.8;
 	}
 	50% {
 		transform: scale(1);
@@ -47,11 +47,41 @@
 	animation: arc-grid-loader-pulse 1.2s ease-in-out infinite;
 }
 
+.arc-grid-loader__cell--diamond {
+	clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+}
+
+.arc-grid-loader__cell--star {
+	clip-path: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 94%, 50% 71%, 21% 94%, 32% 57%, 2% 35%, 39% 35%);
+}
+
+.arc-grid-loader__cell--heart {
+	clip-path: polygon(
+		50% 94%,
+		8% 54%,
+		2% 39%,
+		5% 24%,
+		16% 13%,
+		30% 12%,
+		42% 21%,
+		50% 33%,
+		58% 21%,
+		70% 12%,
+		84% 13%,
+		95% 24%,
+		98% 39%,
+		92% 54%
+	);
+}
+
+.arc-grid-loader__cell--hexagon {
+	clip-path: polygon(25% 4%, 75% 4%, 100% 50%, 75% 96%, 25% 96%, 0 50%);
+}
+
 @media (prefers-reduced-motion: reduce) {
 	.arc-grid-loader__cell {
 		animation: none;
 		opacity: 1;
-		transform: none;
 	}
 }
 

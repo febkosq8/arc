@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { GridLoader } from "../components";
+import { GridLoader, type GridLoaderShape } from "../components";
 
 const meta = {
 	title: "Components/GridLoader",
@@ -34,6 +34,12 @@ const meta = {
 			description: "Maximum width and height of an individual dot in pixels.",
 			table: { defaultValue: { summary: "24" } },
 		},
+		shape: {
+			control: "select",
+			options: ["circle", "square", "diamond", "star", "heart", "hexagon", "random"],
+			description: "Shape used for every dot, or a random shape per dot that changes with its pulse.",
+			table: { defaultValue: { summary: "circle" } },
+		},
 		label: {
 			control: "text",
 			description: "Accessible loading status announced to assistive technology.",
@@ -50,6 +56,7 @@ const meta = {
 		columns: 3,
 		size: 120,
 		maxSize: 24,
+		shape: "circle",
 		label: "Loading",
 		symbols: [
 			"(,,> ᴗ <,,)",
@@ -86,6 +93,36 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
 
-export const Rectangular: Story = {
-	args: { rows: 4, columns: 2 },
+export const Sizes: Story = {
+	render: (args) => (
+		<div className="flex flex-wrap items-end gap-8">
+			{[
+				{ label: "Small", size: 64 },
+				{ label: "Medium", size: 96 },
+				{ label: "Large", size: 144 },
+			].map(({ label, size }) => (
+				<div key={label} className="flex flex-col items-center gap-2">
+					<GridLoader {...args} size={size} maxSize={Math.min(24, size / 3)} />
+					<span className="text-sm text-muted-foreground">{label}</span>
+				</div>
+			))}
+		</div>
+	),
+};
+
+export const Shapes: Story = {
+	render: (args) => {
+		const shapes: GridLoaderShape[] = ["circle", "square", "diamond", "star", "heart", "hexagon", "random"];
+
+		return (
+			<div className="grid grid-cols-4 gap-6">
+				{shapes.map((shape) => (
+					<div key={shape} className="flex flex-col items-center gap-2">
+						<GridLoader {...args} shape={shape} />
+						<span className="text-sm text-muted-foreground capitalize">{shape}</span>
+					</div>
+				))}
+			</div>
+		);
+	},
 };

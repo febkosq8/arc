@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { cx } from "@rinzai/zen";
+import { cva, cx } from "@rinzai/zen";
 
 const defaultSymbols = [
 	"(,,> ᴗ <,,)",
@@ -34,11 +34,35 @@ function getCellVariation(index: number, rows: number, columns: number) {
 	return value - Math.floor(value);
 }
 
+const gridLoaderShapes = ["circle", "square", "diamond", "star", "heart", "hexagon"] as const;
+
+const gridLoaderCellVariants = cva(
+	"arc-grid-loader__cell grid aspect-square w-full place-items-center overflow-hidden text-center leading-none break-all",
+	{
+		variants: {
+			shape: {
+				circle: "rounded-full",
+				square: "rounded-md",
+				diamond: "arc-grid-loader__cell--diamond",
+				star: "arc-grid-loader__cell--star",
+				heart: "arc-grid-loader__cell--heart",
+				hexagon: "arc-grid-loader__cell--hexagon",
+			},
+		},
+		defaultVariants: {
+			shape: "circle",
+		},
+	},
+);
+
+export type GridLoaderShape = (typeof gridLoaderShapes)[number] | "random";
+
 export interface GridLoaderProps extends React.ComponentPropsWithoutRef<"span"> {
 	rows?: number;
 	columns?: number;
 	size?: number;
 	maxSize?: number;
+	shape?: GridLoaderShape;
 	label?: string;
 	symbols?: string[];
 }
@@ -49,14 +73,28 @@ const GridLoader = ({
 	columns = 3,
 	size = 120,
 	maxSize = 24,
+	shape = "circle",
 	label = "Loading",
 	symbols = defaultSymbols,
+	style,
 	...props
 }: GridLoaderProps) => {
 	const [symbolIndexes, setSymbolIndexes] = useState<number[]>([]);
+	const [randomShapes, setRandomShapes] = useState<(typeof gridLoaderShapes)[number][]>([]);
 	const [reducedMotion, setReducedMotion] = useState(
 		() => typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches,
 	);
+
+	useEffect(() => {
+		if (shape !== "random") return;
+
+		setRandomShapes(
+			Array.from(
+				{ length: rows * columns },
+				() => gridLoaderShapes[Math.floor(Math.random() * gridLoaderShapes.length)],
+			),
+		);
+	}, [columns, rows, shape]);
 
 	useEffect(() => {
 		const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -111,14 +149,13 @@ const GridLoader = ({
 			role="status"
 			aria-live="polite"
 			aria-label={label}
-			className={cx("arc-grid-loader inline-flex items-center justify-center", className)}
+			className={cx("arc-grid-loader inline-flex shrink-0 items-center justify-center align-middle", className)}
+			style={{ width: size, height: size, ...style }}
 		>
 			<span
 				aria-hidden="true"
-				className="grid w-full place-items-center"
+				className="grid h-full w-full place-items-center"
 				style={{
-					width: size,
-					height: size,
 					gap: "8%",
 					gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`,
 					gridTemplateRows: `repeat(${rows}, minmax(0, 1fr))`,
@@ -126,17 +163,42 @@ const GridLoader = ({
 			>
 				{Array.from({ length: rows * columns }, (_, index) => (
 					<span
-					key={index}
-					className="arc-grid-loader__cell grid aspect-square w-full place-items-center overflow-hidden rounded-full text-center leading-none break-all"
-					style={{
-						animationDelay: `${-getCellVariation(index, rows, columns) * 1200}ms`,
-						animationDuration: `${900 + getCellVariation(index, rows, columns) * 600}ms`,
-						fontSize: `${Math.min(size / Math.max(rows, columns), maxSize) * 0.3}px`,
-						maxWidth: maxSize,
-						maxHeight: maxSize,
-					}}
+						key={index}
+						className={cx(
+							gridLoaderCellVariants({
+								shape:
+									shape === "random"
+										? (randomShapes[index] ??
+											gridLoaderShapes[
+												Math.floor(getCellVariation(index, rows, columns) * gridLoaderShapes.length)
+											])
+										: shape,
+							}),
+						)}
+						onAnimationIteration={() => {
+							if (shape !== "random") return;
+
+							setRandomShapes((current) => {
+								const next = [...current];
+								const currentShape =
+									next[index] ??
+									gridLoaderShapes[
+										Math.floor(getCellVariation(index, rows, columns) * gridLoaderShapes.length)
+									];
+								const alternatives = gridLoaderShapes.filter((candidate) => candidate !== currentShape);
+								next[index] = alternatives[Math.floor(Math.random() * alternatives.length)];
+								return next;
+							});
+						}}
+						style={{
+							animationDelay: `${-getCellVariation(index, rows, columns) * 1200}ms`,
+							animationDuration: `${900 + getCellVariation(index, rows, columns) * 600}ms`,
+							fontSize: `${Math.min(size / Math.max(rows, columns), maxSize) * 0.3}px`,
+							maxWidth: maxSize,
+							maxHeight: maxSize,
+						}}
 					>
-					{symbols[symbolIndexes[index] ?? index % symbols.length]}
+						{symbols[symbolIndexes[index] ?? index % symbols.length]}
 					</span>
 				))}
 			</span>
