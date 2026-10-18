@@ -29,6 +29,32 @@
 	mask-composite: exclude;
 }
 
+@keyframes arc-grid-loader-pulse {
+	0%,
+	100% {
+		transform: scale(0.45);
+		opacity: 0.35;
+	}
+	50% {
+		transform: scale(1);
+		opacity: 1;
+	}
+}
+
+.arc-grid-loader__cell {
+	background-color: color-mix(in srgb, var(--color-primary) 85%, var(--color-primary-foreground) 15%);
+	color: var(--color-foreground);
+	animation: arc-grid-loader-pulse 1.2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.arc-grid-loader__cell {
+		animation: none;
+		opacity: 1;
+		transform: none;
+	}
+}
+
 .arc-pill:hover,
 .arc-pill-link:hover {
 	border-color: var(--color-border);

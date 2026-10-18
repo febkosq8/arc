@@ -20,7 +20,7 @@ Arc is a React + Tailwind CSS component library that brings together the UI buil
 ## Features
 
 - **Reusable UI building blocks:** Buttons, inputs, cards, menus, dropdowns, selects, switches, tags, modals, and more.
-- **Interaction-focused components:** Long-press and double-click buttons, preview cards, typing animation, and hash navigation helpers.
+- **Interaction-focused components:** Long-press and double-click buttons, preview cards, typing animation, a configurable grid loader, and hash navigation helpers.
 - **Themed styling:** Built with React and Tailwind CSS, with shared design tokens and light and dark theme styles.
 - **Composable components:** Use the components as parts of your interface without handing over control of your page layout.
 - **Interactive examples:** Browse component examples and states in [Storybook](https://arc.febkosq8.me/).
@@ -46,10 +46,15 @@ Arc's stylesheet registers its compiled components with Tailwind CSS v4, so thei
 Import components from the package:
 
 ```tsx
-import { Button } from "@febkosq8/arc";
+import { Button, GridLoader } from "@febkosq8/arc";
 
 export function Example() {
-	return <Button>Save</Button>;
+	return (
+		<>
+			<Button>Save</Button>
+			<GridLoader rows={3} columns={3} label="Saving" />
+		</>
+	);
 }
 ```
 

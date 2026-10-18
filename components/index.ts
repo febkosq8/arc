@@ -21,6 +21,8 @@ export { default as Dropdown } from "./dropdown";
 export type { DropdownItem, DropdownProps } from "./dropdown";
 export { default as ErrorText } from "./error-text";
 export type { ErrorTextProps } from "./error-text";
+export { default as GridLoader } from "./grid-loader";
+export type { GridLoaderProps } from "./grid-loader";
 export { default as LabelField } from "./label-field";
 export type { LabelFieldProps } from "./label-field";
 export { default as Input } from "./input";
