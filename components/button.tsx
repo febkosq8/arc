@@ -41,7 +41,7 @@ const buttonVariants: (props?: ButtonVariantOptions) => string = cva(
 					"border border-warning bg-background text-warning hover:bg-warning hover:text-warning-foreground",
 			},
 			size: {
-				xs: "h-7 rounded-md px-2 text-xs",
+				xs: "h-6 rounded-md px-2 text-xs",
 				sm: "h-8 pointer-coarse:min-h-10 rounded-md px-3 text-xs",
 				md: "h-10 pointer-coarse:min-h-11 px-4 py-2",
 				lg: "h-11 rounded-md px-8",
