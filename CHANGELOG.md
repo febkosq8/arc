@@ -2,12 +2,33 @@
 
 Notable changes to Arc are recorded here. Release versions follow [Semantic Versioning](https://semver.org/).
 
-## [Unreleased]
+## [0.8.0] - 2026-10-18
+
+### Added
+
+- Add customizable GridLoader symbols and a `shapes` palette to choose which shapes appear in mixed mode.
+- Add Storybook examples for GridLoader layouts, colors, symbol-free loading, and DateHandler utilities.
+- Add a README-based Storybook introduction with theme-aware documentation.
+
+### Changed
+
+- Synchronize GridLoader symbol, color, and mixed-shape changes with each cell's pulse.
+- Move DateHandler and hash-navigation helpers into a dedicated `utilities/` source folder while preserving the package root exports.
+
+## [0.7.0] - 2026-10-18
+
+### Added
+
+- Add GridLoader with configurable grid dimensions, size, animated shapes, and themed loading visuals.
+- Add Table with sorting, filtering, and pagination.
+- Add LabelField and a success button variant.
 
 ### Changed
 
 - Name the pill-shaped navigation link `PillLink`, following the `<base>-<child>` component naming convention.
 - Extend `PillLink` with primary and outline button styles for reusable button-like navigation links.
+- Add outline button styling and refine shared component styles and PreviewCard open-state behavior.
+- Improve table filter typing and pagination separators.
 
 ## [0.6.0] - 2026-10-17
 
