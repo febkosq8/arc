@@ -76,6 +76,26 @@
 		color: hsl(var(--muted-foreground)) !important;
 	}
 
+	html.dark .sbdocs pre.prismjs,
+	html.dark .sbdocs pre.prismjs * {
+		color: hsl(var(--foreground)) !important;
+	}
+
+	html.dark .sbdocs pre.prismjs .token.comment {
+		color: hsl(var(--muted-foreground)) !important;
+	}
+
+	html.dark .sbdocs pre.prismjs .token.keyword,
+	html.dark .sbdocs pre.prismjs .token.function,
+	html.dark .sbdocs pre.prismjs .token.atrule.rule {
+		color: color-mix(in srgb, hsl(var(--primary)) 72%, hsl(var(--foreground))) !important;
+	}
+
+	html.dark .sbdocs pre.prismjs .token.string,
+	html.dark .sbdocs pre.prismjs .token.attr-value {
+		color: color-mix(in srgb, hsl(var(--success)) 72%, hsl(var(--foreground))) !important;
+	}
+
 	.docblock-source {
 		border: 1px solid hsl(var(--border)) !important;
 		border-radius: var(--radius) !important;

@@ -37,7 +37,7 @@ export class DateHandler {
 		return DateTime.fromJSDate(new Date(String(date)));
 	}
 
-	static getDateTime(date: unknown, format: string = "dd/MM/yyyy hh:mm:ss a"): string {
+	static getDateTime(date: unknown, format: string = "dd/MMM/yyyy hh:mm:ss a"): string {
 		const dateTime = DateHandler.toDateTime(date);
 		return dateTime.isValid ? dateTime.toFormat(format) : "";
 	}

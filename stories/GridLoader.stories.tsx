@@ -40,10 +40,16 @@ const meta = {
 			description: "Shape used for every dot, or a changing mix of shapes.",
 			table: { defaultValue: { summary: "circle" } },
 		},
+		shapes: {
+			control: { type: "check" },
+			options: ["circle", "square", "diamond", "star", "heart", "hexagon"],
+			description: "Shapes available when shape is set to mixed.",
+			table: { defaultValue: { summary: "all supported shapes" } },
+		},
 		colors: {
 			control: "object",
 			description:
-				"Optional CSS color palette repeated across cells, or randomized with each pulse in mixed shape mode. An empty palette uses the theme color.",
+				"Optional CSS color palette cycles left to right as cells pulse. An empty palette uses the theme color.",
 			table: { defaultValue: { summary: "[]" } },
 		},
 		label: {
@@ -53,8 +59,9 @@ const meta = {
 		},
 		symbols: {
 			control: "object",
-			description: "Text or symbols displayed inside each cell; the cells shuffle these while loading.",
-			table: { defaultValue: { summary: "25 text emoticons" } },
+			description:
+				"Monochrome text symbols displayed inside each cell; each cell changes symbol with its pulse. An empty array hides symbols.",
+			table: { defaultValue: { summary: "33 monochrome symbols" } },
 		},
 	},
 	args: {
@@ -63,34 +70,43 @@ const meta = {
 		size: 120,
 		maxSize: 24,
 		shape: "circle",
+		shapes: ["circle", "square", "diamond", "star", "heart", "hexagon"],
 		colors: [],
 		label: "Loading",
 		symbols: [
-			"(,,> ᴗ <,,)",
-			"≽^•⩊•^≼",
-			"(╥﹏╥)",
-			"(˶ᵔ ᵕ ᵔ˶)",
-			"•⩊•",
-			"˚₊‧꒰ა ₍ᐢ.  ̫.ᐢ₎ ໒꒱ ‧₊˚",
-			"٩(ˊᗜˋ )و",
-			"(≧◡≦)",
-			"⸜(｡˃ ᵕ ˂ )⸝♡",
-			"(˶˃⤙˂˶)",
-			"（˶′◡‵˶）",
-			"(＾▽＾)",
-			"˚₊‧꒰ა.  .໒꒱ ‧₊˚",
-			"( ˶ˆᗜˆ˵ )",
-			"⊹ ₊  ⁺‧₊˚ ♡ ପ(๑•ᴗ•๑)ଓ ♡˚₊‧⁺ ₊ ⊹",
-			"(つ﹏⊂)",
-			"ʕ•̫͡•ʕ•̫͡•ʔ•̫͡•ʔ•̫͡•ʕ•̫͡•ʔ•̫͡ʕ•̫͡•ʕ•̫͡•ʔ•̫͡ʔ•̫͡•",
-			"（´・｀ ）♡",
-			"(╥_╥)",
-			"(♡ˊ͈ ꒳ ˋ͈)",
-			"(⸝⸝๑  ̫ ๑⸝⸝⸝)",
-			"(˶º⤙º˶)",
-			"૮₍｡´ᴖ ˔ ᴖ`｡₎ა",
-			"(•̀ᴗ•́)و ̑̑",
-			"(─‿‿─)",
+			"*",
+			"+",
+			"×",
+			"÷",
+			"=",
+			"~",
+			"!",
+			"?",
+			"@",
+			"#",
+			"%",
+			"&",
+			"§",
+			"¶",
+			"※",
+			"◇",
+			"◆",
+			"○",
+			"●",
+			"△",
+			"▽",
+			"□",
+			"■",
+			"♠",
+			"♣",
+			"♦",
+			"♤",
+			"♧",
+			"♢",
+			"♪",
+			"♫",
+			"∴",
+			"∵",
 		],
 	},
 } satisfies Meta<typeof GridLoader>;
@@ -99,6 +115,12 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
+
+export const WithoutSymbols: Story = {
+	args: {
+		symbols: [],
+	},
+};
 
 export const Sizes: Story = {
 	render: (args) => (
@@ -115,6 +137,32 @@ export const Sizes: Story = {
 			))}
 		</div>
 	),
+};
+
+export const GridLayouts: Story = {
+	render: (args) => {
+		const layouts = [
+			{ rows: 1, columns: 1 },
+			{ rows: 1, columns: 5 },
+			{ rows: 2, columns: 4 },
+			{ rows: 3, columns: 3 },
+			{ rows: 4, columns: 2 },
+			{ rows: 5, columns: 1 },
+		];
+
+		return (
+			<div className="grid grid-cols-3 gap-8">
+				{layouts.map(({ rows, columns }) => (
+					<div key={`${rows}x${columns}`} className="flex flex-col items-center gap-2">
+						<GridLoader {...args} rows={rows} columns={columns} />
+						<span className="text-sm text-muted-foreground">
+							{rows} row{rows === 1 ? "" : "s"} × {columns} column{columns === 1 ? "" : "s"}
+						</span>
+					</div>
+				))}
+			</div>
+		);
+	},
 };
 
 export const Shapes: Story = {
@@ -137,6 +185,29 @@ export const Shapes: Story = {
 export const Colors: Story = {
 	args: {
 		shape: "mixed",
-		colors: ["var(--color-primary)", "var(--color-success)", "var(--color-warning)", "var(--color-accent)"],
+		colors: [
+			"var(--color-primary)",
+			"var(--color-success)",
+			"var(--color-warning)",
+			"var(--color-destructive)",
+		],
+	},
+	render: (args) => {
+		const examples = [
+			{ label: "One line", rows: 1, columns: 5 },
+			{ label: "Two lines", rows: 2, columns: 5 },
+			{ label: "Original grid", rows: 3, columns: 3 },
+		];
+
+		return (
+			<div className="flex flex-col gap-8">
+				{examples.map(({ label, rows, columns }) => (
+					<div key={label} className="flex flex-col items-center gap-2">
+						<GridLoader {...args} rows={rows} columns={columns} />
+						<span className="text-sm text-muted-foreground">{label}</span>
+					</div>
+				))}
+			</div>
+		);
 	},
 };

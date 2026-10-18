@@ -1,0 +1,56 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Introduction" />
+
+# Arc
+
+Arc is a React and Tailwind CSS component library that brings together reusable UI building blocks and interaction patterns. It focuses on practical components, consistent styling, and small interaction details while leaving page layout and product decisions to the application.
+
+## Features
+
+- **Reusable UI building blocks:** Buttons, inputs, cards, menus, dropdowns, selects, switches, tags, modals, and more.
+- **Interaction-focused components:** Long-press and double-click buttons, preview cards, typing animation, a configurable grid loader, and hash navigation helpers.
+- **Themed styling:** Shared design tokens with light and dark theme styles.
+- **Composable components:** Use components as parts of your interface without handing over control of your page layout.
+
+## Installation
+
+```bash
+npm install @febkosq8/arc
+# or
+pnpm add @febkosq8/arc
+```
+
+## Setup
+
+Import Arc's stylesheet from your application CSS:
+
+```css
+@import "@febkosq8/arc/styles.css";
+```
+
+The stylesheet registers Arc's compiled components with Tailwind CSS v4, so an application-level `@source` directive is not needed.
+
+## Usage
+
+```tsx
+import { Button, GridLoader } from "@febkosq8/arc";
+
+export function Example() {
+	return (
+		<>
+			<Button>Save</Button>
+			<GridLoader rows={3} columns={3} label="Saving" />
+		</>
+	);
+}
+```
+
+## Links
+
+- [npm package](https://www.npmjs.com/package/@febkosq8/arc)
+- [GitHub repository](https://github.com/febkosq8/arc)
+- [Component source](https://github.com/febkosq8/arc/tree/main/components)
+- [Storybook stories](https://github.com/febkosq8/arc/tree/main/stories)
+
+Arc is primarily built to meet the needs of its maintainer's projects. It's shared publicly for anyone who might find the code useful, but it isn't intended as a polished, general-purpose replacement for a larger UI framework.

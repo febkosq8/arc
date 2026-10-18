@@ -2,7 +2,23 @@
 
 import type { Preview } from "@storybook/react-vite";
 import { createElement, useEffect } from "react";
+import { GLOBALS_UPDATED } from "storybook/internal/core-events";
+import { addons } from "storybook/preview-api";
 import "../components/index.css";
+
+const setDocumentTheme = (theme?: string) => {
+	const isDark = theme !== "light";
+	document.documentElement.classList.toggle("dark", isDark);
+	document.documentElement.dataset.theme = isDark ? "dark" : "light";
+};
+
+const initialGlobals = new URLSearchParams(window.location.search).get("globals");
+const initialTheme = initialGlobals?.match(/(?:^|;)theme:([^;]+)/)?.[1];
+setDocumentTheme(initialTheme);
+
+addons.getChannel().on(GLOBALS_UPDATED, ({ globals, initialGlobals: defaults }) => {
+	setDocumentTheme(globals.theme ?? defaults.theme);
+});
 
 const preview: Preview = {
 	globalTypes: {
@@ -68,7 +84,7 @@ const preview: Preview = {
 		options: {
 			storySort: {
 				method: "alphabetical",
-				order: ["Theme", "Components", "Utilities"],
+				order: ["Introduction", "Theme", "Components", "Utilities"],
 			},
 		},
 	},

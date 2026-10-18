@@ -2,31 +2,39 @@ import { useEffect, useState } from "react";
 import { cva, cx } from "@rinzai/zen";
 
 const defaultSymbols = [
-	"(,,> ᴗ <,,)",
-	"≽^•⩊•^≼",
-	"(╥﹏╥)",
-	"(˶ᵔ ᵕ ᵔ˶)",
-	"•⩊•",
-	"˚₊‧꒰ა ₍ᐢ.  ̫.ᐢ₎ ໒꒱ ‧₊˚",
-	"٩(ˊᗜˋ )و",
-	"(≧◡≦)",
-	"⸜(｡˃ ᵕ ˂ )⸝♡",
-	"(˶˃⤙˂˶)",
-	"（˶′◡‵˶）",
-	"(＾▽＾)",
-	"˚₊‧꒰ა.  .໒꒱ ‧₊˚",
-	"( ˶ˆᗜˆ˵ )",
-	"⊹ ₊  ⁺‧₊˚ ♡ ପ(๑•ᴗ•๑)ଓ ♡˚₊‧⁺ ₊ ⊹",
-	"(つ﹏⊂)",
-	"ʕ•̫͡•ʕ•̫͡•ʔ•̫͡•ʔ•̫͡•ʕ•̫͡•ʔ•̫͡ʕ•̫͡•ʕ•̫͡•ʔ•̫͡ʔ•̫͡•",
-	"（´・｀ ）♡",
-	"(╥_╥)",
-	"(♡ˊ͈ ꒳ ˋ͈)",
-	"(⸝⸝๑  ̫ ๑⸝⸝⸝)",
-	"(˶º⤙º˶)",
-	"૮₍｡´ᴖ ˔ ᴖ`｡₎ა",
-	"(•̀ᴗ•́)و ̑̑",
-	"(─‿‿─)",
+	"*",
+	"+",
+	"×",
+	"÷",
+	"=",
+	"~",
+	"!",
+	"?",
+	"@",
+	"#",
+	"%",
+	"&",
+	"§",
+	"¶",
+	"※",
+	"◇",
+	"◆",
+	"○",
+	"●",
+	"△",
+	"▽",
+	"□",
+	"■",
+	"♠",
+	"♣",
+	"♦",
+	"♤",
+	"♧",
+	"♢",
+	"♪",
+	"♫",
+	"∴",
+	"∵",
 ];
 
 function getCellVariation(index: number, rows: number, columns: number) {
@@ -56,6 +64,7 @@ const gridLoaderCellVariants = cva(
 );
 
 export type GridLoaderShape = (typeof gridLoaderShapes)[number] | "mixed";
+export type GridLoaderCellShape = Exclude<GridLoaderShape, "mixed">;
 
 export interface GridLoaderProps extends React.ComponentPropsWithoutRef<"span"> {
 	rows?: number;
@@ -63,6 +72,7 @@ export interface GridLoaderProps extends React.ComponentPropsWithoutRef<"span"> 
 	size?: number;
 	maxSize?: number;
 	shape?: GridLoaderShape;
+	shapes?: readonly GridLoaderCellShape[];
 	colors?: string[];
 	label?: string;
 	symbols?: string[];
@@ -75,6 +85,7 @@ const GridLoader = ({
 	size = 120,
 	maxSize = 24,
 	shape = "circle",
+	shapes = gridLoaderShapes,
 	colors = [],
 	label = "Loading",
 	symbols = defaultSymbols,
@@ -82,8 +93,9 @@ const GridLoader = ({
 	...props
 }: GridLoaderProps) => {
 	const [symbolIndexes, setSymbolIndexes] = useState<number[]>([]);
-	const [randomShapes, setRandomShapes] = useState<(typeof gridLoaderShapes)[number][]>([]);
-	const [randomColorIndexes, setRandomColorIndexes] = useState<number[]>([]);
+	const [randomShapes, setRandomShapes] = useState<GridLoaderCellShape[]>([]);
+	const [colorSteps, setColorSteps] = useState<number[]>([]);
+	const availableShapes = shapes.length > 0 ? shapes : gridLoaderShapes;
 	const [reducedMotion, setReducedMotion] = useState(
 		() => typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches,
 	);
@@ -94,18 +106,10 @@ const GridLoader = ({
 		setRandomShapes(
 			Array.from(
 				{ length: rows * columns },
-				() => gridLoaderShapes[Math.floor(Math.random() * gridLoaderShapes.length)],
+				() => availableShapes[Math.floor(Math.random() * availableShapes.length)],
 			),
 		);
-	}, [columns, rows, shape]);
-
-	useEffect(() => {
-		if (shape !== "mixed" || colors.length === 0) return;
-
-		setRandomColorIndexes(
-			Array.from({ length: rows * columns }, () => Math.floor(Math.random() * colors.length)),
-		);
-	}, [columns, colors.length, rows, shape]);
+	}, [availableShapes, columns, rows, shape]);
 
 	useEffect(() => {
 		const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -117,25 +121,11 @@ const GridLoader = ({
 	}, []);
 
 	useEffect(() => {
-		if (reducedMotion) return;
+		if (reducedMotion || symbols.length === 0) return;
 
-		const randomizeSymbols = () => {
-			const shuffled = Array.from({ length: symbols.length }, (_, index) => index);
-			for (let index = shuffled.length - 1; index > 0; index -= 1) {
-				const swapIndex = Math.floor(Math.random() * (index + 1));
-				[shuffled[index], shuffled[swapIndex]] = [shuffled[swapIndex], shuffled[index]];
-			}
-			setSymbolIndexes(Array.from({ length: rows * columns }, (_, index) => shuffled[index % shuffled.length]));
-		};
-
-		randomizeSymbols();
-		if (symbols.length < 2) return;
-
-		const timer = window.setInterval(() => {
-			randomizeSymbols();
-		}, 900);
-
-		return () => window.clearInterval(timer);
+		setSymbolIndexes(
+			Array.from({ length: rows * columns }, () => Math.floor(Math.random() * symbols.length)),
+		);
 	}, [columns, reducedMotion, rows, symbols]);
 
 	if (!Number.isInteger(rows) || rows < 1) {
@@ -150,10 +140,6 @@ const GridLoader = ({
 	if (!Number.isFinite(maxSize) || maxSize <= 0) {
 		throw new RangeError("GridLoader maxSize must be a positive number.");
 	}
-	if (symbols.length === 0) {
-		throw new RangeError("GridLoader symbols must contain at least one item.");
-	}
-
 	return (
 		<span
 			{...props}
@@ -180,54 +166,72 @@ const GridLoader = ({
 								shape:
 									shape === "mixed"
 										? (randomShapes[index] ??
-											gridLoaderShapes[
-												Math.floor(getCellVariation(index, rows, columns) * gridLoaderShapes.length)
+											availableShapes[
+												Math.floor(getCellVariation(index, rows, columns) * availableShapes.length)
 											])
 										: shape,
 							}),
 						)}
 						onAnimationIteration={() => {
-							if (shape !== "mixed") return;
-
-							setRandomShapes((current) => {
-								const next = [...current];
-								const currentShape =
-									next[index] ??
-									gridLoaderShapes[
-										Math.floor(getCellVariation(index, rows, columns) * gridLoaderShapes.length)
-									];
-								const alternatives = gridLoaderShapes.filter((candidate) => candidate !== currentShape);
-								next[index] = alternatives[Math.floor(Math.random() * alternatives.length)];
-								return next;
-							});
+							if (shape === "mixed") {
+								setRandomShapes((current) => {
+									const next = [...current];
+									const currentShape =
+										next[index] ??
+										availableShapes[
+											Math.floor(getCellVariation(index, rows, columns) * availableShapes.length)
+										];
+									const alternatives = availableShapes.filter((candidate) => candidate !== currentShape);
+									if (alternatives.length > 0) {
+										next[index] = alternatives[Math.floor(Math.random() * alternatives.length)];
+									} else {
+										next[index] = currentShape;
+									}
+									return next;
+								});
+							}
 
 							if (colors.length > 1) {
-								setRandomColorIndexes((current) => {
+								setColorSteps((current) => {
 									const next = [...current];
-									const currentIndex = next[index] ?? index % colors.length;
-									const offset = 1 + Math.floor(Math.random() * (colors.length - 1));
-									next[index] = (currentIndex + offset) % colors.length;
+									next[index] = (next[index] ?? 0) + 1;
+									return next;
+								});
+							}
+
+							if (symbols.length > 1) {
+								setSymbolIndexes((current) => {
+									const next = [...current];
+									const currentIndex = next[index] ?? index % symbols.length;
+									const offset = 1 + Math.floor(Math.random() * (symbols.length - 1));
+									next[index] = (currentIndex + offset) % symbols.length;
 									return next;
 								});
 							}
 						}}
 						style={{
-							animationDelay: `${-getCellVariation(index, rows, columns) * 1200}ms`,
-							animationDuration: `${900 + getCellVariation(index, rows, columns) * 600}ms`,
+							animationDelay:
+								colors.length > 1
+									? `${(index / (rows * columns)) * 1200}ms`
+									: `${-getCellVariation(index, rows, columns) * 1200}ms`,
+							animationDuration:
+								colors.length > 1
+									? "1200ms"
+									: `${900 + getCellVariation(index, rows, columns) * 600}ms`,
 							backgroundColor:
 								colors.length > 0
-									? colors[
-											shape === "mixed"
-												? (randomColorIndexes[index] ?? index % colors.length)
-												: index % colors.length
-										]
+									? colors[(index + (colorSteps[index] ?? 0)) % colors.length]
 									: undefined,
-							fontSize: `${Math.min(size / Math.max(rows, columns), maxSize) * 0.3}px`,
+							fontSize: `${Math.min(size / Math.max(rows, columns), maxSize) * 0.4}px`,
 							maxWidth: maxSize,
 							maxHeight: maxSize,
 						}}
 					>
-						{symbols[symbolIndexes[index] ?? index % symbols.length]}
+						{symbols.length > 0 && (
+							<span className="grid h-full w-full place-items-center text-center leading-none">
+								{symbols[symbolIndexes[index] ?? index % symbols.length]}
+							</span>
+						)}
 					</span>
 				))}
 			</span>
