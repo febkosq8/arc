@@ -26,6 +26,7 @@ import {
 	tableFeatures,
 	useTable,
 } from "@tanstack/react-table";
+import type { FilterFnOption } from "@tanstack/react-table";
 import { useEffect, useId, useMemo, useState } from "react";
 import Button from "./button";
 import Input from "./input";
@@ -86,7 +87,7 @@ export type TableColumnDef = {
 	size?: number;
 	minSize?: number;
 	maxSize?: number;
-	filterFn?: "auto" | "fuzzy" | "includesString" | "select" | ((...args: any[]) => boolean);
+	filterFn?: string | false | ((...args: any[]) => boolean);
 	filterSelectOptions?: { value: string; label: string }[];
 	mobileFullWidth?: boolean;
 	cell?: any;
@@ -100,6 +101,12 @@ export type TableProps = {
 	showHeader?: boolean;
 	showFilters?: boolean;
 	showSorting?: boolean;
+};
+
+const tableFilterFns = {
+	fuzzy: fuzzyFilter,
+	includesString: filterFn_includesString,
+	select: selectFilter,
 };
 
 const features = tableFeatures({
@@ -122,12 +129,25 @@ const features = tableFeatures({
 		text: sortFn_text,
 		textCaseSensitive: sortFn_textCaseSensitive,
 	},
-	filterFns: {
-		fuzzy: fuzzyFilter,
-		includesString: filterFn_includesString,
-		select: selectFilter,
-	},
+	filterFns: tableFilterFns,
 });
+
+function isRegisteredFilterFn(name: string): name is keyof typeof tableFilterFns {
+	return Object.prototype.hasOwnProperty.call(tableFilterFns, name);
+}
+
+function resolveFilterFn(
+	filterFn: TableColumnDef["filterFn"],
+	filterSelectOptions?: TableColumnDef["filterSelectOptions"],
+): FilterFnOption<typeof features, any> | undefined {
+	if (filterFn === false) return undefined;
+	if (filterFn === undefined) return filterSelectOptions ? "select" : undefined;
+	if (typeof filterFn === "function") return filterFn;
+	if (filterFn === "auto" || isRegisteredFilterFn(filterFn)) return filterFn;
+	throw new Error(
+		`Unsupported table filterFn "${filterFn}". Use "auto" or one of: ${Object.keys(tableFilterFns).join(", ")}.`,
+	);
+}
 
 const columnHelper = createColumnHelper<typeof features, any>();
 
@@ -153,13 +173,13 @@ const Table = ({
 			return columnHelper.accessor(item.accessorKey, {
 				id: item.id,
 				enableResizing: item.enableResizing,
-				enableColumnFilter: item.enableColumnFilter,
+				enableColumnFilter: item.filterFn === false ? false : item.enableColumnFilter,
 				enableSorting: item.enableSorting,
 				enableHiding: item.enableHiding ?? true,
 				size: item.size,
 				minSize: item.minSize ?? 50,
 				maxSize: item.maxSize ?? 1000,
-				filterFn: item.filterFn ?? (item.filterSelectOptions ? "select" : undefined),
+				filterFn: resolveFilterFn(item.filterFn, item.filterSelectOptions),
 				meta: {
 					headerLabel: item.header,
 					filterSelectOptions: item.filterSelectOptions,
@@ -186,7 +206,7 @@ const Table = ({
 						</div>
 					);
 				},
-				cell: item.cell,
+				cell: item.cell ?? ((context) => context.getValue()),
 			});
 		});
 	}, [columnDef]);

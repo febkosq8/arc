@@ -14,6 +14,11 @@ const data = [
 	{ name: "Mary Jackson", role: "Admin", team: "Infrastructure" },
 	{ name: "Barbara Liskov", role: "Viewer", team: "Platform" },
 	{ name: "Radia Perlman", role: "Editor", team: "Research" },
+	{ name: "Elizabeth Feinler", role: "Admin", team: "Infrastructure" },
+	{ name: "Karen Spärck Jones", role: "Viewer", team: "Research" },
+	{ name: "Sophie Wilson", role: "Editor", team: "Platform" },
+	{ name: "Adele Goldberg", role: "Admin", team: "Research" },
+	{ name: "Lynn Conway", role: "Viewer", team: "Infrastructure" },
 ];
 
 const columnDef: TableColumnDef[] = [
