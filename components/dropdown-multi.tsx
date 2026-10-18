@@ -51,7 +51,7 @@ const MultiDropdown = ({
 			<div className={cx("arc-dropdown-multi relative", className)}>
 				<Combobox.InputGroup
 					className={cx(
-						"relative flex min-h-10 w-full items-center justify-between gap-1.5 rounded-md border border-border bg-background py-1 pr-2 pl-2 text-foreground shadow-xs",
+						"relative flex min-h-8 w-full items-center justify-between gap-1.5 rounded border border-border bg-background py-1 pr-2 pl-2 text-foreground shadow-xs pointer-coarse:min-h-9",
 						"focus-within:border-transparent focus-within:outline-hidden focus-within:ring-2 focus-within:ring-ring",
 						"data-disabled:cursor-not-allowed data-disabled:bg-muted data-disabled:text-muted-foreground",
 					)}

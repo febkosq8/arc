@@ -10,6 +10,8 @@ export interface PreviewCardProps {
 	side?: "top" | "bottom" | "left" | "right";
 	align?: "start" | "center" | "end";
 	className?: string;
+	open?: boolean;
+	onOpenChange?: (open: boolean) => void;
 }
 
 const PreviewCard = ({
@@ -20,8 +22,10 @@ const PreviewCard = ({
 	side = "bottom",
 	align = "center",
 	className,
+	open,
+	onOpenChange,
 }: PreviewCardProps) => (
-	<Popover.Root>
+	<Popover.Root open={open} onOpenChange={onOpenChange}>
 		<Popover.Trigger
 			nativeButton={!!triggerRender}
 			openOnHover={trigger === "hover"}
@@ -34,11 +38,18 @@ const PreviewCard = ({
 				<Popover.Popup
 					className={cx(
 						"arc-preview-card relative w-fit max-w-[calc(100vw-1rem)] rounded-md border border-border bg-popover px-2 py-3 text-foreground shadow-lg ring-1 ring-border/60",
-						"data-[side=bottom]:before:absolute data-[side=bottom]:before:top-0 data-[side=bottom]:before:left-1/2 data-[side=bottom]:before:h-3 data-[side=bottom]:before:w-3 data-[side=bottom]:before:-translate-x-1/2 data-[side=bottom]:before:-translate-y-1/2 data-[side=bottom]:before:rotate-45",
-						"data-[side=bottom]:before:border-t data-[side=bottom]:before:border-l data-[side=bottom]:before:border-border data-[side=bottom]:before:bg-popover",
 						className,
 					)}
 				>
+					<Popover.Arrow
+						className={cx(
+							"border-border bg-popover h-3 w-3 rotate-45",
+							"data-[side=bottom]:-top-1.5 data-[side=bottom]:border-t data-[side=bottom]:border-l",
+							"data-[side=top]:-bottom-1.5 data-[side=top]:border-r data-[side=top]:border-b",
+							"data-[side=left]:-right-1.5 data-[side=left]:border-t data-[side=left]:border-r",
+							"data-[side=right]:-left-1.5 data-[side=right]:border-b data-[side=right]:border-l",
+						)}
+					/>
 					{cardContent}
 				</Popover.Popup>
 			</Popover.Positioner>

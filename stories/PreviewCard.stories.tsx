@@ -43,6 +43,16 @@ const meta = {
 			description: "Trigger content that opens the card.",
 			table: { type: { summary: "ReactNode" } },
 		},
+		open: {
+			control: false,
+			description: "Controls the open state when managing the popover externally.",
+			table: { type: { summary: "boolean | undefined" }, defaultValue: { summary: "undefined" } },
+		},
+		onOpenChange: {
+			control: false,
+			description: "Called when a controlled popover requests an open-state change.",
+			table: { type: { summary: "(open: boolean) => void" } },
+		},
 		triggerRender: { control: false, table: { disable: true } },
 	},
 	args: {
@@ -51,6 +61,8 @@ const meta = {
 		align: "center",
 		cardContent: "Extra details shown in the card.",
 		children: "Hover me",
+		open: undefined,
+		onOpenChange: undefined,
 	},
 } satisfies Meta<typeof PreviewCard>;
 
@@ -70,6 +82,19 @@ export const ClickTrigger: Story = {
 	render: (args) => (
 		<div className="p-16">
 			<PreviewCard {...args} triggerRender={<Button variant="outline-primary" />} />
+		</div>
+	),
+};
+
+export const NearViewportEdge: Story = {
+	args: {
+		trigger: "click",
+		children: "Edge trigger",
+		cardContent: "The arrow stays aligned with the trigger when the card shifts to fit the viewport.",
+	},
+	render: (args) => (
+		<div className="fixed top-1/2 left-2 -translate-y-1/2 text-foreground">
+			<PreviewCard {...args} />
 		</div>
 	),
 };
