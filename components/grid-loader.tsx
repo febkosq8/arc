@@ -55,7 +55,7 @@ const gridLoaderCellVariants = cva(
 	},
 );
 
-export type GridLoaderShape = (typeof gridLoaderShapes)[number] | "random";
+export type GridLoaderShape = (typeof gridLoaderShapes)[number] | "mixed";
 
 export interface GridLoaderProps extends React.ComponentPropsWithoutRef<"span"> {
 	rows?: number;
@@ -63,6 +63,7 @@ export interface GridLoaderProps extends React.ComponentPropsWithoutRef<"span"> 
 	size?: number;
 	maxSize?: number;
 	shape?: GridLoaderShape;
+	colors?: string[];
 	label?: string;
 	symbols?: string[];
 }
@@ -74,6 +75,7 @@ const GridLoader = ({
 	size = 120,
 	maxSize = 24,
 	shape = "circle",
+	colors = [],
 	label = "Loading",
 	symbols = defaultSymbols,
 	style,
@@ -81,12 +83,13 @@ const GridLoader = ({
 }: GridLoaderProps) => {
 	const [symbolIndexes, setSymbolIndexes] = useState<number[]>([]);
 	const [randomShapes, setRandomShapes] = useState<(typeof gridLoaderShapes)[number][]>([]);
+	const [randomColorIndexes, setRandomColorIndexes] = useState<number[]>([]);
 	const [reducedMotion, setReducedMotion] = useState(
 		() => typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches,
 	);
 
 	useEffect(() => {
-		if (shape !== "random") return;
+		if (shape !== "mixed") return;
 
 		setRandomShapes(
 			Array.from(
@@ -95,6 +98,14 @@ const GridLoader = ({
 			),
 		);
 	}, [columns, rows, shape]);
+
+	useEffect(() => {
+		if (shape !== "mixed" || colors.length === 0) return;
+
+		setRandomColorIndexes(
+			Array.from({ length: rows * columns }, () => Math.floor(Math.random() * colors.length)),
+		);
+	}, [columns, colors.length, rows, shape]);
 
 	useEffect(() => {
 		const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -167,7 +178,7 @@ const GridLoader = ({
 						className={cx(
 							gridLoaderCellVariants({
 								shape:
-									shape === "random"
+									shape === "mixed"
 										? (randomShapes[index] ??
 											gridLoaderShapes[
 												Math.floor(getCellVariation(index, rows, columns) * gridLoaderShapes.length)
@@ -176,7 +187,7 @@ const GridLoader = ({
 							}),
 						)}
 						onAnimationIteration={() => {
-							if (shape !== "random") return;
+							if (shape !== "mixed") return;
 
 							setRandomShapes((current) => {
 								const next = [...current];
@@ -189,10 +200,28 @@ const GridLoader = ({
 								next[index] = alternatives[Math.floor(Math.random() * alternatives.length)];
 								return next;
 							});
+
+							if (colors.length > 1) {
+								setRandomColorIndexes((current) => {
+									const next = [...current];
+									const currentIndex = next[index] ?? index % colors.length;
+									const offset = 1 + Math.floor(Math.random() * (colors.length - 1));
+									next[index] = (currentIndex + offset) % colors.length;
+									return next;
+								});
+							}
 						}}
 						style={{
 							animationDelay: `${-getCellVariation(index, rows, columns) * 1200}ms`,
 							animationDuration: `${900 + getCellVariation(index, rows, columns) * 600}ms`,
+							backgroundColor:
+								colors.length > 0
+									? colors[
+											shape === "mixed"
+												? (randomColorIndexes[index] ?? index % colors.length)
+												: index % colors.length
+										]
+									: undefined,
 							fontSize: `${Math.min(size / Math.max(rows, columns), maxSize) * 0.3}px`,
 							maxWidth: maxSize,
 							maxHeight: maxSize,

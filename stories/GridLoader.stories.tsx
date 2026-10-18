@@ -36,9 +36,15 @@ const meta = {
 		},
 		shape: {
 			control: "select",
-			options: ["circle", "square", "diamond", "star", "heart", "hexagon", "random"],
-			description: "Shape used for every dot, or a random shape per dot that changes with its pulse.",
+			options: ["circle", "square", "diamond", "star", "heart", "hexagon", "mixed"],
+			description: "Shape used for every dot, or a changing mix of shapes.",
 			table: { defaultValue: { summary: "circle" } },
+		},
+		colors: {
+			control: "object",
+			description:
+				"Optional CSS color palette repeated across cells, or randomized with each pulse in mixed shape mode. An empty palette uses the theme color.",
+			table: { defaultValue: { summary: "[]" } },
 		},
 		label: {
 			control: "text",
@@ -57,6 +63,7 @@ const meta = {
 		size: 120,
 		maxSize: 24,
 		shape: "circle",
+		colors: [],
 		label: "Loading",
 		symbols: [
 			"(,,> ᴗ <,,)",
@@ -112,7 +119,7 @@ export const Sizes: Story = {
 
 export const Shapes: Story = {
 	render: (args) => {
-		const shapes: GridLoaderShape[] = ["circle", "square", "diamond", "star", "heart", "hexagon", "random"];
+		const shapes: GridLoaderShape[] = ["circle", "square", "diamond", "star", "heart", "hexagon", "mixed"];
 
 		return (
 			<div className="grid grid-cols-4 gap-6">
@@ -124,5 +131,12 @@ export const Shapes: Story = {
 				))}
 			</div>
 		);
+	},
+};
+
+export const Colors: Story = {
+	args: {
+		shape: "mixed",
+		colors: ["var(--color-primary)", "var(--color-success)", "var(--color-warning)", "var(--color-accent)"],
 	},
 };
