@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useEffect, useState } from "react";
-import { Button, navigateToHashOnLoad } from "../components";
+import { Button } from "../components";
+import { navigateToHashOnLoad } from "../utilities";
 
 type NavigateToHashOnLoadStoryArgs = {
 	intervalMs: number;

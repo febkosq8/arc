@@ -1,5 +1,5 @@
 import { useMemo, type ComponentPropsWithoutRef } from "react";
-import { DateHandler } from "./date-handler";
+import { DateHandler } from "../utilities/date-handler";
 import Input from "./input";
 
 export interface InputTimestampProps extends Omit<ComponentPropsWithoutRef<"input">, "value"> {

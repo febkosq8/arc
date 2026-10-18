@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { DateHandler } from "../components";
+import { DateHandler } from "../utilities";
 
 type DateHandlerStoryArgs = {
 	date: string;

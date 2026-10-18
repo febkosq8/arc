@@ -64,6 +64,7 @@ export function Example() {
 - [npm package](https://www.npmjs.com/package/@febkosq8/arc)
 - [GitHub repository](https://github.com/febkosq8/arc)
 - [Component source](./components/)
+- [Utility source](./utilities/)
 - [Storybook stories](./stories/)
 
 Arc is primarily built to meet my own projects' needs. It's shared publicly for anyone who might find the code useful, but it isn't intended as a polished, general-purpose replacement for a larger UI framework.

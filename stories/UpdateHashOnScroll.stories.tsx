@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useEffect, useRef, useState } from "react";
-import { updateHashOnScroll } from "../components";
+import { updateHashOnScroll } from "../utilities";
 
 type UpdateHashOnScrollStoryArgs = {
 	sectionIds: string[];

@@ -8,7 +8,7 @@ export default defineConfig({
 	plugins: [
 		react(),
 		dts({
-			include: ["components/"],
+			include: ["components/", "utilities/", "index.ts"],
 		}),
 	],
 	resolve: {
@@ -22,7 +22,7 @@ export default defineConfig({
 
 	build: {
 		lib: {
-			entry: resolve("components", "index.ts"),
+			entry: resolve("index.ts"),
 			formats: ["es"],
 		},
 
