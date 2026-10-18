@@ -42,6 +42,8 @@ export { default as Select } from "./select";
 export type { SelectItem, SelectProps } from "./select";
 export { default as Tag } from "./tag";
 export type { TagProps, TagVariant } from "./tag";
+export { default as Table } from "./table";
+export type { TableColumnDef, TableProps } from "./table";
 export { default as TextLink } from "./text-link";
 export type { TextLinkProps } from "./text-link";
 export { default as Switch } from "./switch";

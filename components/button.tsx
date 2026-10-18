@@ -7,11 +7,13 @@ type ButtonVariantOptions = VariantClassProps & {
 	variant?:
 		| "primary"
 		| "secondary"
+		| "success"
 		| "destructive"
 		| "ghost"
 		| "warning"
 		| "outline-primary"
 		| "outline-secondary"
+		| "outline-success"
 		| "outline-destructive"
 		| "outline-ghost"
 		| "outline-warning"
@@ -26,6 +28,7 @@ const buttonVariants: (props?: ButtonVariantOptions) => string = cva(
 			variant: {
 				primary: "bg-primary text-primary-foreground hover:bg-primary/90",
 				secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+				success: "bg-success text-success-foreground hover:bg-success/90",
 				destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
 				ghost: "text-foreground hover:bg-accent hover:text-accent-foreground [&>svg]:text-inherit",
 				warning: "bg-warning text-warning-foreground hover:bg-warning/90",
@@ -33,6 +36,8 @@ const buttonVariants: (props?: ButtonVariantOptions) => string = cva(
 					"border border-primary bg-background text-primary hover:bg-primary hover:text-primary-foreground",
 				"outline-secondary":
 					"border border-secondary-foreground bg-background text-secondary-foreground hover:bg-secondary",
+				"outline-success":
+					"border border-success bg-background text-success hover:bg-success hover:text-success-foreground",
 				"outline-destructive":
 					"border border-destructive bg-background text-destructive hover:bg-destructive hover:text-destructive-foreground",
 				"outline-ghost":
