@@ -89,6 +89,7 @@ const GridLoader = ({
 	colors = [],
 	label = "Loading",
 	symbols = defaultSymbols,
+	title,
 	style,
 	...props
 }: GridLoaderProps) => {
@@ -146,6 +147,7 @@ const GridLoader = ({
 			role="status"
 			aria-live="polite"
 			aria-label={label}
+			title={title ?? label}
 			className={cx("arc-grid-loader inline-flex shrink-0 items-center justify-center align-middle", className)}
 			style={{ width: size, height: size, ...style }}
 		>

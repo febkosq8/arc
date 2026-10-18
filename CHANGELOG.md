@@ -2,6 +2,12 @@
 
 Notable changes to Arc are recorded here. Release versions follow [Semantic Versioning](https://semver.org/).
 
+## [0.8.1] - 2026-10-18
+
+### Changed
+
+- Use GridLoader's accessible label as its default hover title, while allowing an explicit title override.
+
 ## [0.8.0] - 2026-10-18
 
 ### Added
