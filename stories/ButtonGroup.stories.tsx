@@ -393,3 +393,84 @@ export const WithInteractionButtons: InteractionStory = {
 		selectedVariant: "destructive",
 	},
 };
+
+export const Orientations: Story = {
+	render: () => (
+		<div className="flex flex-wrap items-center gap-8">
+			{(["horizontal", "vertical"] as const).map((orientation) => (
+				<div key={orientation} className="flex flex-col items-center gap-2">
+					<Button.Group orientation={orientation} selectedVariant="primary" aria-label={`${orientation} buttons`}>
+						<Button aria-pressed>Selected</Button>
+						<Button aria-pressed={false} variant="secondary">
+							Other
+						</Button>
+					</Button.Group>
+					<span className="text-sm text-muted-foreground">{orientation}</span>
+				</div>
+			))}
+		</div>
+	),
+	args: {
+		orientation: "horizontal",
+		selected: "Current",
+		button1Content: "Previous",
+		button1Variant: "secondary",
+		button2Content: "Current",
+		button2Variant: "secondary",
+		button3Content: "Next",
+		button3Variant: "secondary",
+		selectedVariant: "primary",
+	},
+	parameters: {
+		controls: { exclude: ["orientation"] },
+		docs: { description: { story: "A comparison of both predefined ButtonGroup orientations." } },
+	},
+};
+
+export const SelectedVariants: Story = {
+	render: () => {
+		const variants: ButtonGroupVariant[] = [
+			"primary",
+			"secondary",
+			"destructive",
+			"ghost",
+			"warning",
+			"outline-primary",
+			"outline-secondary",
+			"outline-destructive",
+			"outline-ghost",
+			"outline-warning",
+		];
+
+		return (
+			<div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
+				{variants.map((variant) => (
+					<div key={variant} className="flex flex-col items-center gap-2">
+						<Button.Group orientation="horizontal" selectedVariant={variant} aria-label={`${variant} selection`}>
+							<Button aria-pressed>{variant}</Button>
+							<Button aria-pressed={false} variant="secondary">
+								Other
+							</Button>
+						</Button.Group>
+						<span className="text-xs text-muted-foreground">{variant}</span>
+					</div>
+				))}
+			</div>
+		);
+	},
+	args: {
+		orientation: "horizontal",
+		selected: "Current",
+		button1Content: "Previous",
+		button1Variant: "secondary",
+		button2Content: "Current",
+		button2Variant: "secondary",
+		button3Content: "Next",
+		button3Variant: "secondary",
+		selectedVariant: "primary",
+	},
+	parameters: {
+		controls: { exclude: ["selectedVariant"] },
+		docs: { description: { story: "A comparison of every predefined selected-button variant." } },
+	},
+};

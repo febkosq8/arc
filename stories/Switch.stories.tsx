@@ -54,3 +54,41 @@ export const Default: Story = {
 		);
 	},
 };
+
+export const Variants: Story = {
+	render: (args) => {
+		const [checkedByVariant, setCheckedByVariant] = useState({
+			primary: args.checked ?? false,
+			secondary: args.checked ?? false,
+			danger: args.checked ?? false,
+			success: args.checked ?? false,
+		});
+
+		return (
+			<div className="flex flex-wrap items-center gap-6">
+				{(["primary", "secondary", "danger", "success"] as const).map((variant) => (
+					<label key={variant} className="flex items-center gap-2">
+						<Switch
+							{...args}
+							checked={checkedByVariant[variant]}
+							variant={variant}
+							onChange={(checked) => setCheckedByVariant((current) => ({ ...current, [variant]: checked }))}
+						/>
+						<span className="text-sm text-foreground">{variant}</span>
+					</label>
+				))}
+			</div>
+		);
+	},
+	args: { checked: true, disabled: false, variant: "primary" },
+	parameters: {
+		controls: {
+			exclude: ["variant"],
+		},
+		docs: {
+			description: {
+				story: "A comparison of every predefined Switch color variant in its checked state.",
+			},
+		},
+	},
+};

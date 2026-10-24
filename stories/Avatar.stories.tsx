@@ -28,13 +28,27 @@ const meta = {
 			control: "select",
 			description: "Avatar dimensions.",
 			table: { defaultValue: { summary: "md" } },
-			options: ["xs", "sm", "md", "lg", "xl"],
+			options: ["xs", "sm", "md", "lg", "xl", "2xl", "3xl", "4xl", "5xl", "6xl", "7xl", "8xl"],
+		},
+		variant: {
+			control: "select",
+			description: "Use the default border or a colored ring.",
+			table: { defaultValue: { summary: "default" } },
+			options: ["default", "ring"],
+		},
+		ringColor: {
+			control: "select",
+			description: "Semantic color for the ring variant.",
+			table: { defaultValue: { summary: "primary" } },
+			options: ["primary", "secondary", "accent", "muted", "destructive", "success", "warning"],
 		},
 	},
 	args: {
 		name: "Jamie Rivera",
 		image: "https://avatars.githubusercontent.com/u/1?v=4",
 		size: "md",
+		variant: "default",
+		ringColor: "primary",
 	},
 } satisfies Meta<typeof Avatar>;
 
@@ -53,4 +67,45 @@ export const BrokenImage: Story = {
 
 export const Fallback: Story = {
 	args: { name: null, image: null, size: "md" },
+};
+
+export const Sizes: Story = {
+	render: (args) => (
+		<div className="flex flex-wrap items-end gap-6">
+			{(["xs", "sm", "md", "lg", "xl", "2xl", "3xl", "4xl", "5xl", "6xl", "7xl", "8xl"] as const).map((size) => (
+				<div key={size} className="flex flex-col items-center gap-2">
+					<Avatar {...args} name="Jamie Rivera" image={null} size={size} />
+					<span className="text-sm text-muted-foreground">{size}</span>
+				</div>
+			))}
+		</div>
+	),
+};
+
+export const Variants: Story = {
+	render: (args) => (
+		<div className="flex flex-wrap items-center gap-6">
+			{(["default", "ring"] as const).map((variant) => (
+				<div key={variant} className="flex flex-col items-center gap-2">
+					<Avatar {...args} name="Jamie Rivera" image={null} variant={variant} />
+					<span className="text-sm text-muted-foreground">{variant}</span>
+				</div>
+			))}
+		</div>
+	),
+};
+
+export const Rings: Story = {
+	render: (args) => (
+		<div className="flex flex-wrap items-center gap-6">
+			{(["primary", "secondary", "accent", "muted", "destructive", "success", "warning"] as const).map(
+				(ringColor) => (
+					<div key={ringColor} className="flex flex-col items-center gap-2">
+						<Avatar {...args} name="Jamie Rivera" image={null} variant="ring" ringColor={ringColor} />
+						<span className="text-sm text-muted-foreground">{ringColor}</span>
+					</div>
+				),
+			)}
+		</div>
+	),
 };

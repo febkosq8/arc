@@ -121,7 +121,7 @@ const DoubleClickButton = ({
 	return (
 		<span
 			aria-label={isWaiting ? "Waiting for second click" : undefined}
-			className="arc-double-click-button relative inline-flex"
+			className="arc-double-click-button relative inline-flex w-fit"
 			data-double-click-state={isWaiting ? "waiting" : undefined}
 		>
 			{button}

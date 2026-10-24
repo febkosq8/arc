@@ -122,6 +122,10 @@
 	border-color: var(--color-primary) !important;
 }
 
+.arc-avatar--ring-accent {
+	--tw-ring-color: color-mix(in srgb, var(--color-primary) 65%, var(--color-accent-foreground));
+}
+
 @layer base {
 	:root {
 		--background: 220 14% 94%;

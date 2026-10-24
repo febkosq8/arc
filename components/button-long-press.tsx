@@ -81,7 +81,7 @@ const LongPressButton = ({
 
 	return (
 		<span
-			className="arc-long-press-button relative inline-flex"
+			className="arc-long-press-button relative inline-flex w-fit"
 			data-long-press-state={isPressing ? "pressing" : undefined}
 		>
 			<Button

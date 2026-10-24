@@ -33,6 +33,10 @@ const meta = {
 			},
 		},
 	},
+	args: {
+		variant: "dropdown",
+		showLabel: false,
+	},
 } satisfies Meta<typeof ThemeSwitcher>;
 
 export default meta;
@@ -49,5 +53,28 @@ export const WithLabel: Story = {
 	args: {
 		variant: "dropdown",
 		showLabel: true,
+	},
+};
+
+export const Variants: Story = {
+	render: () => (
+		<div className="flex flex-wrap items-center gap-6">
+			{(["dropdown", "toggle"] as const).map((variant) => (
+				<div key={variant} className="flex flex-col items-center gap-2">
+					<ThemeSwitcher variant={variant} />
+					<span className="text-sm text-muted-foreground">{variant}</span>
+				</div>
+			))}
+		</div>
+	),
+	parameters: {
+		controls: {
+			exclude: ["variant"],
+		},
+		docs: {
+			description: {
+				story: "A side-by-side comparison of the dropdown and toggle theme switchers.",
+			},
+		},
 	},
 };

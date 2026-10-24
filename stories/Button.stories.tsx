@@ -121,6 +121,37 @@ export const Variants: Story = {
 	},
 };
 
+export const Sizes: Story = {
+	render: (args) => {
+		const sizes = ["xs", "sm", "md", "lg", "xl", "icon-xs", "icon-sm", "icon-md", "icon-lg", "icon-xl"] as const;
+
+		return (
+			<div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
+				{sizes.map((size) => {
+					const isIconSize = size.startsWith("icon-");
+
+					return (
+						<div key={size} className="flex flex-col items-center gap-2">
+							<Button {...args} size={size} aria-label={isIconSize ? size : undefined} title={size}>
+								{isIconSize ? <FiArrowRight aria-hidden="true" className="size-4" /> : size}
+							</Button>
+							<span className="text-xs text-muted-foreground">{size}</span>
+						</div>
+					);
+				})}
+			</div>
+		);
+	},
+	args: { ...meta.args, variant: "primary" },
+	parameters: {
+		docs: {
+			description: {
+				story: "A comparison of every predefined Button size, including icon-only sizes.",
+			},
+		},
+	},
+};
+
 export const IconOnly: Story = {
 	render: (args) => (
 		<Button {...args} aria-label="Continue" title="Continue">

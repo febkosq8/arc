@@ -56,6 +56,29 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
 
+export const Variants: Story = {
+	render: (args) => (
+		<div className="flex w-72 flex-col gap-4">
+			{(["default", "ghost"] as const).map((variant) => (
+				<label key={variant} className="flex flex-col gap-2 text-sm">
+					<span className="text-muted-foreground">{variant}</span>
+					<Input {...args} variant={variant} aria-label={`${variant} input`} />
+				</label>
+			))}
+		</div>
+	),
+	parameters: {
+		controls: {
+			exclude: ["variant"],
+		},
+		docs: {
+			description: {
+				story: "A side-by-side comparison of every predefined Input variant.",
+			},
+		},
+	},
+};
+
 export const Textarea: Story = {
 	args: {
 		as: "textarea",

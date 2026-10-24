@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 import { fn } from "storybook/test";
-import { PillLink } from "../components";
+import { PillLink, type PillLinkVariant } from "../components";
 
 const meta = {
 	title: "Components/PillLink",
@@ -15,7 +15,7 @@ const meta = {
 		docs: {
 			description: {
 				component:
-					"A navigation link with pill, primary, and outline styles. Set active to highlight the current page and mark it with aria-current.",
+					"A navigation link with pill, semantic button-style, and outline variants. Set active to highlight the current page and mark it with aria-current.",
 			},
 		},
 	},
@@ -27,9 +27,24 @@ const meta = {
 		},
 		variant: {
 			control: "inline-radio",
-			options: ["pill", "primary", "outline"],
-			description: "Visual style. Use pill for navigation links and primary or outline for button-style links.",
-			table: { type: { summary: '"pill" | "primary" | "outline"' }, defaultValue: { summary: "pill" } },
+			options: [
+				"pill",
+				"primary",
+				"secondary",
+				"success",
+				"destructive",
+				"ghost",
+				"warning",
+				"outline",
+				"outline-primary",
+				"outline-secondary",
+				"outline-success",
+				"outline-destructive",
+				"outline-ghost",
+				"outline-warning",
+			],
+			description: "Visual style. Use pill for navigation or a semantic button-style variant.",
+			table: { type: { summary: "PillLinkVariant" }, defaultValue: { summary: "pill" } },
 		},
 		size: {
 			control: "inline-radio",
@@ -72,6 +87,80 @@ export const Default: Story = {
 			}}
 		/>
 	),
+};
+
+export const Variants: Story = {
+	render: (args) => {
+		const variants = [
+			"pill",
+			"primary",
+			"secondary",
+			"success",
+			"destructive",
+			"ghost",
+			"warning",
+			"outline",
+			"outline-primary",
+			"outline-secondary",
+			"outline-success",
+			"outline-destructive",
+			"outline-ghost",
+			"outline-warning",
+		] as const satisfies readonly PillLinkVariant[];
+
+		return (
+			<div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+				{variants.map((variant) => (
+					<div key={variant} className="flex flex-col items-center gap-2">
+						<PillLink
+							{...args}
+							href={`#${variant}`}
+							variant={variant}
+							onClick={(event) => {
+								event.preventDefault();
+								args.onClick?.(event);
+							}}
+						>
+							{variant}
+						</PillLink>
+						<span className="text-xs text-muted-foreground">{variant}</span>
+					</div>
+				))}
+			</div>
+		);
+	},
+	args: { ...meta.args, size: "md", active: false },
+	parameters: {
+		docs: {
+			description: {
+				story:
+					"A comparison of every PillLink variant, including the semantic and outline variants shared with Button.",
+			},
+		},
+	},
+};
+
+export const Sizes: Story = {
+	render: (args) => (
+		<div className="flex flex-wrap items-end gap-4">
+			{(["sm", "md"] as const).map((size) => (
+				<div key={size} className="flex flex-col items-center gap-2">
+					<PillLink {...args} size={size}>
+						{size}
+					</PillLink>
+					<span className="text-xs text-muted-foreground">{size}</span>
+				</div>
+			))}
+		</div>
+	),
+	args: { ...meta.args, variant: "outline-primary" },
+	parameters: {
+		docs: {
+			description: {
+				story: "A comparison of every predefined PillLink size.",
+			},
+		},
+	},
 };
 
 export const Navigation: Story = {

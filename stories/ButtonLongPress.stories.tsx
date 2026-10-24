@@ -1,6 +1,24 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
+import { FiArrowRight } from "react-icons/fi";
 import { LongPressButton } from "../components";
+
+const variants = [
+	"primary",
+	"secondary",
+	"success",
+	"destructive",
+	"ghost",
+	"warning",
+	"outline-primary",
+	"outline-secondary",
+	"outline-success",
+	"outline-destructive",
+	"outline-ghost",
+	"outline-warning",
+] as const;
+const sizes = ["xs", "sm", "md", "lg", "xl", "icon-xs", "icon-sm", "icon-md", "icon-lg", "icon-xl"] as const;
+const feedbackVariants = ["primary", "secondary", "destructive", "warning"] as const;
 
 const meta = {
 	title: "Components/ButtonLongPress",
@@ -23,23 +41,14 @@ type Story = StoryObj<{
 	children: string;
 	longPressMsDuration: number;
 	preventClick: boolean;
-	variant:
-		| "primary"
-		| "secondary"
-		| "destructive"
-		| "ghost"
-		| "warning"
-		| "outline-primary"
-		| "outline-secondary"
-		| "outline-destructive"
-		| "outline-ghost"
-		| "outline-warning";
-	feedbackVariant: "primary" | "secondary" | "destructive" | "warning";
+	variant: (typeof variants)[number];
+	size: (typeof sizes)[number];
+	feedbackVariant: (typeof feedbackVariants)[number];
 	feedbackContent?: string;
 }>;
 
 export const Default: Story = {
-	render: ({ children, longPressMsDuration, preventClick, variant, feedbackVariant, feedbackContent }) => {
+	render: ({ children, longPressMsDuration, preventClick, variant, size, feedbackVariant, feedbackContent }) => {
 		const [message, setMessage] = useState("Press and hold for 2500ms");
 
 		return (
@@ -48,6 +57,7 @@ export const Default: Story = {
 					longPressMsDuration={longPressMsDuration}
 					preventClick={preventClick}
 					variant={variant}
+					size={size}
 					feedbackVariant={feedbackVariant}
 					feedbackContent={feedbackContent}
 					onLongPress={() => setMessage("Long-press action fired")}
@@ -90,9 +100,15 @@ export const Default: Story = {
 				defaultValue: { summary: "primary" },
 			},
 		},
+		size: {
+			control: "select",
+			options: sizes,
+			description: "Button size, including icon-only sizes.",
+			table: { defaultValue: { summary: "md" } },
+		},
 		feedbackVariant: {
 			control: "select",
-			options: ["primary", "secondary", "destructive", "warning"],
+			options: feedbackVariants,
 			description: "Variant used for the long-press feedback indicator.",
 			table: {
 				type: { summary: '"primary" | "secondary" | "destructive" | "warning"' },
@@ -109,7 +125,109 @@ export const Default: Story = {
 		longPressMsDuration: 2500,
 		preventClick: true,
 		variant: "secondary",
+		size: "md",
 		feedbackVariant: "primary",
 		feedbackContent: "Keep holding",
 	},
+};
+
+export const Variants: Story = {
+	render: (args) => (
+		<div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+			{variants.map((variant) => (
+				<LongPressButton
+					key={variant}
+					variant={variant}
+					size={args.size}
+					longPressMsDuration={args.longPressMsDuration}
+					preventClick={args.preventClick}
+					feedbackVariant={args.feedbackVariant}
+					feedbackContent={args.feedbackContent}
+				>
+					{variant}
+				</LongPressButton>
+			))}
+		</div>
+	),
+	args: {
+		children: "Press and hold",
+		longPressMsDuration: 1500,
+		preventClick: true,
+		variant: "primary",
+		size: "md",
+		feedbackVariant: "warning",
+		feedbackContent: "Keep holding",
+	},
+	parameters: { controls: { exclude: ["variant"] } },
+};
+
+export const Sizes: Story = {
+	render: (args) => (
+		<div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
+			{sizes.map((size) => {
+				const isIconSize = size.startsWith("icon-");
+
+				return (
+					<div key={size} className="flex flex-col items-center gap-2">
+						<LongPressButton
+							variant={args.variant}
+							size={size}
+							longPressMsDuration={args.longPressMsDuration}
+							preventClick={args.preventClick}
+							feedbackVariant={args.feedbackVariant}
+							feedbackContent={args.feedbackContent}
+							aria-label={isIconSize ? size : undefined}
+							title={size}
+						>
+							{isIconSize ? <FiArrowRight aria-hidden="true" className="size-4" /> : size}
+						</LongPressButton>
+						<span className="text-xs text-muted-foreground">{size}</span>
+					</div>
+				);
+			})}
+		</div>
+	),
+	args: {
+		children: "Press and hold",
+		longPressMsDuration: 1500,
+		preventClick: true,
+		variant: "primary",
+		size: "md",
+		feedbackVariant: "warning",
+		feedbackContent: "Keep holding",
+	},
+	parameters: { controls: { exclude: ["size"] } },
+};
+
+export const FeedbackVariants: Story = {
+	render: (args) => (
+		<div className="flex flex-wrap items-center gap-4">
+			{feedbackVariants.map((feedbackVariant) => (
+				<div key={feedbackVariant} className="flex flex-col items-center gap-2">
+					<LongPressButton
+						variant={args.variant}
+						size={args.size}
+						longPressMsDuration={args.longPressMsDuration}
+						preventClick={args.preventClick}
+						feedbackVariant={feedbackVariant}
+						feedbackContent={feedbackVariant}
+					>
+						Press and hold
+					</LongPressButton>
+					<span className="text-xs text-muted-foreground">{feedbackVariant}</span>
+				</div>
+			))}
+			<p className="w-full text-center text-sm text-muted-foreground">Press and hold to preview each feedback ring.</p>
+		</div>
+	),
+	args: {
+		children: "Press and hold",
+		longPressMsDuration: 1500,
+		preventClick: true,
+		variant: "secondary",
+		size: "md",
+		feedbackVariant: "warning",
+		feedbackContent: "Keep holding",
+	},
+	parameters: { controls: { exclude: ["feedbackVariant"] } },
 };
