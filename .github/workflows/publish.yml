@@ -122,7 +122,20 @@ jobs:
                 }
               }
 
-              const notes = `## Changelog\n\n${sections.join("\n\n")}`;
+              const npmUrl = `https://www.npmjs.com/package/${pkg.name}/v/${version}`;
+              const notes = [
+                `Install [${pkg.name}@${version}](${npmUrl}) with pnpm:`,
+                "",
+                "```sh",
+                `pnpm add ${pkg.name}@${version}`,
+                "```",
+                "",
+                "---",
+                "",
+                "## Changelog",
+                "",
+                sections.join("\n\n"),
+              ].join("\n");
               const delimiter = `NOTES_${randomUUID()}`;
               appendFileSync(
                 process.env.GITHUB_OUTPUT,
