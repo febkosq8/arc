@@ -1,0 +1,288 @@
+name: Publish
+
+on:
+  workflow_dispatch:
+    inputs:
+      version_override:
+        description: Version to publish instead of the package.json version (leave empty to use package.json)
+        type: string
+        default: ""
+      create_tag:
+        description: Create and push the version Git tag
+        type: boolean
+        default: true
+      create_release:
+        description: Create a GitHub release for the version tag
+        type: boolean
+        default: true
+      publish_npm:
+        description: Publish the package to npm
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.release-info.outputs.version }}
+      package_name: ${{ steps.release-info.outputs.package_name }}
+      release_notes: ${{ steps.release-info.outputs.release_notes }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Prepare release preview
+        id: release-info
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CREATE_RELEASE: ${{ inputs.create_release }}
+          CREATE_TAG: ${{ inputs.create_tag }}
+          PUBLISH_NPM: ${{ inputs.publish_npm }}
+          VERSION_OVERRIDE: ${{ inputs.version_override }}
+        run: |
+          node --input-type=module -e '
+            import { appendFileSync, readFileSync } from "node:fs";
+            import { randomUUID } from "node:crypto";
+
+            const override = process.env.VERSION_OVERRIDE.trim();
+            if (override && !/^[0-9A-Za-z][0-9A-Za-z._+-]*$/.test(override)) {
+              throw new Error(`Invalid version override: ${override}`);
+            }
+            const pkg = JSON.parse(readFileSync("package.json", "utf8"));
+            const version = override || pkg.version;
+            if (!version || !/^[0-9A-Za-z][0-9A-Za-z._+-]*$/.test(version)) {
+              throw new Error(`Invalid package version: ${version}`);
+            }
+            appendFileSync(process.env.GITHUB_OUTPUT, `version=${version}\n`);
+            appendFileSync(process.env.GITHUB_OUTPUT, `package_name=${pkg.name}\n`);
+
+            let summary = `## Publish preview\n\nPackage: \`${pkg.name}\`\n\nVersion: \`v${version}\`\n\n`;
+            summary += `- Create Git tag: ${process.env.CREATE_TAG}\n`;
+            summary += `- Create GitHub release: ${process.env.CREATE_RELEASE}\n`;
+            summary += `- Publish to npm: ${process.env.PUBLISH_NPM}\n`;
+            if (process.env.CREATE_RELEASE === "true") {
+              const heading = `## [${version}]`;
+              const lines = readFileSync("CHANGELOG.md", "utf8").split(/\r?\n/);
+              const start = lines.findIndex(
+                (line) => line === heading || line.startsWith(`${heading} -`),
+              );
+
+              if (start === -1) {
+                throw new Error(`No changelog section found for version ${version}`);
+              }
+
+              const findEnd = (from) => {
+                const index = lines.findIndex(
+                  (line, i) => i > from && line.startsWith("## ["),
+                );
+                return index === -1 ? lines.length : index;
+              };
+              const end = findEnd(start);
+              const current = lines.slice(start, end).join("\n").trim();
+              if (!lines.slice(start + 1, end).join("").trim()) {
+                throw new Error(`Changelog section for version ${version} is empty`);
+              }
+
+              const sections = [current];
+              const previousHeading = lines[end] ?? "";
+              const previousVersion = /^## \[([^\]]+)\]/.exec(previousHeading)?.[1];
+              if (previousVersion) {
+                const response = await fetch(
+                  `${process.env.GITHUB_API_URL}/repos/${process.env.GITHUB_REPOSITORY}/releases/tags/v${previousVersion}`,
+                  {
+                    headers: {
+                      Authorization: `Bearer ${process.env.GH_TOKEN}`,
+                      Accept: "application/vnd.github+json",
+                    },
+                  },
+                );
+                if (response.status === 404) {
+                  const previous = lines.slice(end, findEnd(end)).join("\n").trim();
+                  if (previous.split("\n").slice(1).join("").trim()) {
+                    sections.push(previous);
+                  }
+                } else if (!response.ok) {
+                  throw new Error(
+                    `Could not check GitHub release v${previousVersion} (HTTP ${response.status})`,
+                  );
+                }
+              }
+
+              const notes = `## Changelog\n\n${sections.join("\n\n")}`;
+              const delimiter = `NOTES_${randomUUID()}`;
+              appendFileSync(
+                process.env.GITHUB_OUTPUT,
+                `release_notes<<${delimiter}\n${notes}\n${delimiter}\n`,
+              );
+              summary += `\n---\n\n### Release Summary\n\n${notes}\n`;
+            }
+
+            appendFileSync(process.env.GITHUB_STEP_SUMMARY, `${summary}\n`);
+            console.log(summary);
+          '
+
+  check:
+    needs: prepare
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Ensure version tag does not exist
+        if: inputs.create_tag
+        env:
+          VERSION: ${{ needs.prepare.outputs.version }}
+        run: |
+          tag="v${VERSION}"
+          if ! existing_tag=$(git ls-remote --tags origin "refs/tags/${tag}"); then
+              echo "::error::Could not check whether Git tag ${tag} exists."
+              exit 1
+          fi
+          if [ -n "$existing_tag" ]; then
+              echo "::error::Git tag ${tag} already exists; refusing to publish this version."
+              printf '\n> [!WARNING]\n> Git tag `%s` already exists; refusing to publish this version.\n' "$tag" >> "$GITHUB_STEP_SUMMARY"
+              exit 1
+          fi
+          printf '\n> [!NOTE]\n> Git tag `%s` does not exist yet.\n' "$tag" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Ensure GitHub release does not exist
+        if: inputs.create_release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ needs.prepare.outputs.version }}
+        run: |
+          tag="v${VERSION}"
+          status=$(curl --silent --show-error \
+              --output "$RUNNER_TEMP/release.json" \
+              --write-out '%{http_code}' \
+              --header "Authorization: Bearer $GH_TOKEN" \
+              --header "Accept: application/vnd.github+json" \
+              "${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/releases/tags/${tag}")
+
+          if [ "$status" = "200" ]; then
+              echo "::error::GitHub release ${tag} already exists; refusing to publish this version."
+              printf '\n> [!WARNING]\n> GitHub release `%s` already exists; refusing to publish this version.\n' "$tag" >> "$GITHUB_STEP_SUMMARY"
+              exit 1
+          elif [ "$status" != "404" ]; then
+              echo "::error::Could not check GitHub release ${tag} (HTTP ${status})."
+              cat "$RUNNER_TEMP/release.json"
+              exit 1
+          fi
+          printf '\n> [!NOTE]\n> GitHub release `%s` does not exist yet.\n' "$tag" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Ensure npm package version does not exist
+        if: inputs.publish_npm
+        env:
+          PACKAGE_NAME: ${{ needs.prepare.outputs.package_name }}
+          VERSION: ${{ needs.prepare.outputs.version }}
+        run: |
+          output="$RUNNER_TEMP/npm-view.out"
+          if npm view "${PACKAGE_NAME}@${VERSION}" version --json > "$output" 2>&1; then
+              echo "::error::${PACKAGE_NAME}@${VERSION} already exists on npm; refusing to publish this version."
+              printf '\n> [!WARNING]\n> npm package version `%s@%s` already exists; refusing to publish this version.\n' "$PACKAGE_NAME" "$VERSION" >> "$GITHUB_STEP_SUMMARY"
+              exit 1
+          elif grep -Eq 'E404|404 Not Found' "$output"; then
+              printf '\n> [!NOTE]\n> npm package version `%s@%s` does not exist yet.\n' "$PACKAGE_NAME" "$VERSION" >> "$GITHUB_STEP_SUMMARY"
+          else
+              echo "::error::Could not check npm package version ${PACKAGE_NAME}@${VERSION}."
+              cat "$output"
+              exit 1
+          fi
+
+  publish:
+    needs: [prepare, check]
+    if: inputs.create_tag || inputs.create_release || inputs.publish_npm
+    runs-on: ubuntu-latest
+    environment: Arc-Env
+    permissions:
+      contents: write
+      id-token: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Create and push Git tag
+        id: tag
+        if: inputs.create_tag
+        env:
+          VERSION: ${{ needs.prepare.outputs.version }}
+        run: |
+          tag="v${VERSION}"
+          git tag "$tag" "$GITHUB_SHA"
+          git push origin "$tag"
+
+      - name: Create GitHub release
+        id: release
+        if: inputs.create_release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ needs.prepare.outputs.version }}
+          RELEASE_NOTES: ${{ needs.prepare.outputs.release_notes }}
+        run: |
+          tag="v${VERSION}"
+          gh release create "$tag" \
+              --title "$tag" \
+              --verify-tag \
+              --notes "$RELEASE_NOTES"
+
+      - name: Set up Node.js
+        if: inputs.publish_npm
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+          package-manager-cache: false
+
+      - name: Set up pnpm
+        if: inputs.publish_npm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 12.15.0
+
+      - name: Ensure npm supports trusted publishing
+        if: inputs.publish_npm
+        run: npm install --global "npm@^11.5.1"
+
+      - name: Install dependencies
+        if: inputs.publish_npm
+        run: pnpm install --frozen-lockfile
+
+      - name: Publish to npm
+        id: npm
+        if: inputs.publish_npm
+        run: npm publish --access public
+
+      - name: Write publish summary
+        if: always()
+        env:
+          VERSION: ${{ needs.prepare.outputs.version }}
+          JOB_STATUS: ${{ job.status }}
+          TAG_OUTCOME: ${{ steps.tag.outcome }}
+          RELEASE_OUTCOME: ${{ steps.release.outcome }}
+          NPM_OUTCOME: ${{ steps.npm.outcome }}
+        run: |
+          report() {
+              case "$2" in
+                  success) echo "> - ✅ $1" ;;
+                  failure) echo "> - ❌ $1" ;;
+              esac
+          }
+          if [ "$JOB_STATUS" = "success" ]; then
+              alert="NOTE"
+              title="Published \`v${VERSION}\`."
+          else
+              alert="WARNING"
+              title="Publishing \`v${VERSION}\` did not complete successfully."
+          fi
+          {
+              echo
+              echo "> [!${alert}]"
+              echo "> ${title}"
+              echo ">"
+              report "Git tag \`v${VERSION}\`" "$TAG_OUTCOME"
+              report "GitHub release \`v${VERSION}\`" "$RELEASE_OUTCOME"
+              report "npm package version \`${VERSION}\`" "$NPM_OUTCOME"
+          } >> "$GITHUB_STEP_SUMMARY"
