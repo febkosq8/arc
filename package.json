@@ -2,7 +2,7 @@
 	"name": "@febkosq8/arc",
 	"description": "A React components library for febkosq8",
 	"private": false,
-	"version": "0.8.1",
+	"version": "0.8.2",
 	"type": "module",
 	"main": "./dist/arc.js",
 	"types": "./dist/index.d.ts",
