@@ -64,14 +64,25 @@ jobs:
             summary += `- Create GitHub release: ${process.env.CREATE_RELEASE}\n`;
             summary += `- Publish to npm: ${process.env.PUBLISH_NPM}\n`;
             if (process.env.CREATE_RELEASE === "true") {
-              const heading = `## [${version}]`;
               const lines = readFileSync("CHANGELOG.md", "utf8").split(/\r?\n/);
-              const start = lines.findIndex(
-                (line) => line === heading || line.startsWith(`${heading} -`),
-              );
+              const findSection = (sectionVersion) => {
+                const heading = `## [${sectionVersion}]`;
+                return lines.findIndex(
+                  (line) => line === heading || line.startsWith(`${heading} -`),
+                );
+              };
+              let changelogVersion = version;
+              let start = findSection(changelogVersion);
+              if (start === -1 && override) {
+                changelogVersion = pkg.version;
+                start = findSection(changelogVersion);
+                if (start !== -1) {
+                  summary += `- No changelog section for override \`${version}\`; using package.json version \`${changelogVersion}\` notes.\n`;
+                }
+              }
 
               if (start === -1) {
-                throw new Error(`No changelog section found for version ${version}`);
+                throw new Error(`No changelog section found for version ${changelogVersion}`);
               }
 
               const findEnd = (from) => {
@@ -83,7 +94,7 @@ jobs:
               const end = findEnd(start);
               const current = lines.slice(start, end).join("\n").trim();
               if (!lines.slice(start + 1, end).join("").trim()) {
-                throw new Error(`Changelog section for version ${version} is empty`);
+                throw new Error(`Changelog section for version ${changelogVersion} is empty`);
               }
 
               const sections = [current];
@@ -111,7 +122,11 @@ jobs:
                 }
               }
 
-              const notes = `## Changelog\n\n${sections.join("\n\n")}`;
+              const fallbackNote =
+                changelogVersion === version
+                  ? ""
+                  : `Release version \`${version}\` uses changelog notes from package.json version \`${changelogVersion}\`.\n\n---\n\n`;
+              const notes = `${fallbackNote}## Changelog\n\n${sections.join("\n\n")}`;
               const delimiter = `NOTES_${randomUUID()}`;
               appendFileSync(
                 process.env.GITHUB_OUTPUT,
@@ -236,11 +251,9 @@ jobs:
           registry-url: https://registry.npmjs.org
           package-manager-cache: false
 
-      - name: Set up pnpm
+      - name: Install pnpm
         if: inputs.publish_npm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 12.15.0
+        run: npm install --global pnpm@12.15.0
 
       - name: Ensure npm supports trusted publishing
         if: inputs.publish_npm
