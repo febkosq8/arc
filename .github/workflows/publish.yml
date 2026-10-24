@@ -263,6 +263,12 @@ jobs:
         if: inputs.publish_npm
         run: pnpm install --frozen-lockfile
 
+      - name: Set package version for npm publish
+        if: inputs.publish_npm
+        env:
+          VERSION: ${{ needs.prepare.outputs.version }}
+        run: npm version "$VERSION" --no-git-tag-version --allow-same-version
+
       - name: Publish to npm
         id: npm
         if: inputs.publish_npm
