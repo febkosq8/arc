@@ -17,8 +17,20 @@
 		"dist",
 		"components/index.css"
 	],
+	"author": {
+		"name": "Febkosq8",
+		"email": "contact@febkosq8.me",
+		"url": "https://febkosq8.me"
+	},
+	"license": "CC-BY-NC-4.0",
+	"engines": {
+		"node": ">=24.22.1"
+	},
 	"homepage": "https://www.npmjs.com/package/@febkosq8/arc",
-	"repository": "https://github.com/febkosq8/arc",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/febkosq8/arc.git"
+	},
 	"packageManager": "pnpm@12.15.0",
 	"scripts": {
 		"build": "vite build",
