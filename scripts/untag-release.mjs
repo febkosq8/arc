@@ -6,6 +6,9 @@ import { fileURLToPath } from "node:url";
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const runGit = (args) => execFileSync("git", args, { cwd: root, encoding: "utf8" }).trim();
 
+console.log("Refreshing and pruning tags against origin...");
+runGit(["fetch", "origin", "--prune", "--prune-tags"]);
+
 const localTags = runGit(["tag", "--list", "v*"]).split(/\r?\n/).filter(Boolean);
 const remoteTags = runGit(["ls-remote", "--tags", "--refs", "origin", "v*"])
 	.split(/\r?\n/)
