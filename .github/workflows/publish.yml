@@ -122,11 +122,7 @@ jobs:
                 }
               }
 
-              const fallbackNote =
-                changelogVersion === version
-                  ? ""
-                  : `Release version \`${version}\` uses changelog notes from package.json version \`${changelogVersion}\`.\n\n---\n\n`;
-              const notes = `${fallbackNote}## Changelog\n\n${sections.join("\n\n")}`;
+              const notes = `## Changelog\n\n${sections.join("\n\n")}`;
               const delimiter = `NOTES_${randomUUID()}`;
               appendFileSync(
                 process.env.GITHUB_OUTPUT,
@@ -251,9 +247,9 @@ jobs:
           registry-url: https://registry.npmjs.org
           package-manager-cache: false
 
-      - name: Install pnpm
+      - name: Set up pnpm
         if: inputs.publish_npm
-        run: npm install --global pnpm@12.15.0
+        uses: pnpm/action-setup@v6
 
       - name: Ensure npm supports trusted publishing
         if: inputs.publish_npm
@@ -272,7 +268,14 @@ jobs:
       - name: Publish to npm
         id: npm
         if: inputs.publish_npm
-        run: npm publish --access public
+        env:
+          VERSION: ${{ needs.prepare.outputs.version }}
+        run: |
+          if [[ "$VERSION" == *-* ]]; then
+              npm publish --access public --tag next
+          else
+              npm publish --access public --tag latest
+          fi
 
       - name: Write publish summary
         if: always()
