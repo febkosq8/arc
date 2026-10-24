@@ -1,0 +1,16 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Get Commands to Unpublish Arc release",
+			"type": "process",
+			"command": "node",
+			"args": ["${workspaceFolder}/scripts/untag-release.mjs"],
+			"problemMatcher": [],
+			"presentation": {
+				"reveal": "always",
+				"focus": true
+			}
+		}
+	]
+}
