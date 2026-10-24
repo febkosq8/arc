@@ -98,9 +98,14 @@ jobs:
               }
 
               const sections = [current];
-              const previousHeading = lines[end] ?? "";
-              const previousVersion = /^## \[([^\]]+)\]/.exec(previousHeading)?.[1];
-              if (previousVersion) {
+              let previousStart = end;
+              while (previousStart < lines.length) {
+                const previousHeading = lines[previousStart] ?? "";
+                const previousVersion = /^## \[([^\]]+)\]/.exec(previousHeading)?.[1];
+                if (!previousVersion) {
+                  break;
+                }
+
                 const response = await fetch(
                   `${process.env.GITHUB_API_URL}/repos/${process.env.GITHUB_REPOSITORY}/releases/tags/v${previousVersion}`,
                   {
@@ -110,16 +115,21 @@ jobs:
                     },
                   },
                 );
-                if (response.status === 404) {
-                  const previous = lines.slice(end, findEnd(end)).join("\n").trim();
-                  if (previous.split("\n").slice(1).join("").trim()) {
-                    sections.push(previous);
-                  }
-                } else if (!response.ok) {
+                if (response.ok) {
+                  break;
+                }
+                if (response.status !== 404) {
                   throw new Error(
                     `Could not check GitHub release v${previousVersion} (HTTP ${response.status})`,
                   );
                 }
+
+                const previousEnd = findEnd(previousStart);
+                const previous = lines.slice(previousStart, previousEnd).join("\n").trim();
+                if (previous.split("\n").slice(1).join("").trim()) {
+                  sections.push(previous);
+                }
+                previousStart = previousEnd;
               }
 
               const npmUrl = `https://www.npmjs.com/package/${pkg.name}/v/${version}`;
