@@ -5,6 +5,18 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.8.4] - 2026-11-07
+
+### Added
+
+- Support typed computed Table values through `accessorFn`, requiring an explicit column ID and supporting filtering and sorting.
+- Add Storybook coverage for key-based and computed Table accessors.
+
+### Changed
+
+- Move Tailwind processing from `@tailwindcss/postcss` to `@tailwindcss/vite`.
+- Update `@rinzai/zen`, Storybook, Tailwind CSS, Vite, and related development tools; use pnpm 12.18.0.
+
 ## [0.8.3] - 2026-10-24
 
 ### Added

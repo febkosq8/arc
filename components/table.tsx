@@ -9,7 +9,6 @@ import {
 	columnResizingFeature,
 	columnSizingFeature,
 	columnVisibilityFeature,
-	createColumnHelper,
 	createFilteredRowModel,
 	createPaginatedRowModel,
 	createSortedRowModel,
@@ -26,8 +25,9 @@ import {
 	tableFeatures,
 	useTable,
 } from "@tanstack/react-table";
-import type { FilterFnOption } from "@tanstack/react-table";
-import { useEffect, useId, useMemo, useState } from "react";
+import type { ColumnDef, DeepKeys, FilterFnOption } from "@tanstack/react-table";
+import type { CellContext, HeaderContext } from "@tanstack/react-table";
+import { useEffect, useId, useMemo, useState, type ReactNode } from "react";
 import Button from "./button";
 import Input from "./input";
 import PreviewCard from "./preview-card";
@@ -76,8 +76,10 @@ type TableColumnMeta = {
 	mobileFullWidth?: boolean;
 };
 
-export type TableColumnDef = {
-	accessorKey: string;
+export type TableColumnDef<
+	TData extends object = Record<string, unknown>,
+	TValue = unknown,
+> = {
 	header: string;
 	id?: string;
 	enableResizing?: boolean;
@@ -90,12 +92,15 @@ export type TableColumnDef = {
 	filterFn?: string | false | ((...args: any[]) => boolean);
 	filterSelectOptions?: { value: string; label: string }[];
 	mobileFullWidth?: boolean;
-	cell?: any;
-};
+	cell?: (context: CellContext<typeof features, TData, TValue>) => ReactNode;
+} & (
+	| { accessorKey: DeepKeys<TData>; accessorFn?: never }
+	| { accessorKey?: never; accessorFn: (row: TData) => TValue; id: string }
+);
 
-export type TableProps = {
-	data: any[];
-	columnDef: TableColumnDef[];
+export type TableProps<TData extends object = Record<string, unknown>> = {
+	data: TData[];
+	columnDef: TableColumnDef<TData, any>[];
 	pageSize?: number;
 	className?: string;
 	showHeader?: boolean;
@@ -149,9 +154,7 @@ function resolveFilterFn(
 	);
 }
 
-const columnHelper = createColumnHelper<typeof features, any>();
-
-const Table = ({
+const Table = <TData extends object = Record<string, unknown>,>({
 	data,
 	columnDef,
 	pageSize = 10,
@@ -159,7 +162,7 @@ const Table = ({
 	showHeader = true,
 	showFilters = true,
 	showSorting = true,
-}: TableProps) => {
+}: TableProps<TData>) => {
 	const tableId = useId();
 	const [pagination, setPagination] = useState({ pageIndex: 0, pageSize });
 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -170,8 +173,13 @@ const Table = ({
 
 	const columns = useMemo(() => {
 		return columnDef?.map((item) => {
-			return columnHelper.accessor(item.accessorKey, {
-				id: item.id,
+			if (item.accessorFn !== undefined) {
+				if (!item.id) {
+					throw new Error("Table columns with accessorFn require a non-empty id.");
+				}
+			}
+
+			const options = {
 				enableResizing: item.enableResizing,
 				enableColumnFilter: item.filterFn === false ? false : item.enableColumnFilter,
 				enableSorting: item.enableSorting,
@@ -185,7 +193,7 @@ const Table = ({
 					filterSelectOptions: item.filterSelectOptions,
 					mobileFullWidth: item.mobileFullWidth,
 				},
-				header: (header) => {
+				header: (header: HeaderContext<typeof features, TData, any>) => {
 					const isSorted = header.column.getIsSorted();
 					const canSort = header.column.getCanSort();
 					return (
@@ -206,8 +214,24 @@ const Table = ({
 						</div>
 					);
 				},
-				cell: item.cell ?? ((context) => context.getValue()),
-			});
+				cell:
+					item.cell ??
+					((context: CellContext<typeof features, TData, any>) => context.getValue()),
+			};
+
+			if (item.accessorFn !== undefined) {
+				return {
+					...options,
+					id: item.id,
+					accessorFn: item.accessorFn,
+				} satisfies ColumnDef<typeof features, TData, any>;
+			}
+
+			return {
+				...options,
+				...(item.id === undefined ? {} : { id: item.id }),
+				accessorKey: item.accessorKey,
+			} satisfies ColumnDef<typeof features, TData, any>;
 		});
 	}, [columnDef]);
 	const table = useTable({

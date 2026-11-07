@@ -2,7 +2,7 @@
 	"name": "@febkosq8/arc",
 	"description": "A React components library for febkosq8",
 	"private": false,
-	"version": "0.8.3",
+	"version": "0.8.4",
 	"type": "module",
 	"main": "./dist/arc.js",
 	"types": "./dist/index.d.ts",
@@ -31,7 +31,7 @@
 		"type": "git",
 		"url": "https://github.com/febkosq8/arc.git"
 	},
-	"packageManager": "pnpm@12.15.0",
+	"packageManager": "pnpm@12.18.0",
 	"scripts": {
 		"build": "vite build",
 		"storybook": "storybook dev -p 6006",
@@ -46,23 +46,23 @@
 	},
 	"dependencies": {
 		"@base-ui/react": "1.9.0",
-		"@rinzai/zen": "0.14.0",
+		"@rinzai/zen": "0.17.0",
 		"@tanstack/match-sorter-utils": "9.2.6",
 		"@tanstack/react-table": "9.3.1",
 		"luxon": "3.7.2",
 		"react-icons": "5.7.0"
 	},
 	"devDependencies": {
-		"@storybook/addon-docs": "10.6.3",
-		"@storybook/react-vite": "10.6.3",
-		"@tailwindcss/postcss": "4.3.3",
+		"@storybook/addon-docs": "10.6.6",
+		"@storybook/react-vite": "10.6.6",
+		"@tailwindcss/vite": "4.3.4",
 		"@types/luxon": "3.7.6",
-		"@types/node": "26.6.5",
+		"@types/node": "26.6.6",
 		"@types/react": "19.3.0",
 		"@types/react-dom": "19.3.0",
 		"@typescript/typescript6": "6.0.2",
-		"@vitejs/plugin-react": "6.1.2",
-		"eslint": "10.13.0",
+		"@vitejs/plugin-react": "6.2.1",
+		"eslint": "10.14.0",
 		"prettier": "3.9.10",
 		"prettier-plugin-css-order": "2.2.0",
 		"prettier-plugin-organize-attributes": "1.0.0",
@@ -70,10 +70,10 @@
 		"prettier-plugin-tailwindcss": "0.8.1",
 		"react": "19.3.1",
 		"react-dom": "19.3.1",
-		"storybook": "10.6.3",
-		"tailwindcss": "4.3.3",
+		"storybook": "10.6.6",
+		"tailwindcss": "4.3.4",
 		"typescript": "7.0.2",
 		"unplugin-dts": "1.1.2",
-		"vite": "8.3.5"
+		"vite": "8.3.6"
 	}
 }

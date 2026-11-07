@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Table } from "../components";
 import type { TableColumnDef } from "../components";
+import type { TableProps } from "../components";
 
 const data = [
 	{ name: "Ada Lovelace", role: "Admin", team: "Platform" },
@@ -21,12 +22,15 @@ const data = [
 	{ name: "Lynn Conway", role: "Viewer", team: "Infrastructure" },
 ];
 
-const columnDef: TableColumnDef[] = [
+type Person = (typeof data)[number];
+
+const columnDef: TableColumnDef<Person>[] = [
 	{
 		accessorKey: "name",
 		header: "Name",
 		enableColumnFilter: true,
 		filterFn: "fuzzy",
+		cell: ({ row }) => row.original.name,
 	},
 	{
 		accessorKey: "role",
@@ -46,9 +50,29 @@ const columnDef: TableColumnDef[] = [
 	},
 ];
 
+const computedColumnDef: TableColumnDef<Person, string>[] = [
+	{
+		accessorKey: "name",
+		header: "Name",
+		enableColumnFilter: true,
+		filterFn: "fuzzy",
+	},
+	{
+		accessorFn: (person) => `${person.name} - ${person.team}`,
+		id: "nameAndTeam",
+		header: "Name and team",
+		enableColumnFilter: true,
+		filterFn: "fuzzy",
+		enableSorting: true,
+		cell: ({ getValue, row }) => `${getValue()} (${row.original.role})`,
+	},
+];
+
+const PersonTable = (props: TableProps<Person>) => <Table<Person> {...props} />;
+
 const meta = {
 	title: "Components/Table",
-	component: Table,
+	component: PersonTable,
 	tags: ["autodocs"],
 	parameters: {
 		layout: "fullscreen",
@@ -105,7 +129,7 @@ const meta = {
 		showFilters: true,
 		showSorting: true,
 	},
-} satisfies Meta<typeof Table>;
+} satisfies Meta<typeof PersonTable>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -117,5 +141,11 @@ export const Compact: Story = {
 		showHeader: false,
 		showFilters: false,
 		showSorting: false,
+	},
+};
+
+export const ComputedAccessor: Story = {
+	args: {
+		columnDef: computedColumnDef,
 	},
 };
