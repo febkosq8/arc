@@ -49,6 +49,9 @@ import {
 
 const fuzzyFilter = (row: any, columnId: any, value: any, addMeta: any) => {
 	let rowValue = row.getValue(columnId);
+	if (rowValue === undefined) {
+		rowValue = row.getAllCellsByColumnId()[columnId]?.column.columnDef.meta?.filterUndefinedValue;
+	}
 	const itemRank = rankItem(rowValue, value);
 	addMeta({
 		itemRank,
@@ -73,13 +76,11 @@ const selectFilter = (row: any, columnId: any, filterValue: any) => {
 type TableColumnMeta = {
 	headerLabel?: string;
 	filterSelectOptions?: { value: string; label: string }[];
+	filterUndefinedValue?: string;
 	mobileFullWidth?: boolean;
 };
 
-export type TableColumnDef<
-	TData extends object = Record<string, unknown>,
-	TValue = unknown,
-> = {
+export type TableColumnDef<TData extends object = Record<string, unknown>, TValue = unknown> = {
 	header: string;
 	id?: string;
 	enableResizing?: boolean;
@@ -91,7 +92,9 @@ export type TableColumnDef<
 	maxSize?: number;
 	filterFn?: string | false | ((...args: any[]) => boolean);
 	sortingFn?: SortFnOption<typeof features, TData>;
+	sortUndefined?: false | -1 | 1 | "first" | "last";
 	filterSelectOptions?: { value: string; label: string }[];
+	filterUndefinedValue?: string;
 	mobileFullWidth?: boolean;
 	cell?: (context: CellContext<typeof features, TData, TValue>) => ReactNode;
 } & (
@@ -165,7 +168,7 @@ function resolveSortingFn<TData extends object>(
 	);
 }
 
-const Table = <TData extends object = Record<string, unknown>,>({
+const Table = <TData extends object = Record<string, unknown>>({
 	data,
 	columnDef,
 	pageSize = 10,
@@ -195,6 +198,7 @@ const Table = <TData extends object = Record<string, unknown>,>({
 				enableColumnFilter: item.filterFn === false ? false : item.enableColumnFilter,
 				enableSorting: item.enableSorting,
 				sortFn: resolveSortingFn(item.sortingFn),
+				...(item.sortUndefined === undefined ? {} : { sortUndefined: item.sortUndefined }),
 				enableHiding: item.enableHiding ?? true,
 				size: item.size,
 				minSize: item.minSize ?? 50,
@@ -203,6 +207,7 @@ const Table = <TData extends object = Record<string, unknown>,>({
 				meta: {
 					headerLabel: item.header,
 					filterSelectOptions: item.filterSelectOptions,
+					filterUndefinedValue: item.filterUndefinedValue,
 					mobileFullWidth: item.mobileFullWidth,
 				},
 				header: (header: HeaderContext<typeof features, TData, any>) => {
@@ -226,9 +231,7 @@ const Table = <TData extends object = Record<string, unknown>,>({
 						</div>
 					);
 				},
-				cell:
-					item.cell ??
-					((context: CellContext<typeof features, TData, any>) => context.getValue()),
+				cell: item.cell ?? ((context: CellContext<typeof features, TData, any>) => context.getValue()),
 			};
 
 			if (item.accessorFn !== undefined) {
@@ -404,10 +407,7 @@ const Table = <TData extends object = Record<string, unknown>,>({
 						{hasSortingControls && (
 							<div className="flex min-w-0 items-end gap-2">
 								<div className="min-w-0 flex-1">
-									<label
-										htmlFor={`${tableId}-sort`}
-										className="text-muted-foreground mb-1 block text-xs font-medium"
-									>
+									<label htmlFor={`${tableId}-sort`} className="text-muted-foreground mb-1 block text-xs font-medium">
 										Sort by
 									</label>
 									<Select

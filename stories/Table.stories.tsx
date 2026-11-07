@@ -150,3 +150,24 @@ export const ComputedAccessor: Story = {
 		columnDef: computedColumnDef,
 	},
 };
+
+export const UnavailableValuesLast: Story = {
+	args: {
+		data: [
+			{ name: "Ada Lovelace", role: "Admin", team: "Platform" },
+			{ name: "Grace Hopper", role: "Editor", team: "Infrastructure" },
+			{ name: "Katherine Johnson", role: "Viewer", team: "" },
+		],
+		columnDef: [
+			{ accessorKey: "name", header: "Name" },
+			{
+				id: "team",
+				accessorFn: (person) => person.team || undefined,
+				header: "Team",
+				sortUndefined: "last",
+				filterUndefinedValue: "Unavailable",
+				cell: ({ getValue }) => getValue() ?? "Unavailable",
+			},
+		],
+	},
+};
