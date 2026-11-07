@@ -70,6 +70,40 @@ export class DateHandler {
 		return dateTime.isValid ? (dateTime.toRelative(options) ?? "") : "";
 	}
 
+	/** Format a whole-unit duration. Months are 30 days and years are 365 days. */
+	static formatDuration(
+		value: number,
+		{
+			unit = "seconds",
+		}: {
+			unit?: "milliseconds" | "seconds" | "minutes" | "hours" | "days" | "months" | "years";
+		} = {},
+	): string {
+		if (!Number.isSafeInteger(value) || value < 0) {
+			throw new RangeError("Duration must be a non-negative safe integer");
+		}
+
+		const units = [
+			["years", "year", 31_536_000_000n],
+			["months", "month", 2_592_000_000n],
+			["days", "day", 86_400_000n],
+			["hours", "hour", 3_600_000n],
+			["minutes", "minute", 60_000n],
+			["seconds", "second", 1_000n],
+			["milliseconds", "millisecond", 1n],
+		] as const;
+		const inputUnit = units.find(([name]) => name === unit);
+		if (!inputUnit) throw new RangeError(`Unsupported duration unit: ${unit}`);
+		let remaining = BigInt(value) * inputUnit[2];
+		const parts: string[] = [];
+		for (const [, name, size] of units) {
+			const count = remaining / size;
+			remaining %= size;
+			if (count > 0n) parts.push(`${count} ${name}${count === 1n ? "" : "s"}`);
+		}
+		return parts.length ? parts.join(", ") : `0 ${unit}`;
+	}
+
 	static getTimeDiff(date: unknown): string | null {
 		const dateTime = DateHandler.toDateTime(date);
 		if (!dateTime.isValid) {

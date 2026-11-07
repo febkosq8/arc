@@ -5,6 +5,8 @@ type DateHandlerStoryArgs = {
 	date: string;
 	format: DateTimeFormat;
 	offsetDays: number;
+	durationValue: number;
+	durationUnit: "milliseconds" | "seconds" | "minutes" | "hours" | "days" | "months" | "years";
 };
 
 const meta = {
@@ -35,18 +37,32 @@ const meta = {
 			description: "Number of days used to generate future and past examples.",
 			table: { defaultValue: { summary: "3" } },
 		},
+		durationValue: {
+			control: { type: "number", min: 0, step: 1 },
+			description: "Non-negative whole-unit duration passed to formatDuration.",
+			table: { defaultValue: { summary: "3661" } },
+		},
+		durationUnit: {
+			control: "select",
+			options: ["milliseconds", "seconds", "minutes", "hours", "days", "months", "years"],
+			description: "Input unit; months are 30 days and years are 365 days.",
+			table: { defaultValue: { summary: "seconds" } },
+		},
 	},
 	args: {
 		date: "2024-06-15T12:30:00.000Z",
 		format: "dd/MMM/yyyy hh:mm:ss a",
 		offsetDays: 3,
+		durationValue: 3661,
+		durationUnit: "seconds",
 	},
-	render: ({ date, format, offsetDays }) => {
+	render: ({ date, format, offsetDays, durationValue, durationUnit }) => {
 		const results = [
 			{ label: "Absolute date", value: DateHandler.getDateTime(date, format) },
 			{ label: "Relative time", value: DateHandler.getRelativeTime(date) },
 			{ label: "Time difference", value: DateHandler.getTimeDiff(date) ?? "—" },
 			{ label: "Combined format", value: DateHandler.getFormattedTime(date) },
+			{ label: "Duration", value: DateHandler.formatDuration(durationValue, { unit: durationUnit }) },
 			{
 				label: `${offsetDays} days in the future`,
 				value: DateHandler.generateOffsetDateTime({ offset: { days: offsetDays }, format }),
@@ -78,5 +94,12 @@ export const Default: Story = {};
 export const InvalidDate: Story = {
 	args: {
 		date: "not a date",
+	},
+};
+
+export const MillisecondDuration: Story = {
+	args: {
+		durationValue: 61001,
+		durationUnit: "milliseconds",
 	},
 };

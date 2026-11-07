@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Expose a separate `sortingFn` option on table columns to customize sorting independently of filtering.
 - Add the `sortUndefined` table column option to control placement of missing values when sorting.
+- Add `DateHandler.formatDuration` for whole-unit durations from milliseconds through years, using 30-day months and 365-day years.
 
 ### Fixed
 
