@@ -10,6 +10,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Expose a separate `sortingFn` option on table columns to customize sorting independently of filtering.
+- Add the `sortUndefined` table column option to control placement of missing values when sorting.
+
+### Fixed
+
+- Show a meaningful search title for table columns with custom filter functions.
 
 ## [0.8.6] - 2026-11-07
 

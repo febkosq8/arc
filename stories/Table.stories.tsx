@@ -92,7 +92,8 @@ const meta = {
 		},
 		columnDef: {
 			control: false,
-			description: "Column accessors, labels, filters, sizing, and cell renderers.",
+			description:
+				'Column accessors, labels, filters, sizing, and cell renderers. Use sortUndefined: "last" to keep missing values last in both directions.',
 			table: { type: { summary: "TableColumnDef[]" } },
 		},
 		pageSize: {
@@ -165,7 +166,6 @@ export const UnavailableValuesLast: Story = {
 				accessorFn: (person) => person.team || undefined,
 				header: "Team",
 				sortUndefined: "last",
-				filterUndefinedValue: "Unavailable",
 				cell: ({ getValue }) => getValue() ?? "Unavailable",
 			},
 		],

@@ -49,9 +49,6 @@ import {
 
 const fuzzyFilter = (row: any, columnId: any, value: any, addMeta: any) => {
 	let rowValue = row.getValue(columnId);
-	if (rowValue === undefined) {
-		rowValue = row.getAllCellsByColumnId()[columnId]?.column.columnDef.meta?.filterUndefinedValue;
-	}
 	const itemRank = rankItem(rowValue, value);
 	addMeta({
 		itemRank,
@@ -76,7 +73,6 @@ const selectFilter = (row: any, columnId: any, filterValue: any) => {
 type TableColumnMeta = {
 	headerLabel?: string;
 	filterSelectOptions?: { value: string; label: string }[];
-	filterUndefinedValue?: string;
 	mobileFullWidth?: boolean;
 };
 
@@ -94,7 +90,6 @@ export type TableColumnDef<TData extends object = Record<string, unknown>, TValu
 	sortingFn?: SortFnOption<typeof features, TData>;
 	sortUndefined?: false | -1 | 1 | "first" | "last";
 	filterSelectOptions?: { value: string; label: string }[];
-	filterUndefinedValue?: string;
 	mobileFullWidth?: boolean;
 	cell?: (context: CellContext<typeof features, TData, TValue>) => ReactNode;
 } & (
@@ -207,7 +202,6 @@ const Table = <TData extends object = Record<string, unknown>>({
 				meta: {
 					headerLabel: item.header,
 					filterSelectOptions: item.filterSelectOptions,
-					filterUndefinedValue: item.filterUndefinedValue,
 					mobileFullWidth: item.mobileFullWidth,
 				},
 				header: (header: HeaderContext<typeof features, TData, any>) => {
@@ -649,7 +643,7 @@ function Filter({ column, idPrefix = "" }: { column: any; idPrefix?: string }) {
 			name={column.id}
 			value={columnFilterValue ?? ""}
 			onChange={(value) => column.setFilterValue(value)}
-			title={`Search (${filterMap[column.columnDef.filterFn]})`}
+			title={filterMap[column.columnDef.filterFn] ? `Search (${filterMap[column.columnDef.filterFn]})` : "Search"}
 			placeholder={`Filter...`}
 			className="border-border text-foreground placeholder:text-muted-foreground focus:ring-ring w-full rounded border bg-transparent px-2 py-1 text-xs shadow-sm focus:border-transparent focus:ring-1 focus:outline-hidden"
 		/>
