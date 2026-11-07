@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { DateHandler } from "../utilities";
+import { DateHandler, type DateTimeFormat } from "../utilities";
 
 type DateHandlerStoryArgs = {
 	date: string;
-	format: string;
+	format: DateTimeFormat;
 	offsetDays: number;
 };
 
@@ -26,7 +26,8 @@ const meta = {
 		},
 		format: {
 			control: "text",
-			description: "Luxon format string passed to getDateTime and generateOffsetDateTime.",
+			description:
+				"Luxon format string passed to getDateTime and generateOffsetDateTime. Common formats are suggested; any Luxon format string is accepted.",
 			table: { defaultValue: { summary: "dd/MMM/yyyy hh:mm:ss a" } },
 		},
 		offsetDays: {

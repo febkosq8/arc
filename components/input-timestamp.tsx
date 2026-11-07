@@ -1,10 +1,10 @@
 import { useMemo, type ComponentPropsWithoutRef } from "react";
-import { DateHandler } from "../utilities/date-handler";
+import { DateHandler, type FormattedTimeTemplate } from "../utilities/date-handler";
 import Input from "./input";
 
 export interface InputTimestampProps extends Omit<ComponentPropsWithoutRef<"input">, "value"> {
 	value?: unknown;
-	format?: string;
+	format?: FormattedTimeTemplate;
 }
 
 const InputTimestamp = ({ value, format = `$ISO$ ($RELATIVE$)`, ...rest }: InputTimestampProps) => {
