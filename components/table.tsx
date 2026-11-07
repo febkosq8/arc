@@ -25,7 +25,7 @@ import {
 	tableFeatures,
 	useTable,
 } from "@tanstack/react-table";
-import type { ColumnDef, DeepKeys, FilterFnOption } from "@tanstack/react-table";
+import type { ColumnDef, DeepKeys, FilterFnOption, SortFnOption } from "@tanstack/react-table";
 import type { CellContext, HeaderContext } from "@tanstack/react-table";
 import { useEffect, useId, useMemo, useState, type ReactNode } from "react";
 import Button from "./button";
@@ -90,6 +90,7 @@ export type TableColumnDef<
 	minSize?: number;
 	maxSize?: number;
 	filterFn?: string | false | ((...args: any[]) => boolean);
+	sortingFn?: SortFnOption<typeof features, TData>;
 	filterSelectOptions?: { value: string; label: string }[];
 	mobileFullWidth?: boolean;
 	cell?: (context: CellContext<typeof features, TData, TValue>) => ReactNode;
@@ -154,6 +155,16 @@ function resolveFilterFn(
 	);
 }
 
+function resolveSortingFn<TData extends object>(
+	sortingFn: TableColumnDef<TData>["sortingFn"],
+): SortFnOption<typeof features, TData> | undefined {
+	if (sortingFn === undefined || sortingFn === "auto" || typeof sortingFn === "function") return sortingFn;
+	if (Object.prototype.hasOwnProperty.call(features.sortFns, sortingFn)) return sortingFn;
+	throw new Error(
+		`Unsupported table sortingFn "${sortingFn}". Use "auto" or one of: ${Object.keys(features.sortFns).join(", ")}.`,
+	);
+}
+
 const Table = <TData extends object = Record<string, unknown>,>({
 	data,
 	columnDef,
@@ -183,6 +194,7 @@ const Table = <TData extends object = Record<string, unknown>,>({
 				enableResizing: item.enableResizing,
 				enableColumnFilter: item.filterFn === false ? false : item.enableColumnFilter,
 				enableSorting: item.enableSorting,
+				sortFn: resolveSortingFn(item.sortingFn),
 				enableHiding: item.enableHiding ?? true,
 				size: item.size,
 				minSize: item.minSize ?? 50,

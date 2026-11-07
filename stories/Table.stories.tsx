@@ -36,6 +36,7 @@ const columnDef: TableColumnDef<Person>[] = [
 		accessorKey: "role",
 		header: "Role",
 		enableColumnFilter: true,
+		sortingFn: "alphanumeric",
 		filterSelectOptions: [
 			{ value: "Admin", label: "Admin" },
 			{ value: "Editor", label: "Editor" },
