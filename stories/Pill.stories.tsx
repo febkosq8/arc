@@ -24,6 +24,33 @@ const meta = {
 				defaultValue: { summary: "false" },
 			},
 		},
+		variant: {
+			control: "inline-radio",
+			options: [
+				"pill",
+				"primary",
+				"secondary",
+				"success",
+				"destructive",
+				"ghost",
+				"warning",
+				"outline",
+				"outline-primary",
+				"outline-secondary",
+				"outline-success",
+				"outline-destructive",
+				"outline-ghost",
+				"outline-warning",
+			],
+			description: "Visual style. Use pill for tabs and navigation or a semantic button-style variant.",
+			table: { type: { summary: "PillVariant" }, defaultValue: { summary: "pill" } },
+		},
+		size: {
+			control: "inline-radio",
+			options: ["sm", "md"],
+			description: "Button size.",
+			table: { type: { summary: '"sm" | "md"' }, defaultValue: { summary: "md" } },
+		},
 		children: {
 			control: false,
 			table: { disable: true },
@@ -37,6 +64,9 @@ const meta = {
 		},
 	},
 	args: {
+		active: false,
+		variant: "pill",
+		size: "md",
 		children: null,
 		selection: "/workspace",
 	},
@@ -57,9 +87,16 @@ export const Default: Story = {
 
 		return (
 			<div className="flex w-full min-w-0 flex-col items-center gap-3">
-				<div className="flex w-full min-w-0 flex-nowrap items-center justify-center gap-3 overflow-x-auto">
+				<div className="flex w-full min-w-0 flex-nowrap items-center justify-center gap-3 overflow-x-auto p-2">
 					{options.map(([path, label]) => (
-						<Pill key={path} active={selection === path} className="w-fit shrink-0" onClick={() => setSelection(path)}>
+						<Pill
+							key={path}
+							variant={args.variant}
+							size={args.size}
+							active={selection === path}
+							className="w-fit shrink-0"
+							onClick={() => setSelection(path)}
+						>
 							{label}
 						</Pill>
 					))}
