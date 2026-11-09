@@ -5,19 +5,13 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.8.8] - 2026-11-07
+## [0.8.7] - 2026-11-09
 
 ### Added
 
 - Add `variant` (`pill`, semantic, and outline variants) and `size` options to `Pill`, matching `PillLink`; the default appearance is unchanged.
-
 - Add `Tabs`, `TabsList`, `TabsTab`, and `TabsPanel` components built on Base UI Tabs, with tabs rendered as `Pill` so styling stays in sync.
 - Add Storybook coverage for `Tabs`.
-
-## [0.8.7] - 2026-11-07
-
-### Added
-
 - Expose a separate `sortingFn` option on table columns to customize sorting independently of filtering.
 - Add the `sortUndefined` table column option to control placement of missing values when sorting.
 - Add `DateHandler.formatDuration` for whole-unit durations from milliseconds through years, using 30-day months and 365-day years.
