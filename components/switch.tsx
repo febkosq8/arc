@@ -55,7 +55,7 @@ const SwitchVariants = cva(
 );
 
 const SwitchThumbVariants = cva(
-	"absolute top-1/2 inline-block h-5 w-5 -translate-y-1/2 transform rounded-full border shadow-sm transition-[left,background-color,border-color] duration-300 ease-out",
+	"absolute top-1/2 inline-block h-5 w-5 -translate-y-1/2 transform rounded-full border shadow-sm transition-[left,translate,background-color,border-color] duration-300 ease-out",
 	{
 		variants: {
 			variant: {
@@ -65,7 +65,7 @@ const SwitchThumbVariants = cva(
 				success: "",
 			},
 			checked: {
-				true: "left-6",
+				true: "left-1/2 -translate-x-px",
 				false: "left-1 border-foreground/60 bg-background",
 			},
 			disabled: {
