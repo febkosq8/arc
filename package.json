@@ -53,15 +53,15 @@
 		"react-icons": "5.7.0"
 	},
 	"devDependencies": {
-		"@storybook/addon-docs": "10.6.6",
-		"@storybook/react-vite": "10.6.6",
+		"@storybook/addon-docs": "10.6.7",
+		"@storybook/react-vite": "10.6.7",
 		"@tailwindcss/vite": "4.3.5",
 		"@types/luxon": "3.7.6",
 		"@types/node": "26.6.6",
 		"@types/react": "19.3.0",
 		"@types/react-dom": "19.3.0",
 		"@typescript/typescript6": "6.0.2",
-		"@vitejs/plugin-react": "6.2.1",
+		"@vitejs/plugin-react": "6.3.0",
 		"eslint": "10.14.0",
 		"prettier": "3.9.10",
 		"prettier-plugin-css-order": "2.2.0",
@@ -70,10 +70,10 @@
 		"prettier-plugin-tailwindcss": "0.8.1",
 		"react": "19.3.1",
 		"react-dom": "19.3.1",
-		"storybook": "10.6.6",
+		"storybook": "10.6.7",
 		"tailwindcss": "4.3.5",
 		"typescript": "7.0.2",
 		"unplugin-dts": "1.1.2",
-		"vite": "8.3.6"
+		"vite": "8.3.7"
 	}
 }
