@@ -321,4 +321,6 @@
 
 * {
 	@apply scroll-smooth;
+	scrollbar-color: var(--color-primary) var(--color-background);
+	scrollbar-width: thin;
 }
