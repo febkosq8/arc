@@ -1,10 +1,31 @@
 import { Combobox } from "@base-ui/react/combobox";
 import { cx } from "@rinzai/zen";
 import { FaCheck, FaChevronDown } from "react-icons/fa6";
+import { isValidElement } from "react";
 import type { KeyboardEventHandler, ReactNode } from "react";
 import { useRef } from "react";
 
-export type DropdownItem = { key: string | number; label: string; disabled?: boolean };
+export type DropdownItem = {
+	key: string | number;
+	label: ReactNode;
+	labelTextValue?: string;
+	disabled?: boolean;
+};
+
+export const getReactNodeText = (node: ReactNode): string => {
+	if (node === null || node === undefined || typeof node === "boolean") return "";
+	if (typeof node === "string" || typeof node === "number" || typeof node === "bigint") return String(node);
+	if (Array.isArray(node)) return node.map(getReactNodeText).join("");
+	if (isValidElement<{ children?: ReactNode }>(node)) return getReactNodeText(node.props.children);
+	return "";
+};
+
+export const getDropdownItemText = (item: DropdownItem) => {
+	const override = item.labelTextValue;
+	if (override !== undefined) return override;
+	if (typeof item.label === "string" || typeof item.label === "number") return String(item.label);
+	return getReactNodeText(item.label) || String(item.key);
+};
 
 export interface DropdownProps {
 	items: DropdownItem[];
@@ -56,8 +77,21 @@ const Dropdown = ({
 	"data-required": dataRequired,
 }: DropdownProps) => {
 	const selectedItem = items.find((item) => String(item.key) === String(value)) ?? null;
-	const selectedValue = selectedItem && renderValue ? renderValue(selectedItem) : null;
+	const richSelectedLabel =
+		selectedItem !== null &&
+		typeof selectedItem.label !== "string" &&
+		typeof selectedItem.label !== "number" &&
+		selectedItem.label !== null &&
+		typeof selectedItem.label !== "boolean";
+	const selectedValue = selectedItem
+		? renderValue
+			? renderValue(selectedItem)
+			: richSelectedLabel
+				? selectedItem.label
+				: null
+		: null;
 	const hasSelectedValue = selectedValue !== null && selectedValue !== undefined && selectedValue !== false;
+	const fillsSelectedValueSpace = selectedValueFillsSpace || (richSelectedLabel && !renderValue);
 	const inputRef = useRef<HTMLInputElement>(null);
 
 	return (
@@ -74,7 +108,7 @@ const Dropdown = ({
 			onOpenChange={(isOpen) => onOpenChange?.(isOpen)}
 			inputValue={inputValue}
 			onInputValueChange={(newInputValue) => onInputValueChange?.(newInputValue)}
-			itemToStringLabel={(item) => item?.label ?? ""}
+			itemToStringLabel={(item) => (item ? getDropdownItemText(item) : "")}
 			itemToStringValue={(item) => String(item?.key ?? "")}
 			isItemEqualToValue={(a, b) => String(a.key) === String(b.key)}
 			name={name}
@@ -84,7 +118,7 @@ const Dropdown = ({
 				<Combobox.InputGroup
 					className={cx(
 						"relative flex h-8 w-full items-center justify-between gap-5 overflow-hidden rounded border border-border bg-background pr-2 text-foreground shadow-xs pointer-coarse:h-9",
-						hasSelectedValue && (selectedValueFillsSpace ? "gap-0" : "gap-2"),
+						hasSelectedValue && (fillsSelectedValueSpace ? "gap-0" : "gap-2"),
 						"focus-within:border-transparent focus-within:outline-hidden focus-within:ring-2 focus-within:ring-ring",
 						"data-disabled:cursor-not-allowed data-disabled:bg-muted data-disabled:text-muted-foreground",
 					)}
@@ -93,10 +127,10 @@ const Dropdown = ({
 						<span
 							className={cx(
 								"ml-3",
-								selectedValueFillsSpace ? "mr-2 min-w-0 flex-1 truncate" : "flex shrink-0 items-center",
+								fillsSelectedValueSpace ? "mr-2 min-w-0 flex-1 truncate" : "flex shrink-0 items-center",
 							)}
 							onMouseDown={
-								selectedValueFillsSpace
+								fillsSelectedValueSpace
 									? (event) => {
 											event.preventDefault();
 											inputRef.current?.focus();
@@ -112,7 +146,7 @@ const Dropdown = ({
 						id={id}
 						className={cx(
 							"h-full min-w-0 border-none bg-transparent outline-hidden placeholder:text-muted-foreground focus:ring-0 focus:outline-hidden disabled:cursor-not-allowed",
-							hasSelectedValue ? (selectedValueFillsSpace ? "w-0 flex-none p-0" : "grow py-2 pl-0") : "grow py-2 pl-3",
+							hasSelectedValue ? (fillsSelectedValueSpace ? "w-0 flex-none p-0" : "grow py-2 pl-0") : "grow py-2 pl-3",
 						)}
 						placeholder={placeholder}
 						onKeyDown={onKeyDown}
@@ -164,7 +198,7 @@ const Dropdown = ({
 										{renderItem ? (
 											renderItem(item)
 										) : (
-											<span title={item.label} className="block truncate">
+											<span title={getDropdownItemText(item)} className="block truncate">
 												{item.label}
 											</span>
 										)}

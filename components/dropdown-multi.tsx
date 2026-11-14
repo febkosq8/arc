@@ -2,6 +2,7 @@ import { Combobox } from "@base-ui/react/combobox";
 import { cx } from "@rinzai/zen";
 import { FaCheck, FaChevronDown } from "react-icons/fa6";
 import { RxCross1 } from "react-icons/rx";
+import { getDropdownItemText } from "./dropdown";
 import type { DropdownItem } from "./dropdown";
 
 export interface MultiDropdownProps {
@@ -42,7 +43,7 @@ const MultiDropdown = ({
 				if (preventEmpty && newValues.length === 0) return;
 				onChange?.(newValues);
 			}}
-			itemToStringLabel={(item) => item?.label ?? ""}
+			itemToStringLabel={(item) => (item ? getDropdownItemText(item) : "")}
 			itemToStringValue={(item) => String(item?.key ?? "")}
 			isItemEqualToValue={(a, b) => String(a.key) === String(b.key)}
 			name={name}
@@ -65,11 +66,13 @@ const MultiDropdown = ({
 											key={item.key}
 											className="inline-flex items-center gap-1 rounded-md border border-border bg-muted px-2 py-0.5 text-sm text-foreground"
 										>
-											<span className="max-w-32 truncate">{item.label}</span>
+											<span title={getDropdownItemText(item)} className="max-w-32 truncate">
+												{item.label}
+											</span>
 											{!disabled && (preventEmpty ? selectedValues.length > 1 : true) && (
 												<Combobox.ChipRemove
 													className="ml-0.5 cursor-pointer rounded-md hover:text-destructive focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-													aria-label={`Remove ${item.label}`}
+													aria-label={`Remove ${getDropdownItemText(item)}`}
 												>
 													<RxCross1 className="h-3 w-3" aria-hidden="true" />
 												</Combobox.ChipRemove>
@@ -121,7 +124,7 @@ const MultiDropdown = ({
 										<Combobox.ItemIndicator className="flex items-center">
 											<FaCheck className="h-3 w-3" aria-hidden="true" />
 										</Combobox.ItemIndicator>
-										<span title={item.label} className="block truncate">
+										<span title={getDropdownItemText(item)} className="block truncate">
 											{item.label}
 										</span>
 									</Combobox.Item>

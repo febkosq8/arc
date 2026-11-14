@@ -19,7 +19,7 @@ const meta = {
 		docs: {
 			description: {
 				component:
-					"A non-searchable single-select dropdown for choosing one value from a list. Option labels can include rich content; set textValue to keep selected and assistive text readable.",
+					"A non-searchable single-select dropdown for choosing one value from a list. Option labels can include rich content; text is extracted from their children, with optional labelTextValue overrides.",
 			},
 		},
 	},
@@ -27,7 +27,7 @@ const meta = {
 		data: {
 			control: "object",
 			description:
-				"Options to choose from. Each has a key and label, with optional textValue for rich labels and disabled to prevent selection.",
+				"Options to choose from. Each has a key and label, with optional labelTextValue for rich labels and disabled to prevent selection.",
 			table: { type: { summary: "SelectItem[]" } },
 		},
 		value: {

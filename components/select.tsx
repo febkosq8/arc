@@ -2,8 +2,14 @@ import { Select as BaseSelect } from "@base-ui/react/select";
 import { cx } from "@rinzai/zen";
 import { ReactNode } from "react";
 import { FaCheck, FaChevronDown } from "react-icons/fa6";
+import { getReactNodeText } from "./dropdown";
 
-export type SelectItem = { key: string; label: ReactNode; textValue?: string; disabled?: boolean };
+export type SelectItem = {
+	key: string;
+	label: ReactNode;
+	labelTextValue?: string;
+	disabled?: boolean;
+};
 
 export interface SelectProps {
 	id?: string;
@@ -24,10 +30,15 @@ const Select = ({ id, value, onChange, data, className, disabled, placeholder, .
 				if (val !== null) onChange(val);
 			}}
 			disabled={disabled}
-			items={data.map((item) => ({
-				value: item.key,
-				label: item.textValue ?? (typeof item.label === "string" ? item.label : item.key),
-			}))}
+			items={data.map((item) => {
+				const override = item.labelTextValue;
+				const labelText =
+					override ??
+					(typeof item.label === "string" || typeof item.label === "number"
+						? String(item.label)
+						: getReactNodeText(item.label) || item.key);
+				return { value: item.key, label: labelText };
+			})}
 			{...rest}
 		>
 			<BaseSelect.Trigger

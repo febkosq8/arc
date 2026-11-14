@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Add controlled input and open state, loading indicators, custom selected-value rendering, and an input keydown handler to `Dropdown`.
-- Support rich React content for `Select` labels, with an optional `textValue` for their text representation.
+- Support rich React content for `Select`, `Dropdown`, and `MultiDropdown` labels, extracting text from JSX children and allowing optional `labelTextValue` overrides.
 - Add `selectedValueFillsSpace` to `Dropdown` so custom selected values can use the available field width.
 
 ### Changed

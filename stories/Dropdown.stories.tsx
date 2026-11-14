@@ -34,7 +34,8 @@ const meta = {
 	argTypes: {
 		items: {
 			control: "object",
-			description: "Options to choose from. Each has a key, a label and an optional disabled flag.",
+			description:
+				"Options may use a ReactNode label. Text is extracted from its children; optional labelTextValue overrides it when needed. String and number labels use their own text.",
 			table: { type: { summary: "DropdownItem[]" } },
 		},
 		value: {
@@ -144,4 +145,28 @@ export const LongSelectedValue: Story = {
 			<Dropdown {...args} />
 		</div>
 	),
+};
+
+export const RichOptionLabel: Story = {
+	render: () => {
+		const richItems: DropdownItem[] = [
+			{
+				key: "featured",
+				label: (
+					<span className="inline-flex items-center gap-2">
+						<span className="font-semibold text-primary">Featured:</span>
+						Seasonal fruit
+					</span>
+				),
+			},
+			{ key: "plain", label: "Plain text option" },
+		];
+		const [value, setValue] = useState("featured");
+
+		return (
+			<div className="w-80">
+				<Dropdown items={richItems} value={value} onChange={(item) => setValue(String(item?.key ?? ""))} />
+			</div>
+		);
+	},
 };
