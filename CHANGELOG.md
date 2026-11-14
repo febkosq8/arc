@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Clip overflow in bordered `Input` controls, including textareas, and in `Dropdown` and `MultiDropdown` fields.
+- Let rich `Dropdown` and `MultiDropdown` option labels fill the available row width.
 - Update the development dependencies Prettier to 3.10.1 and Vite to 8.3.8.
 
 ## [0.8.9] - 2026-11-13

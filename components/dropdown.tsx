@@ -198,9 +198,9 @@ const Dropdown = ({
 										{renderItem ? (
 											renderItem(item)
 										) : (
-											<span title={getDropdownItemText(item)} className="block truncate">
+											<div title={getDropdownItemText(item)} className="min-w-0 flex-1 truncate">
 												{item.label}
-											</span>
+											</div>
 										)}
 									</Combobox.Item>
 								)}
