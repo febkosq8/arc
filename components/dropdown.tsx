@@ -1,6 +1,7 @@
 import { Combobox } from "@base-ui/react/combobox";
 import { cx } from "@rinzai/zen";
 import { FaCheck, FaChevronDown } from "react-icons/fa6";
+import type { ReactNode } from "react";
 
 export type DropdownItem = { key: string | number; label: string; disabled?: boolean };
 
@@ -13,6 +14,13 @@ export interface DropdownProps {
 	disabled?: boolean;
 	name?: string;
 	preventEmpty?: boolean;
+	id?: string;
+	inputValue?: string;
+	onInputValueChange?: (inputValue: string) => void;
+	open?: boolean;
+	onOpenChange?: (open: boolean) => void;
+	renderItem?: (item: DropdownItem) => ReactNode;
+	"aria-label"?: string;
 	"data-name"?: string;
 	"data-required"?: boolean;
 }
@@ -26,6 +34,13 @@ const Dropdown = ({
 	disabled,
 	name,
 	preventEmpty = false,
+	id,
+	inputValue,
+	onInputValueChange,
+	open,
+	onOpenChange,
+	renderItem,
+	"aria-label": ariaLabel,
 	"data-name": dataName,
 	"data-required": dataRequired,
 }: DropdownProps) => {
@@ -41,6 +56,10 @@ const Dropdown = ({
 					newValue !== null && selectedItem !== null && String(newValue.key) === String(selectedItem.key);
 				onChange?.(!preventEmpty && isSelectedAgain ? null : newValue);
 			}}
+			open={open}
+			onOpenChange={(isOpen) => onOpenChange?.(isOpen)}
+			inputValue={inputValue}
+			onInputValueChange={(newInputValue) => onInputValueChange?.(newInputValue)}
 			itemToStringLabel={(item) => item?.label ?? ""}
 			itemToStringValue={(item) => String(item?.key ?? "")}
 			isItemEqualToValue={(a, b) => String(a.key) === String(b.key)}
@@ -56,8 +75,10 @@ const Dropdown = ({
 					)}
 				>
 					<Combobox.Input
+						id={id}
 						className="h-full grow border-none bg-transparent py-2 pl-3 outline-hidden placeholder:text-muted-foreground focus:ring-0 focus:outline-hidden disabled:cursor-not-allowed"
 						placeholder={placeholder}
+						aria-label={ariaLabel}
 						data-name={dataName}
 						data-required={dataRequired}
 						data-disabled={disabled}
@@ -92,9 +113,13 @@ const Dropdown = ({
 										<Combobox.ItemIndicator className="flex items-center">
 											<FaCheck className="h-3 w-3" aria-hidden="true" />
 										</Combobox.ItemIndicator>
-										<span title={item.label} className="block truncate">
-											{item.label}
-										</span>
+										{renderItem ? (
+											renderItem(item)
+										) : (
+											<span title={item.label} className="block truncate">
+												{item.label}
+											</span>
+										)}
 									</Combobox.Item>
 								)}
 							</Combobox.List>

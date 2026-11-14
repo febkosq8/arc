@@ -27,7 +27,7 @@ const meta = {
 		docs: {
 			description: {
 				component:
-					"A searchable single-select dropdown. Clicking the selected option again clears it unless preventEmpty is set.",
+					"A searchable single-select dropdown. Its input and open state can be controlled for async suggestions, and items can provide custom rendering.",
 			},
 		},
 	},
@@ -57,6 +57,21 @@ const meta = {
 			description: "Prevents clearing the selection.",
 			table: { type: { summary: "boolean" }, defaultValue: { summary: "false" } },
 		},
+		inputValue: {
+			control: false,
+			description: "Controlled text displayed in the input.",
+			table: { type: { summary: "string" } },
+		},
+		onInputValueChange: { control: false, table: { disable: true } },
+		open: {
+			control: false,
+			description: "Controls whether the options popup is open.",
+			table: { type: { summary: "boolean" } },
+		},
+		onOpenChange: { control: false, table: { disable: true } },
+		renderItem: { control: false, table: { disable: true } },
+		id: { control: false, table: { disable: true } },
+		"aria-label": { control: false, table: { disable: true } },
 		"data-name": { control: false, table: { disable: true } },
 		"data-required": { control: false, table: { disable: true } },
 		onChange: { control: false, table: { disable: true } },
@@ -67,6 +82,8 @@ const meta = {
 		placeholder: "Select an option",
 		disabled: false,
 		preventEmpty: false,
+		inputValue: undefined,
+		open: undefined,
 	},
 } satisfies Meta<typeof Dropdown>;
 
