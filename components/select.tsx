@@ -3,7 +3,7 @@ import { cx } from "@rinzai/zen";
 import { ReactNode } from "react";
 import { FaCheck, FaChevronDown } from "react-icons/fa6";
 
-export type SelectItem = { key: string; label: ReactNode; disabled?: boolean };
+export type SelectItem = { key: string; label: ReactNode; textValue?: string; disabled?: boolean };
 
 export interface SelectProps {
 	id?: string;
@@ -24,7 +24,10 @@ const Select = ({ id, value, onChange, data, className, disabled, placeholder, .
 				if (val !== null) onChange(val);
 			}}
 			disabled={disabled}
-			items={data.map((item) => ({ value: item.key, label: typeof item.label === "string" ? item.label : item.key }))}
+			items={data.map((item) => ({
+				value: item.key,
+				label: item.textValue ?? (typeof item.label === "string" ? item.label : item.key),
+			}))}
 			{...rest}
 		>
 			<BaseSelect.Trigger
@@ -35,7 +38,9 @@ const Select = ({ id, value, onChange, data, className, disabled, placeholder, .
 					className,
 				)}
 			>
-				<BaseSelect.Value placeholder={placeholder} className="min-w-0 flex-1 truncate text-left" />
+				<BaseSelect.Value placeholder={placeholder} className="min-w-0 flex-1 truncate text-left">
+					{(selectedValue: string | null) => data.find((item) => item.key === selectedValue)?.label ?? placeholder}
+				</BaseSelect.Value>
 				<BaseSelect.Icon className="shrink-0">
 					<FaChevronDown className="h-3.5 w-3.5 text-muted-foreground" aria-hidden="true" />
 				</BaseSelect.Icon>
