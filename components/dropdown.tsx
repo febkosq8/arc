@@ -2,6 +2,7 @@ import { Combobox } from "@base-ui/react/combobox";
 import { cx } from "@rinzai/zen";
 import { FaCheck, FaChevronDown } from "react-icons/fa6";
 import type { KeyboardEventHandler, ReactNode } from "react";
+import { useRef } from "react";
 
 export type DropdownItem = { key: string | number; label: string; disabled?: boolean };
 
@@ -22,6 +23,7 @@ export interface DropdownProps {
 	onOpenChange?: (open: boolean) => void;
 	renderItem?: (item: DropdownItem) => ReactNode;
 	renderValue?: (item: DropdownItem) => ReactNode;
+	selectedValueFillsSpace?: boolean;
 	loading?: boolean;
 	loadingLabel?: string;
 	"aria-label"?: string;
@@ -46,6 +48,7 @@ const Dropdown = ({
 	onOpenChange,
 	renderItem,
 	renderValue,
+	selectedValueFillsSpace = false,
 	loading = false,
 	loadingLabel = "Loading options…",
 	"aria-label": ariaLabel,
@@ -55,6 +58,7 @@ const Dropdown = ({
 	const selectedItem = items.find((item) => String(item.key) === String(value)) ?? null;
 	const selectedValue = selectedItem && renderValue ? renderValue(selectedItem) : null;
 	const hasSelectedValue = selectedValue !== null && selectedValue !== undefined && selectedValue !== false;
+	const inputRef = useRef<HTMLInputElement>(null);
 
 	return (
 		<Combobox.Root
@@ -80,17 +84,35 @@ const Dropdown = ({
 				<Combobox.InputGroup
 					className={cx(
 						"relative flex h-8 w-full items-center justify-between gap-5 rounded border border-border bg-background pr-2 text-foreground shadow-xs pointer-coarse:h-9",
-						hasSelectedValue && "gap-2",
+						hasSelectedValue && (selectedValueFillsSpace ? "gap-0" : "gap-2"),
 						"focus-within:border-transparent focus-within:outline-hidden focus-within:ring-2 focus-within:ring-ring",
 						"data-disabled:cursor-not-allowed data-disabled:bg-muted data-disabled:text-muted-foreground",
 					)}
 				>
-					{hasSelectedValue && <span className="ml-3 flex shrink-0 items-center">{selectedValue}</span>}
+					{hasSelectedValue && (
+						<span
+							className={cx(
+								"ml-3",
+								selectedValueFillsSpace ? "mr-2 min-w-0 flex-1 truncate" : "flex shrink-0 items-center",
+							)}
+							onMouseDown={
+								selectedValueFillsSpace
+									? (event) => {
+											event.preventDefault();
+											inputRef.current?.focus();
+										}
+									: undefined
+							}
+						>
+							{selectedValue}
+						</span>
+					)}
 					<Combobox.Input
+						ref={inputRef}
 						id={id}
 						className={cx(
-							"h-full grow border-none bg-transparent py-2 pl-3 outline-hidden placeholder:text-muted-foreground focus:ring-0 focus:outline-hidden disabled:cursor-not-allowed",
-							hasSelectedValue && "pl-0",
+							"h-full min-w-0 border-none bg-transparent outline-hidden placeholder:text-muted-foreground focus:ring-0 focus:outline-hidden disabled:cursor-not-allowed",
+							hasSelectedValue ? (selectedValueFillsSpace ? "w-0 flex-none p-0" : "grow py-2 pl-0") : "grow py-2 pl-3",
 						)}
 						placeholder={placeholder}
 						onKeyDown={onKeyDown}

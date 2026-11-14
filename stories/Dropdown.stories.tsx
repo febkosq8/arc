@@ -72,6 +72,11 @@ const meta = {
 		onOpenChange: { control: false, table: { disable: true } },
 		renderItem: { control: false, table: { disable: true } },
 		renderValue: { control: false, table: { disable: true } },
+		selectedValueFillsSpace: {
+			control: "boolean",
+			description: "Lets a custom selected value use the space normally occupied by the input.",
+			table: { type: { summary: "boolean" }, defaultValue: { summary: "false" } },
+		},
 		loading: {
 			control: "boolean",
 			description: "Shows a loading status in the open popup.",
@@ -98,6 +103,7 @@ const meta = {
 		onKeyDown: undefined,
 		open: undefined,
 		renderValue: undefined,
+		selectedValueFillsSpace: false,
 		loading: false,
 		loadingLabel: "Loading options…",
 	},
@@ -118,4 +124,24 @@ export const Default: Story = {
 			</div>
 		);
 	},
+};
+
+export const LongSelectedValue: Story = {
+	args: {
+		items: [
+			{
+				key: "long",
+				label: "Dance Dance {HD} - Mithun Chakraborty - Mandakini - Smita Patil - Amrish Puri - Hindi Full Movie",
+			},
+		],
+		value: "long",
+		inputValue: "",
+		renderValue: (item) => item.label,
+		selectedValueFillsSpace: true,
+	},
+	render: (args) => (
+		<div className="w-80">
+			<Dropdown {...args} />
+		</div>
+	),
 };
