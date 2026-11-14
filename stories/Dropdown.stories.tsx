@@ -63,6 +63,7 @@ const meta = {
 			table: { type: { summary: "string" } },
 		},
 		onInputValueChange: { control: false, table: { disable: true } },
+		onKeyDown: { control: false, table: { disable: true } },
 		open: {
 			control: false,
 			description: "Controls whether the options popup is open.",
@@ -94,6 +95,7 @@ const meta = {
 		disabled: false,
 		preventEmpty: false,
 		inputValue: undefined,
+		onKeyDown: undefined,
 		open: undefined,
 		renderValue: undefined,
 		loading: false,

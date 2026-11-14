@@ -1,7 +1,7 @@
 import { Combobox } from "@base-ui/react/combobox";
 import { cx } from "@rinzai/zen";
 import { FaCheck, FaChevronDown } from "react-icons/fa6";
-import type { ReactNode } from "react";
+import type { KeyboardEventHandler, ReactNode } from "react";
 
 export type DropdownItem = { key: string | number; label: string; disabled?: boolean };
 
@@ -17,6 +17,7 @@ export interface DropdownProps {
 	id?: string;
 	inputValue?: string;
 	onInputValueChange?: (inputValue: string) => void;
+	onKeyDown?: KeyboardEventHandler<HTMLInputElement>;
 	open?: boolean;
 	onOpenChange?: (open: boolean) => void;
 	renderItem?: (item: DropdownItem) => ReactNode;
@@ -40,6 +41,7 @@ const Dropdown = ({
 	id,
 	inputValue,
 	onInputValueChange,
+	onKeyDown,
 	open,
 	onOpenChange,
 	renderItem,
@@ -91,6 +93,7 @@ const Dropdown = ({
 							hasSelectedValue && "pl-0",
 						)}
 						placeholder={placeholder}
+						onKeyDown={onKeyDown}
 						aria-label={ariaLabel}
 						data-name={dataName}
 						data-required={dataRequired}
