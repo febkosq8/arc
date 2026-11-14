@@ -9,7 +9,7 @@ type InputVariantOptions = VariantClassProps & {
 };
 
 const inputVariants: (props?: InputVariantOptions) => string = cva(
-	"arc-input rounded border text-foreground placeholder:text-muted-foreground focus:border-transparent focus:outline-hidden focus:ring-2 focus:ring-ring disabled:cursor-not-allowed disabled:border-muted disabled:bg-muted",
+	"arc-input overflow-hidden rounded border text-foreground placeholder:text-muted-foreground focus:border-transparent focus:outline-hidden focus:ring-2 focus:ring-ring disabled:cursor-not-allowed disabled:border-muted disabled:bg-muted",
 	{
 		variants: {
 			variant: {
@@ -18,7 +18,7 @@ const inputVariants: (props?: InputVariantOptions) => string = cva(
 			},
 			as: {
 				input: "h-8 pointer-coarse:h-9 p-1 pl-2",
-				textarea: "min-h-50 max-h-250 resize-y overflow-auto! p-2 whitespace-pre-wrap",
+				textarea: "min-h-50 max-h-250 resize-y p-2 whitespace-pre-wrap",
 			},
 		},
 		defaultVariants: {

@@ -83,7 +83,7 @@ const Dropdown = ({
 			<div className={cx("arc-dropdown relative", className)}>
 				<Combobox.InputGroup
 					className={cx(
-						"relative flex h-8 w-full items-center justify-between gap-5 rounded border border-border bg-background pr-2 text-foreground shadow-xs pointer-coarse:h-9",
+						"relative flex h-8 w-full items-center justify-between gap-5 overflow-hidden rounded border border-border bg-background pr-2 text-foreground shadow-xs pointer-coarse:h-9",
 						hasSelectedValue && (selectedValueFillsSpace ? "gap-0" : "gap-2"),
 						"focus-within:border-transparent focus-within:outline-hidden focus-within:ring-2 focus-within:ring-ring",
 						"data-disabled:cursor-not-allowed data-disabled:bg-muted data-disabled:text-muted-foreground",

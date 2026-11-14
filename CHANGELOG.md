@@ -11,6 +11,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add controlled input and open state, loading indicators, custom selected-value rendering, and an input keydown handler to `Dropdown`.
 - Support rich React content for `Select` labels, with an optional `textValue` for their text representation.
+- Add `selectedValueFillsSpace` to `Dropdown` so custom selected values can use the available field width.
+
+### Changed
+
+- Clip overflow in bordered `Input` controls, including textareas, and in `Dropdown` and `MultiDropdown` fields.
+- Update the development dependencies Prettier to 3.10.1 and Vite to 8.3.8.
 
 ## [0.8.9] - 2026-11-13
 
