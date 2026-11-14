@@ -2,7 +2,7 @@ import { Menu as BaseMenu } from "@base-ui/react/menu";
 import Pill from "@feb/pill";
 import { cx } from "@rinzai/zen";
 import { FiChevronDown, FiChevronRight } from "react-icons/fi";
-import { Children, ComponentPropsWithoutRef, Fragment, ReactNode, isValidElement } from "react";
+import { Children, ComponentPropsWithoutRef, Fragment, ReactElement, ReactNode, isValidElement } from "react";
 
 interface MenuProps {
 	className?: string;
@@ -36,20 +36,27 @@ type MenuItemProps = Omit<ComponentPropsWithoutRef<typeof BaseMenu.Item>, "class
 };
 
 const MenuItem = ({ active, asChild = false, className, nativeButton, children, ...props }: MenuItemProps) => {
+	let child: ReactElement | undefined;
+	if (asChild) {
+		const onlyChild = Children.only(children);
+		if (!isValidElement(onlyChild)) {
+			throw new Error("Menu.Item with asChild requires a single React element child.");
+		}
+		child = onlyChild;
+	}
+
+	const childIsActive =
+		child !== undefined && isValidElement<{ active?: boolean }>(child) && child.props.active === true;
+	const isActive = Boolean(active || childIsActive);
 	const itemClassName = cx(
-		"flex min-h-10 pointer-coarse:min-h-11 w-full cursor-default items-center justify-start rounded-md border border-transparent px-3 py-2 text-base font-medium text-foreground outline-none select-none",
+		"flex min-h-10 pointer-coarse:min-h-11 w-full cursor-default items-center justify-start rounded-md border border-transparent px-3 py-2 text-base font-medium text-foreground! outline-none select-none",
 		"data-highlighted:bg-accent data-highlighted:text-primary",
 		"focus-visible:ring-0",
-		active && "text-primary!",
+		isActive && "text-primary!",
 		className,
 	);
 
-	if (asChild) {
-		const child = Children.only(children);
-		if (!isValidElement(child)) {
-			throw new Error("Menu.Item with asChild requires a single React element child.");
-		}
-
+	if (child) {
 		return (
 			<BaseMenu.Item
 				{...props}
@@ -71,7 +78,12 @@ const MenuComponent = ({ className, contentClassName, active, activeClassName, b
 	return (
 		<BaseMenu.Root loopFocus>
 			<BaseMenu.Trigger
-				render={<Pill active={active} className={cx("w-fit", active && activeClassName, className)} />}
+				render={
+					<Pill
+						active={active}
+						className={cx("w-fit", !active && "text-foreground!", active && activeClassName, className)}
+					/>
+				}
 			>
 				{buttonText}
 				<FiChevronDown className="-mr-1 ml-2 h-4 w-4" aria-hidden="true" />

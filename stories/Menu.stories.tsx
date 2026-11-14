@@ -14,7 +14,7 @@ const meta = {
 		active: false,
 		activeClassName: "",
 		children: null,
-		selection: "/account/profile",
+		selection: "/account/notifications",
 	},
 	argTypes: {
 		active: { control: "boolean", description: "Highlights the menu trigger as the current section." },
