@@ -70,6 +70,17 @@ const meta = {
 		},
 		onOpenChange: { control: false, table: { disable: true } },
 		renderItem: { control: false, table: { disable: true } },
+		renderValue: { control: false, table: { disable: true } },
+		loading: {
+			control: "boolean",
+			description: "Shows a loading status in the open popup.",
+			table: { type: { summary: "boolean" }, defaultValue: { summary: "false" } },
+		},
+		loadingLabel: {
+			control: "text",
+			description: "Text shown while options are loading.",
+			table: { type: { summary: "string" }, defaultValue: { summary: "Loading options…" } },
+		},
 		id: { control: false, table: { disable: true } },
 		"aria-label": { control: false, table: { disable: true } },
 		"data-name": { control: false, table: { disable: true } },
@@ -84,6 +95,9 @@ const meta = {
 		preventEmpty: false,
 		inputValue: undefined,
 		open: undefined,
+		renderValue: undefined,
+		loading: false,
+		loadingLabel: "Loading options…",
 	},
 } satisfies Meta<typeof Dropdown>;
 

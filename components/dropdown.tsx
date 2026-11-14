@@ -20,6 +20,9 @@ export interface DropdownProps {
 	open?: boolean;
 	onOpenChange?: (open: boolean) => void;
 	renderItem?: (item: DropdownItem) => ReactNode;
+	renderValue?: (item: DropdownItem) => ReactNode;
+	loading?: boolean;
+	loadingLabel?: string;
 	"aria-label"?: string;
 	"data-name"?: string;
 	"data-required"?: boolean;
@@ -40,11 +43,16 @@ const Dropdown = ({
 	open,
 	onOpenChange,
 	renderItem,
+	renderValue,
+	loading = false,
+	loadingLabel = "Loading options…",
 	"aria-label": ariaLabel,
 	"data-name": dataName,
 	"data-required": dataRequired,
 }: DropdownProps) => {
 	const selectedItem = items.find((item) => String(item.key) === String(value)) ?? null;
+	const selectedValue = selectedItem && renderValue ? renderValue(selectedItem) : null;
+	const hasSelectedValue = selectedValue !== null && selectedValue !== undefined && selectedValue !== false;
 
 	return (
 		<Combobox.Root
@@ -70,13 +78,18 @@ const Dropdown = ({
 				<Combobox.InputGroup
 					className={cx(
 						"relative flex h-8 w-full items-center justify-between gap-5 rounded border border-border bg-background pr-2 text-foreground shadow-xs pointer-coarse:h-9",
+						hasSelectedValue && "gap-2",
 						"focus-within:border-transparent focus-within:outline-hidden focus-within:ring-2 focus-within:ring-ring",
 						"data-disabled:cursor-not-allowed data-disabled:bg-muted data-disabled:text-muted-foreground",
 					)}
 				>
+					{hasSelectedValue && <span className="ml-3 flex shrink-0 items-center">{selectedValue}</span>}
 					<Combobox.Input
 						id={id}
-						className="h-full grow border-none bg-transparent py-2 pl-3 outline-hidden placeholder:text-muted-foreground focus:ring-0 focus:outline-hidden disabled:cursor-not-allowed"
+						className={cx(
+							"h-full grow border-none bg-transparent py-2 pl-3 outline-hidden placeholder:text-muted-foreground focus:ring-0 focus:outline-hidden disabled:cursor-not-allowed",
+							hasSelectedValue && "pl-0",
+						)}
 						placeholder={placeholder}
 						aria-label={ariaLabel}
 						data-name={dataName}
@@ -94,7 +107,17 @@ const Dropdown = ({
 				<Combobox.Portal>
 					<Combobox.Positioner className="z-50" sideOffset={8}>
 						<Combobox.Popup className="max-h-60 min-w-(--anchor-width) overflow-auto rounded-md border border-border bg-popover text-foreground shadow-lg outline-0">
-							<Combobox.Empty className="relative cursor-default select-none px-4 py-2 text-muted-foreground empty:hidden">
+							{loading && (
+								<div role="status" className="px-4 py-2 text-sm text-muted-foreground">
+									{loadingLabel}
+								</div>
+							)}
+							<Combobox.Empty
+								className={cx(
+									"relative cursor-default select-none px-4 py-2 text-muted-foreground empty:hidden",
+									loading && "hidden",
+								)}
+							>
 								No values to show.
 							</Combobox.Empty>
 							<Combobox.List>
