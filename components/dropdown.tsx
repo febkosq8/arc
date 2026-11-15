@@ -1,23 +1,15 @@
 import { Combobox } from "@base-ui/react/combobox";
 import { cx } from "@rinzai/zen";
 import { FaCheck, FaChevronDown } from "react-icons/fa6";
-import { isValidElement } from "react";
 import type { KeyboardEventHandler, ReactNode } from "react";
 import { useRef } from "react";
+import { getReactNodeText } from "../utilities/react-node-text";
 
 export type DropdownItem = {
 	key: string | number;
 	label: ReactNode;
 	labelTextValue?: string;
 	disabled?: boolean;
-};
-
-export const getReactNodeText = (node: ReactNode): string => {
-	if (node === null || node === undefined || typeof node === "boolean") return "";
-	if (typeof node === "string" || typeof node === "number" || typeof node === "bigint") return String(node);
-	if (Array.isArray(node)) return node.map(getReactNodeText).join("");
-	if (isValidElement<{ children?: ReactNode }>(node)) return getReactNodeText(node.props.children);
-	return "";
 };
 
 export const getDropdownItemText = (item: DropdownItem) => {

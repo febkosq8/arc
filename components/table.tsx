@@ -32,6 +32,7 @@ import Button from "./button";
 import Input from "./input";
 import PreviewCard from "./preview-card";
 import Select from "./select";
+import { getReactNodeText } from "../utilities/react-node-text";
 import {
 	FaAnglesLeft,
 	FaAnglesRight,
@@ -77,7 +78,8 @@ type TableColumnMeta = {
 };
 
 export type TableColumnDef<TData extends object = Record<string, unknown>, TValue = unknown> = {
-	header: string;
+	header: ReactNode;
+	headerTextValue?: string;
 	id?: string;
 	enableResizing?: boolean;
 	enableColumnFilter?: boolean;
@@ -188,6 +190,12 @@ const Table = <TData extends object = Record<string, unknown>>({
 				}
 			}
 
+			const extractedHeaderLabel =
+				typeof item.header === "string" || typeof item.header === "number"
+					? String(item.header)
+					: getReactNodeText(item.header);
+			const headerLabel = item.headerTextValue ?? (extractedHeaderLabel || item.id || String(item.accessorKey));
+
 			const options = {
 				enableResizing: item.enableResizing,
 				enableColumnFilter: item.filterFn === false ? false : item.enableColumnFilter,
@@ -200,7 +208,7 @@ const Table = <TData extends object = Record<string, unknown>>({
 				maxSize: item.maxSize ?? 1000,
 				filterFn: resolveFilterFn(item.filterFn, item.filterSelectOptions),
 				meta: {
-					headerLabel: item.header,
+					headerLabel,
 					filterSelectOptions: item.filterSelectOptions,
 					mobileFullWidth: item.mobileFullWidth,
 				},

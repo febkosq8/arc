@@ -2,7 +2,7 @@ import { Select as BaseSelect } from "@base-ui/react/select";
 import { cx } from "@rinzai/zen";
 import { ReactNode } from "react";
 import { FaCheck, FaChevronDown } from "react-icons/fa6";
-import { getReactNodeText } from "./dropdown";
+import { getReactNodeText } from "../utilities/react-node-text";
 
 export type SelectItem = {
 	key: string;
